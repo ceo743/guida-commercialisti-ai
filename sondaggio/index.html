@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Dicci su cosa lavorare — Strumento gratuito per commercialisti</title>
+<meta name="description" content="Stiamo costruendo uno strumento gratuito per commercialisti. Dicci quale attività di routine vuoi togliere dalla tua scrivania: 4 domande, 60 secondi."/>
+<link rel="canonical" href="https://commercialisti.davidecaiazzo.it/sondaggio/"/>
+<link rel="icon" type="image/png" href="https://automazioni.davidecaiazzo.it/favicon.png"/>
+<script type="text/javascript" charset="UTF-8" src="//cdn.cookie-script.com/s/5b24cef87a160ab3ee3c8e35c1c61ff9.js"></script>
+<style>
+:root {
+  color-scheme: light;
+  --surface-1: #fcfcfb;
+  --page: #f9f9f7;
+  --text-primary: #0b0b0b;
+  --text-secondary: #52514e;
+  --muted: #898781;
+  --grid: #e1e0d9;
+  --baseline: #c3c2b7;
+  --border: rgba(11,11,11,0.10);
+  --accent: #2a78d6;
+  --accent-soft: rgba(42,120,214,0.10);
+  --good: #0ca30c; --good-text: #006300;
+  --critical: #d03b3b;
+  --tile-teal: #0e8f83; --tile-amber: #b8860b; --tile-orange: #d9631e;
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --surface-1: #1a1a19; --page: #0d0d0d;
+  --text-primary: #ffffff; --text-secondary: #c3c2b7; --muted: #898781;
+  --grid: #2c2c2a; --baseline: #383835;
+  --border: rgba(255,255,255,0.10);
+  --accent: #3987e5; --accent-soft: rgba(57,135,229,0.16);
+  --good-text: #0ca30c;
+  --tile-teal: #2bbaa9; --tile-amber: #d9a638; --tile-orange: #e0803f;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --surface-1: #1a1a19; --page: #0d0d0d;
+    --text-primary: #ffffff; --text-secondary: #c3c2b7;
+    --grid: #2c2c2a; --baseline: #383835;
+    --border: rgba(255,255,255,0.10);
+    --accent: #3987e5; --accent-soft: rgba(57,135,229,0.16);
+    --good-text: #0ca30c;
+    --tile-teal: #2bbaa9; --tile-amber: #d9a638; --tile-orange: #e0803f;
+  }
+}
+* { box-sizing: border-box; margin: 0; }
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  background: var(--page); color: var(--text-primary);
+  min-height: 100vh; font-size: 15px; line-height: 1.45;
+}
+header {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 22px; border-bottom: 1px solid var(--border);
+  background: var(--surface-1); position: sticky; top: 0; z-index: 10;
+}
+header h1 { font-size: 16px; font-weight: 700; letter-spacing: -0.01em; }
+header .sub { color: var(--muted); font-size: 13px; }
+header .spacer { flex: 1; }
+header .badge { font-size: 12px; font-weight: 600; color: var(--accent); background: var(--accent-soft); border-radius: 999px; padding: 4px 12px; }
+main { max-width: 720px; margin: 0 auto; padding: 28px 22px 60px; }
+
+.topline { margin-bottom: 8px; }
+.topline h2 { font-size: 24px; letter-spacing: -0.015em; line-height: 1.25; margin-bottom: 8px; }
+.topline p { color: var(--text-secondary); font-size: 15px; max-width: 620px; }
+
+.tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 20px 0 26px; }
+.tile { background: var(--surface-1); border: 1px solid var(--border); border-top: 3px solid var(--c, var(--border)); border-radius: 12px; padding: 14px; text-align: center; }
+.tile .k { font-size: 12.5px; color: var(--text-secondary); }
+.tile .v { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; }
+@media (max-width: 560px) { .tiles { grid-template-columns: 1fr 1fr 1fr; gap: 8px; } .tile .v { font-size: 18px; } }
+
+.panel { background: var(--surface-1); border: 1px solid var(--border); border-radius: 12px; padding: 18px; margin-bottom: 16px; }
+.panel .qn { font-size: 12px; font-weight: 600; color: var(--accent); letter-spacing: .4px; margin-bottom: 4px; }
+.panel h3 { font-size: 16px; font-weight: 600; margin-bottom: 12px; }
+.panel.error-q { border-color: var(--critical); box-shadow: 0 0 0 1px var(--critical); }
+
+.opts { display: flex; flex-direction: column; gap: 8px; }
+.opt {
+  display: flex; gap: 10px; align-items: flex-start;
+  border: 1px solid var(--grid); border-radius: 10px; padding: 11px 12px;
+  cursor: pointer; font-size: 14.5px; color: var(--text-primary);
+  background: var(--page); transition: border-color .12s, background .12s;
+}
+.opt:hover { border-color: var(--accent); }
+.opt.sel { border-color: var(--accent); background: var(--accent-soft); }
+.opt input { margin-top: 2px; accent-color: var(--accent); flex: 0 0 auto; }
+.altro-box { display: none; margin-top: 8px; }
+.altro-box.show { display: block; }
+
+.field-in {
+  width: 100%; font: inherit; padding: 10px 12px; border-radius: 8px;
+  border: 1px solid var(--baseline); background: var(--page); color: var(--text-primary);
+}
+.field-in:focus { outline: none; border-color: var(--accent); }
+.field-in.error { border-color: var(--critical); }
+.contact { display: flex; flex-direction: column; gap: 10px; }
+.privacy { display: flex; gap: 9px; align-items: flex-start; font-size: 12.5px; color: var(--text-secondary); line-height: 1.5; }
+.privacy a { color: var(--accent); }
+.privacy input { margin-top: 2px; accent-color: var(--accent); }
+
+button.primary {
+  font: inherit; cursor: pointer; width: 100%;
+  background: var(--accent); border: 1px solid var(--accent); color: #fff;
+  font-weight: 600; font-size: 15.5px; border-radius: 10px; padding: 13px 18px;
+}
+button.primary:hover { filter: brightness(0.96); }
+button.primary:disabled { opacity: .7; cursor: default; }
+.reassure { text-align: center; font-size: 12.5px; color: var(--muted); margin-top: 10px; }
+
+.modal { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; background: rgba(0,0,0,.5); z-index: 60; padding: 24px; }
+.modal.open { display: flex; }
+.modal .box { background: var(--surface-1); border: 1px solid var(--border); border-radius: 14px; max-width: 400px; width: 100%; padding: 32px 28px; text-align: center; }
+.modal .check { width: 56px; height: 56px; border-radius: 50%; background: var(--accent-soft); display: flex; align-items: center; justify-content: center; margin: 0 auto 14px; color: var(--accent); font-size: 26px; font-weight: 700; }
+.modal h4 { font-size: 19px; margin-bottom: 8px; }
+.modal p { color: var(--text-secondary); font-size: 14px; line-height: 1.55; }
+
+footer { border-top: 1px solid var(--border); margin-top: 30px; padding: 18px 0 6px; font-size: 11.5px; color: var(--muted); }
+footer a { color: var(--muted); }
+</style>
+</head>
+<body>
+<header>
+  <h1>DC Academy</h1>
+  <span class="sub">Strumento gratuito per commercialisti</span>
+  <span class="spacer"></span>
+  <span class="badge">4 domande · 60 secondi</span>
+</header>
+
+<main>
+  <div class="topline">
+    <h2>Stiamo costruendo uno strumento gratuito per commercialisti.<br>Dicci su cosa lavorare.</h2>
+    <p>Un assistente che toglie dalla tua scrivania le attività ripetitive dello studio. Lo useranno gratis i primi studi che ci aiutano a costruirlo: le tue risposte decidono da dove partiamo.</p>
+  </div>
+
+  <div class="tiles">
+    <div class="tile" style="--c:var(--tile-teal)"><div class="v">Gratis</div><div class="k">per i primi studi</div></div>
+    <div class="tile" style="--c:var(--accent)"><div class="v">60 sec</div><div class="k">per rispondere</div></div>
+    <div class="tile" style="--c:var(--tile-amber)"><div class="v">0</div><div class="k">impegni richiesti</div></div>
+  </div>
+
+  <form id="surveyForm" onsubmit="submitSurvey(event)" novalidate>
+
+    <div class="panel" id="q1">
+      <div class="qn">DOMANDA 1 DI 4</div>
+      <h3>Quale attività ti porta via più tempo ogni settimana?</h3>
+      <div class="opts" data-name="attivita">
+        <label class="opt"><input type="radio" name="attivita" value="Rispondere alle email dei clienti"/>Rispondere alle email dei clienti</label>
+        <label class="opt"><input type="radio" name="attivita" value="Rincorrere i clienti per i documenti"/>Rincorrere i clienti per farmi mandare i documenti</label>
+        <label class="opt"><input type="radio" name="attivita" value="Scadenze e adempimenti"/>Tenere sotto controllo scadenze e adempimenti</label>
+        <label class="opt"><input type="radio" name="attivita" value="Fatture e prima nota"/>Registrare fatture e prima nota</label>
+        <label class="opt"><input type="radio" name="attivita" value="Lettere incarico, preventivi, circolari"/>Preparare lettere di incarico, preventivi e circolari</label>
+        <label class="opt"><input type="radio" name="attivita" value="ALTRO"/>Altro</label>
+      </div>
+      <div class="altro-box" id="altro-attivita"><input type="text" class="field-in" placeholder="Scrivi qui l'attività..." id="altro-attivita-txt"/></div>
+    </div>
+
+    <div class="panel" id="q2">
+      <div class="qn">DOMANDA 2 DI 4</div>
+      <h3>Se potessimo automatizzare una sola cosa da domani, quale sceglieresti?</h3>
+      <div class="opts" data-name="priorita">
+        <label class="opt"><input type="radio" name="priorita" value="Risposte automatiche alle email"/>Le risposte alle email dei clienti, già pronte da approvare</label>
+        <label class="opt"><input type="radio" name="priorita" value="Solleciti documenti automatici"/>I solleciti automatici a chi non manda i documenti</label>
+        <label class="opt"><input type="radio" name="priorita" value="Promemoria scadenze per cliente"/>I promemoria delle scadenze, personalizzati per cliente</label>
+        <label class="opt"><input type="radio" name="priorita" value="Prima nota da fatture"/>La prima nota compilata partendo dalle fatture</label>
+        <label class="opt"><input type="radio" name="priorita" value="Documenti di studio automatici"/>Lettere di incarico, preventivi e circolari pronti in 5 minuti</label>
+        <label class="opt"><input type="radio" name="priorita" value="ALTRO"/>Altro</label>
+      </div>
+      <div class="altro-box" id="altro-priorita"><input type="text" class="field-in" placeholder="Scrivi qui cosa automatizzeresti..." id="altro-priorita-txt"/></div>
+    </div>
+
+    <div class="panel" id="q3">
+      <div class="qn">DOMANDA 3 DI 4</div>
+      <h3>Che casella email usa il tuo studio?</h3>
+      <div class="opts" data-name="casella">
+        <label class="opt"><input type="radio" name="casella" value="Gmail / Google Workspace"/>Gmail / Google Workspace</label>
+        <label class="opt"><input type="radio" name="casella" value="Outlook / Microsoft 365"/>Outlook / Microsoft 365</label>
+        <label class="opt"><input type="radio" name="casella" value="Aruba"/>Aruba</label>
+        <label class="opt"><input type="radio" name="casella" value="Libero"/>Libero</label>
+        <label class="opt"><input type="radio" name="casella" value="PEC come casella principale"/>Usiamo soprattutto la PEC</label>
+        <label class="opt"><input type="radio" name="casella" value="Server dello studio"/>Un server nostro / del gestionale</label>
+        <label class="opt"><input type="radio" name="casella" value="ALTRO"/>Altro / non lo so</label>
+      </div>
+      <div class="altro-box" id="altro-casella"><input type="text" class="field-in" placeholder="Scrivi qui il fornitore, se lo conosci..." id="altro-casella-txt"/></div>
+    </div>
+
+    <div class="panel" id="q4">
+      <div class="qn">DOMANDA 4 DI 4</div>
+      <h3>Quante persone lavorano nello studio?</h3>
+      <div class="opts" data-name="dimensione">
+        <label class="opt"><input type="radio" name="dimensione" value="Solo io"/>Solo io</label>
+        <label class="opt"><input type="radio" name="dimensione" value="2-5"/>Da 2 a 5</label>
+        <label class="opt"><input type="radio" name="dimensione" value="6-15"/>Da 6 a 15</label>
+        <label class="opt"><input type="radio" name="dimensione" value="Oltre 15"/>Più di 15</label>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="qn">I TUOI DATI</div>
+      <h3>Dove ti avvisiamo quando lo strumento è pronto?</h3>
+      <div class="contact">
+        <input type="text" id="fieldName" class="field-in" placeholder="Nome e Cognome" required/>
+        <input type="email" id="fieldEmail" class="field-in" placeholder="Email" required/>
+        <label class="privacy"><input type="checkbox" id="fieldPrivacy" required/><span>Accetto la <a href="https://docs.google.com/document/d/1qUNgRcZ0W9aZxutDu1Fv2k5aM6Nti4V0/edit" target="_blank" rel="noopener">Privacy Policy</a> e il trattamento dei dati per partecipare al sondaggio ed essere ricontattato sullo strumento gratuito.</span></label>
+      </div>
+    </div>
+
+    <button type="submit" class="primary" id="submitBtn"><span id="btnText">Invia le risposte →</span></button>
+    <p class="reassure">Gli studi che rispondono hanno la precedenza per l'uso gratuito.</p>
+  </form>
+
+  <footer>
+    DC Academy S.r.l. · P.IVA 05125350750 · Via I. Adriano 9, Lecce · academy@davidecaiazzo.it ·
+    <a href="https://docs.google.com/document/d/1qUNgRcZ0W9aZxutDu1Fv2k5aM6Nti4V0/edit" target="_blank" rel="noopener">Privacy</a> ·
+    <a href="https://docs.google.com/document/d/1PTTs2QFMqBtZaefLHPrrfMxJRnlGewih/edit" target="_blank" rel="noopener">Cookie</a>
+  </footer>
+</main>
+
+<div class="modal" id="confirmModal">
+  <div class="box">
+    <div class="check">✓</div>
+    <h4>Risposte ricevute, grazie!</h4>
+    <p>Il tuo studio è in lista per provare gratuitamente lo strumento. Ti scriviamo appena la prima versione è pronta.</p>
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('.opts').forEach(function(group){
+  group.addEventListener('change',function(){
+    group.querySelectorAll('.opt').forEach(function(o){o.classList.toggle('sel',o.querySelector('input').checked)});
+    var name=group.dataset.name;
+    var box=document.getElementById('altro-'+name);
+    if(box) box.classList.toggle('show', group.querySelector('input:checked').value==='ALTRO');
+    group.closest('.panel').classList.remove('error-q');
+  });
+});
+
+function val(name){
+  var sel=document.querySelector('input[name="'+name+'"]:checked');
+  if(!sel) return null;
+  if(sel.value==='ALTRO'){
+    var t=document.getElementById('altro-'+name+'-txt');
+    return 'Altro: '+((t&&t.value.trim())||'non specificato');
+  }
+  return sel.value;
+}
+
+function submitSurvey(e){
+  e.preventDefault();
+  var hasError=false;
+  var answers={};
+  ['attivita','priorita','casella','dimensione'].forEach(function(name){
+    var v=val(name);
+    answers[name]=v;
+    var q=document.querySelector('.opts[data-name="'+name+'"]').closest('.panel');
+    q.classList.toggle('error-q',!v);
+    if(!v) hasError=true;
+  });
+  var fieldName=document.getElementById('fieldName');
+  var fieldEmail=document.getElementById('fieldEmail');
+  var privacy=document.getElementById('fieldPrivacy');
+  fieldName.classList.remove('error');fieldEmail.classList.remove('error');
+  if(!fieldName.value.trim()){fieldName.classList.add('error');hasError=true}
+  var em=fieldEmail.value.trim();
+  if(!em||!/^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/.test(em)){fieldEmail.classList.add('error');hasError=true}
+  if(!privacy.checked){hasError=true;privacy.focus()}
+  if(hasError){
+    var firstErr=document.querySelector('.error-q,.field-in.error');
+    if(firstErr) firstErr.scrollIntoView({behavior:'smooth',block:'center'});
+    return;
+  }
+  var btn=document.getElementById('submitBtn');
+  document.getElementById('btnText').textContent='Invio in corso...';
+  btn.disabled=true;
+  // Le 4 risposte viaggiano impacchettate in utm_content (limite campi personalizzati Kajabi raggiunto:
+  // si riusano i campi utm già esistenti). utm_campaign marca le submission del sondaggio.
+  var packed='attivita: '+answers.attivita+' || priorita: '+answers.priorita+' || casella: '+answers.casella+' || studio: '+answers.dimensione;
+  var data=new URLSearchParams({
+    'form_submission[name]':fieldName.value.trim(),
+    'form_submission[email]':em,
+    'form_submission[utm_campaign]':'sondaggio-tool-commercialisti',
+    'form_submission[utm_content]':packed
+  });
+  fetch('https://www.davidecaiazzo.it/forms/2149685673/form_submissions',{
+    method:'POST',mode:'no-cors',
+    headers:{'Content-Type':'application/x-www-form-urlencoded'},
+    body:data
+  }).catch(function(){});
+  setTimeout(function(){document.getElementById('confirmModal').classList.add('open')},700);
+}
+</script>
+</body>
+</html>
