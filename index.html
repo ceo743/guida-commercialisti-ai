@@ -103,7 +103,40 @@
     footer .fright{font-size:11px;color:#6f6f79;max-width:660px}
     footer a{color:#8a8a95;text-decoration:none;font-size:11px;margin-left:10px}
 
+    /* sezioni sotto la hero */
+    .sec{padding:44px 0 8px}
+    .sec .kicker{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:12px;color:var(--gold);letter-spacing:2px;text-transform:uppercase;display:block;text-align:center;margin-bottom:10px}
+    .sec h2{font-family:'Outfit',sans-serif;font-weight:900;font-size:clamp(26px,3.4vw,40px);line-height:1.1;text-transform:uppercase;text-align:center;margin-bottom:26px}
+    .sec h2 .gold{color:var(--gold)}
+    .agenda{display:flex;flex-direction:column;gap:12px;max-width:760px;margin:0 auto}
+    .ag{display:flex;gap:16px;align-items:flex-start;background:var(--ink2);border:1px solid var(--line);border-radius:16px;padding:20px 22px}
+    .ag .n{flex:0 0 auto;width:38px;height:38px;border-radius:50%;background:rgba(240,180,41,.15);color:var(--gold);font-family:'Outfit',sans-serif;font-weight:900;font-size:17px;display:flex;align-items:center;justify-content:center}
+    .ag h5{font-family:'Outfit',sans-serif;font-weight:900;font-size:16.5px;margin-bottom:4px}
+    .ag p{font-size:14px;color:var(--grey);line-height:1.5}
+    .agnote{text-align:center;font-family:'Outfit',sans-serif;font-weight:700;font-size:15.5px;color:var(--gold);margin-top:16px}
+    .steps3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:900px;margin:0 auto}
+    .s3{background:var(--ink2);border:1px solid var(--line);border-radius:16px;padding:22px;text-align:center}
+    .s3 .big{font-family:'Outfit',sans-serif;font-weight:900;font-size:26px;color:var(--gold);margin-bottom:8px}
+    .s3 h5{font-family:'Outfit',sans-serif;font-weight:900;font-size:15.5px;margin-bottom:6px}
+    .s3 p{font-size:13.5px;color:var(--grey);line-height:1.5}
+    .twocol{display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:900px;margin:0 auto}
+    .col{background:var(--ink2);border:1px solid var(--line);border-radius:16px;padding:24px}
+    .col.ok{border-color:rgba(240,180,41,.45)}
+    .col h5{font-family:'Outfit',sans-serif;font-weight:900;font-size:16px;margin-bottom:12px}
+    .col ul{list-style:none}
+    .col li{display:flex;gap:9px;align-items:flex-start;padding:5px 0;font-size:14px;color:#dcdce3;line-height:1.45}
+    .col li .ck{color:var(--gold);font-weight:900}
+    .col li .no{color:#e5484d;font-weight:900}
+    .bio{display:flex;gap:22px;align-items:center;max-width:760px;margin:0 auto;background:var(--ink2);border:1px solid var(--line);border-radius:16px;padding:24px}
+    .bio p{font-size:14.5px;color:#dcdce3;line-height:1.6}
+    .bio p b{color:var(--gold)}
+    .finalcta{text-align:center;padding:44px 0 20px}
+    .finalcta .btn-gold{display:inline-block;width:auto;text-decoration:none;padding:18px 40px}
+    .finalcta .when{font-family:'Outfit',sans-serif;font-weight:700;font-size:15px;color:var(--grey);margin-bottom:14px}
+
     @media(max-width:900px){
+      .steps3{grid-template-columns:1fr}
+      .twocol{grid-template-columns:1fr}
       .hero{grid-template-columns:1fr;gap:20px;padding-top:14px;min-height:auto}
       .photo{height:360px;margin-top:14px}
       .photo .circle{left:44%}.photo .ring{left:44%}
@@ -121,7 +154,7 @@
       <span class="domain">DAVIDECAIAZZO.IT</span>
     </header>
 
-    <section class="hero">
+    <section class="hero" id="iscrizione">
       <div class="left">
         <span class="chip">PER COMMERCIALISTI // GRATUITO</span>
         <h1>IL WORKSHOP <span class="gold">LIVE</span><br/>BASTA ATTIVITÀ<br/><span class="gold">DI ROUTINE</span></h1>
@@ -175,6 +208,67 @@
         <p class="reassure">Gratuito. Live su Zoom. Il link per entrare arriva via email.</p>
       </div>
     </section>
+
+    <section class="sec">
+      <span class="kicker">La scaletta, punto per punto</span>
+      <h2>ECCO COSA VEDRAI <span class="gold">DAL VIVO</span></h2>
+      <div class="agenda">
+        <div class="ag"><div class="n">1</div><div><h5>Le risposte ai clienti scritte in 30 secondi</h5><p>Prendo l'email vera di un cliente e l'AI scrive la risposta nel tono del tuo studio. Ti mostro il metodo esatto per addestrarla a rispondere come TE, senza saper programmare. Se sai scrivere un'email, sai già fare tutto.</p></div></div>
+        <div class="ag"><div class="n">2</div><div><h5>I solleciti documenti che partono da soli</h5><p>La lista dei clienti ritardatari diventa una serie di solleciti personalizzati, dal tono gentile al primo ritardo a quello perentorio al terzo. In 2 minuti. Tradotto, un pomeriggio al mese che torna tuo.</p></div></div>
+        <div class="ag"><div class="n">3</div><div><h5>Lo scadenzario che avvisa i clienti al posto tuo</h5><p>Dallo scadenzario del mese ai promemoria su misura, cliente per cliente, con le sole scadenze che lo riguardano spiegate in parole semplici. Mai più la telefonata "nessuno mi aveva avvisato dell'F24".</p></div></div>
+        <div class="ag"><div class="n">4</div><div><h5>Dalla fattura alla bozza di prima nota senza ricopiare</h5><p>Carico un estratto conto in PDF e l'AI lo trasforma in una tabella di movimenti con classificazione contabile proposta, pronta per il gestionale. Con le 2 regole di controllo che proteggono la tua responsabilità professionale.</p></div></div>
+        <div class="ag"><div class="n">5</div><div><h5>Circolari, lettere di incarico e preventivi in 5 minuti</h5><p>Da una novità normativa a una circolare chiara per i tuoi clienti, prima dei tuoi concorrenti. E ogni documento ripetitivo dello studio che diventa un modello che si compila da solo.</p></div></div>
+        <div class="ag"><div class="n">★</div><div><h5>BONUS. Le tue 3 attività, analizzate in diretta</h5><p>Porta la lista delle 3 attività che ripeti ogni settimana e che vorresti non fare mai più. Le guardiamo insieme dal vivo e ti dico quali puoi automatizzare già da venerdì mattina.</p></div></div>
+      </div>
+      <p class="agnote">E le risposte alle TUE domande, in diretta. Questo è il motivo per cui è live e non registrato.</p>
+    </section>
+
+    <section class="sec">
+      <span class="kicker">Semplice, in 3 passi</span>
+      <h2>COME <span class="gold">FUNZIONA</span></h2>
+      <div class="steps3">
+        <div class="s3"><div class="big">1</div><h5>Riserva il posto gratuito</h5><p>Compila il modulo qui sopra. Ricevi subito l'email di conferma con le istruzioni.</p></div>
+        <div class="s3"><div class="big">2</div><h5>Ricevi il link Zoom via email</h5><p>Il link per entrare arriva nella tua casella prima della diretta. Ti basta cliccare.</p></div>
+        <div class="s3"><div class="big">3</div><h5>Giovedì 18/09 alle 18:30 sei dentro</h5><p>Entri, guardi le dimostrazioni dal vivo e fai le tue domande. Serve solo un computer.</p></div>
+      </div>
+    </section>
+
+    <section class="sec">
+      <span class="kicker">Parliamoci chiaro</span>
+      <h2>PER CHI È <span class="gold">(E PER CHI NO)</span></h2>
+      <div class="twocol">
+        <div class="col ok">
+          <h5>Il workshop è perfetto per te se…</h5>
+          <ul>
+            <li><span class="ck">✓</span> Hai uno studio e le attività ripetitive ti mangiano le giornate, tra risposte ai clienti, solleciti, scadenze e documenti sempre uguali</li>
+            <li><span class="ck">✓</span> Dell'intelligenza artificiale hai sentito parlare ovunque, ma vuoi vederla applicata al lavoro VERO di uno studio, non l'ennesima teoria</li>
+            <li><span class="ck">✓</span> Vuoi risposte sul TUO caso, in diretta, non un corso registrato che finisce nel cassetto</li>
+            <li><span class="ck">✓</span> Non hai competenze tecniche. Al workshop non serve installare né configurare niente</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h5>Non fa per te se…</h5>
+          <ul>
+            <li><span class="no">✗</span> Cerchi teoria accademica sull'intelligenza artificiale</li>
+            <li><span class="no">✗</span> Pensi che il tuo studio possa lavorare come 10 anni fa per altri 10 anni</li>
+            <li><span class="no">✗</span> Vuoi la registrazione da guardare "prima o poi". Il valore è nel live e nelle domande</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec">
+      <span class="kicker">Chi tiene il workshop</span>
+      <h2>DAVIDE <span class="gold">CAIAZZO</span></h2>
+      <div class="bio">
+        <p>Imprenditore seriale con un <b>exit da 10 milioni di euro</b> (startup venduta al gruppo Zucchetti) e <b>TOP 20 al mondo</b> in "LinkedIn® Growth" secondo Favikon 2025.<br/><br/>Con DC Academy ha automatizzato con l'AI i processi delle sue aziende e di quelle dei suoi clienti, dalle email ai report ai documenti. Giovedì 18 settembre apre il computer e mostra dal vivo come si fa, applicato al lavoro quotidiano di uno studio di commercialisti.</p>
+      </div>
+    </section>
+
+    <div class="finalcta">
+      <p class="when">Giovedì 18 settembre, ore 18:30 · Live su Zoom · Gratuito</p>
+      <a class="btn-gold" href="#iscrizione">RISERVA IL TUO POSTO ADESSO &uarr;</a>
+    </div>
 
     <footer>
       <span class="fb">DC ACADEMY</span>
