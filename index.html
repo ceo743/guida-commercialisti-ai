@@ -48,7 +48,16 @@
     .chip{display:inline-block;font-family:'JetBrains Mono',monospace;font-weight:700;font-size:12.5px;color:var(--gold);background:rgba(240,180,41,.14);border-radius:999px;padding:8px 16px;letter-spacing:1px;margin-bottom:20px}
     h1{font-family:'Outfit',sans-serif;font-weight:900;font-size:clamp(36px,4.8vw,58px);line-height:1.03;text-transform:uppercase;margin-bottom:16px}
     h1 .gold{color:var(--gold)}
-    .sub{font-family:'Outfit',sans-serif;font-weight:400;font-size:clamp(16px,1.5vw,20px);color:var(--grey);line-height:1.4;max-width:440px;margin-bottom:22px}
+    .sub{font-family:'Outfit',sans-serif;font-weight:400;font-size:clamp(16px,1.5vw,20px);color:var(--grey);line-height:1.4;max-width:460px;margin-bottom:18px}
+
+    .databox{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:16px}
+    .databox .d{font-family:'Outfit',sans-serif;font-weight:700;font-size:14.5px;color:#fff;background:rgba(240,180,41,.1);border:1px solid rgba(240,180,41,.45);border-radius:12px;padding:11px 16px}
+    .databox .d span{color:var(--gold)}
+    .cdlabel{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;color:var(--grey);margin-bottom:8px}
+    .cd{display:flex;gap:10px;margin-bottom:6px}
+    .cd .u{background:var(--ink2);border:1px solid var(--line);border-radius:12px;padding:10px 0 8px;width:72px;text-align:center}
+    .cd .u b{display:block;font-family:'Outfit',sans-serif;font-weight:900;font-size:25px;color:var(--gold);line-height:1.1}
+    .cd .u i{font-style:normal;font-size:10.5px;color:var(--grey);letter-spacing:1.5px}
 
     .photo{position:relative;margin-top:14px;height:500px}
     .photo .circle{position:absolute;left:42%;bottom:44px;transform:translateX(-50%);width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,#f0b429 0%,#e8890c 100%);opacity:.92}
@@ -114,9 +123,21 @@
 
     <section class="hero">
       <div class="left">
-        <span class="chip">WORKSHOP LIVE GRATUITO // GIOVEDÌ 18 SETTEMBRE, ORE 18:30</span>
-        <h1>BASTA ATTIVITÀ<br/><span class="gold">DI ROUTINE.</span><br/>FALLE FARE ALL'<span class="gold">AI</span></h1>
-        <p class="sub">Workshop live su Zoom per commercialisti. Ti mostro dal vivo, passo passo, come togliere dalla tua scrivania le attività ripetitive dello studio.</p>
+        <span class="chip">PER COMMERCIALISTI // GRATUITO</span>
+        <h1>IL WORKSHOP <span class="gold">LIVE</span><br/>BASTA ATTIVITÀ<br/><span class="gold">DI ROUTINE</span></h1>
+        <p class="sub">Ti mostro dal vivo, passo passo, come far fare all'AI le attività ripetitive del tuo studio. Tu guardi, copi, e da venerdì le hai tolte dalla scrivania.</p>
+        <div class="databox">
+          <div class="d">📅 <span>Giovedì 18 settembre</span></div>
+          <div class="d">🕡 Ore <span>18:30</span></div>
+          <div class="d">📍 Live su <span>Zoom</span></div>
+        </div>
+        <p class="cdlabel">MANCANO</p>
+        <div class="cd">
+          <div class="u"><b id="cdG">--</b><i>GIORNI</i></div>
+          <div class="u"><b id="cdH">--</b><i>ORE</i></div>
+          <div class="u"><b id="cdM">--</b><i>MINUTI</i></div>
+          <div class="u"><b id="cdS">--</b><i>SECONDI</i></div>
+        </div>
         <div class="photo">
           <div class="circle"></div>
           <div class="ring"></div>
@@ -129,7 +150,7 @@
       </div>
 
       <div class="card">
-        <h3>COSA VEDRAI<br/><span class="gold">DAL VIVO</span></h3>
+        <h3>RISERVA IL TUO POSTO<br/><span class="gold">AL WORKSHOP</span></h3>
         <ul class="benefits">
           <li><span class="ck">✓</span> Dall'email di un cliente alla risposta pronta in 30 secondi, davanti ai tuoi occhi</li>
           <li><span class="ck">✓</span> I solleciti per i documenti mancanti che partono da soli</li>
@@ -149,7 +170,7 @@
           <input type="hidden" name="utm_content" id="utm_content"/>
           <label class="privacy"><input type="checkbox" id="fieldPrivacy" required/><span>Accetto la <a href="https://docs.google.com/document/d/1qUNgRcZ0W9aZxutDu1Fv2k5aM6Nti4V0/edit" target="_blank" rel="noopener">Privacy Policy</a> e il trattamento dei dati per iscrivermi al workshop.</span></label>
           <label class="privacy"><input type="checkbox" id="fieldMarketing"/><span>Voglio ricevere anche consigli su automazioni e intelligenza artificiale.</span></label>
-          <button type="submit" class="btn-gold" id="submitBtn"><span id="btnText">RISERVA IL TUO POSTO GRATUITO</span></button>
+          <button type="submit" class="btn-gold" id="submitBtn"><span id="btnText">ISCRIVIMI AL WORKSHOP GRATUITO</span></button>
         </form>
         <p class="reassure">Gratuito. Live su Zoom. Il link per entrare arriva via email.</p>
       </div>
@@ -183,6 +204,28 @@
     var val = params.get(key);
     if(val){ var el = document.getElementById(key); if(el) el.value = val; }
   });
+})();
+
+(function(){
+  var target = new Date('2026-09-18T18:30:00+02:00').getTime();
+  function pad(n){return n<10?'0'+n:''+n;}
+  function tick(){
+    var diff = target - Date.now();
+    if(diff <= 0){
+      document.getElementById('cdG').textContent='0';
+      document.getElementById('cdH').textContent='00';
+      document.getElementById('cdM').textContent='00';
+      document.getElementById('cdS').textContent='00';
+      var lb=document.querySelector('.cdlabel'); if(lb) lb.textContent='SIAMO LIVE';
+      return;
+    }
+    document.getElementById('cdG').textContent = Math.floor(diff/86400000);
+    document.getElementById('cdH').textContent = pad(Math.floor(diff/3600000)%24);
+    document.getElementById('cdM').textContent = pad(Math.floor(diff/60000)%60);
+    document.getElementById('cdS').textContent = pad(Math.floor(diff/1000)%60);
+    setTimeout(tick, 1000);
+  }
+  tick();
 })();
 
 function dcPhoneOk(raw){var p=String(raw||'').replace(/[\s\-\+\.\(\)]/g,'');if(p.slice(0,2)==='00')p=p.slice(2);if(!/^\d+$/.test(p))return false;if(p.length<9||p.length>13)return false;if(/^(\d)\1+$/.test(p))return false;if('01234567890'.indexOf(p)>=0||'09876543210'.indexOf(p)>=0)return false;var u={},n=0,i;for(i=0;i<p.length;i++){if(!u[p[i]]){u[p[i]]=1;n++;}}if(n<3)return false;return true;}
