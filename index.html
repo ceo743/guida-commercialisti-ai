@@ -207,6 +207,10 @@
     @media(max-width:640px){#resTrack{padding:12px 40px 20px!important} #resPrev{left:4px!important} #resNext{right:4px!important}}
   </style>
 <style>
+.wk-live-badge{display:inline-flex;align-items:center;gap:12px;font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(14px,1.4vw,18px);letter-spacing:2px;text-transform:uppercase;color:#fff;background:rgba(212,175,55,0.1);border:1.5px solid rgba(212,175,55,0.55);border-radius:999px;padding:14px 28px;box-shadow:0 0 34px rgba(212,175,55,0.16)}
+.wk-live-badge b{color:#D4AF37;font-weight:900}
+.wk-live-dot{width:10px;height:10px;border-radius:50%;background:#e5484d;flex:none;animation:wkPulse 1.4s ease-in-out infinite}
+@keyframes wkPulse{0%,100%{box-shadow:0 0 0 0 rgba(229,72,77,0.55)}50%{box-shadow:0 0 0 9px rgba(229,72,77,0)}}
 .wk-pills{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin:26px 0 8px}
 .wk-pill{font-family:'Inter',sans-serif;font-weight:700;font-size:14.5px;color:#fff;background:rgba(212,175,55,0.07);border:1px solid rgba(212,175,55,0.4);border-radius:999px;padding:12px 22px}
 .wk-pill b{color:#D4AF37;font-weight:800}
@@ -247,11 +251,12 @@
 <section class="section-hero" style="position:relative">
 <img src="https://kajabi-storefronts-production.kajabi-cdn.com/kajabi-storefronts-production/themes/2152024008/settings_images/WKdGUgfVTdel6xcpXgaS_file.jpg" alt="Davide Caiazzo" class="hero-photo" style="position:absolute;right:0;top:0;bottom:0;width:40%;height:100%;object-fit:cover;object-position:center top;z-index:1;pointer-events:none;-webkit-mask-image:linear-gradient(to left,rgba(0,0,0,0.8) 0%,rgba(0,0,0,0.5) 50%,transparent 100%);mask-image:linear-gradient(to left,rgba(0,0,0,0.8) 0%,rgba(0,0,0,0.5) 50%,transparent 100%)">
 <div class="ctr" style="margin:0 auto;text-align:center;position:relative;z-index:2">
-<p class="reveal ent-label" style="margin-bottom:24px">Workshop LIVE su Zoom · 100% gratuito · Solo per commercialisti</p>
+<div class="reveal" style="margin-bottom:16px"><span class="wk-live-badge"><span class="wk-live-dot"></span>Workshop <b>LIVE</b> gratuito su Zoom</span></div>
+<p class="reveal" style="font-family:var(--mono);font-size:13px;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,0.55);margin-bottom:28px">Giovedì <b style="color:#D4AF37">18 settembre</b> · ore <b style="color:#D4AF37">18:30</b> · Solo per commercialisti</p>
 <h1 class="reveal" style="font-family:'Playfair Display',serif;font-size:clamp(34px,5.5vw,70px);font-weight:900;line-height:1.06;margin-bottom:22px">
 <span class="gold">Basta attività di routine.</span><br>
 <span class="gold">Al tuo studio le fa l'AI.</span><br>
-<span style="font-size:clamp(15px,1.4vw,22px);color:rgba(255,255,255,0.55);font-weight:300;font-family:'Inter',sans-serif;letter-spacing:0.01em">In una sera vedrai automatizzare dal vivo risposte ai clienti, solleciti, scadenzario, prima nota e circolari. Sul lavoro vero di uno studio.</span>
+<span style="font-size:clamp(15px,1.4vw,22px);color:rgba(255,255,255,0.55);font-weight:300;font-family:'Inter',sans-serif;letter-spacing:0.01em">Un workshop dal vivo di una sera: guardi il mio schermo mentre automatizzo risposte ai clienti, solleciti, scadenzario, prima nota e circolari. Sul lavoro vero di uno studio.</span>
 </h1>
 <p class="body-text reveal" style="max-width:720px;margin:0 auto 8px;font-size:clamp(15px,1.15vw,17px)">Davide Caiazzo, imprenditore con un exit da 10 milioni di euro al gruppo Zucchetti e TOP 20 al mondo in &#8220;LinkedIn&#174; Growth&#8221; (Favikon 2025), apre il computer e lavora davanti a te. Tu guardi, copi, fai domande. E da venerdì mattina lo rifai nel tuo studio.</p>
 <div class="wk-pills reveal">
