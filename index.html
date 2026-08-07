@@ -20,13 +20,13 @@
 <script src="https://dc-chatbot-production.up.railway.app/static/widget.js" defer></script>
 <link rel="stylesheet" href="https://dc-chatbot-production.up.railway.app/static/widget.css"/>
 <style>
-    :root{--gold:#D4AF37;--gold2:#BF953F;--red:#ff4444;--bg:#080b10;--ctr:clamp(320px,94vw,1560px);--ctr-text:clamp(300px,74vw,1000px);--ctr-sm:clamp(280px,56vw,760px);--sec-x:clamp(20px,5vw,100px);--sec-y:clamp(44px,5.5vw,88px);--gap-xs:clamp(8px,1vw,14px);--gap-sm:clamp(12px,1.5vw,20px);--gap-md:clamp(20px,2.5vw,36px);--gap-lg:clamp(32px,4vw,64px);--t-hero:clamp(32px,5.5vw,82px);--t-h2:clamp(26px,3.8vw,56px);--t-h3:clamp(17px,1.8vw,25px);--t-body:clamp(16px,1.1vw,24px);--t-sm:clamp(15px,.95vw,20px);--t-label:clamp(13px,.8vw,16px)}
+    :root{--gold:#ff3d2e;--gold2:#c62d20;--red:#ff4444;--bg:#05070e;--ctr:clamp(320px,94vw,1560px);--ctr-text:clamp(300px,74vw,1000px);--ctr-sm:clamp(280px,56vw,760px);--sec-x:clamp(20px,5vw,100px);--sec-y:clamp(44px,5.5vw,88px);--gap-xs:clamp(8px,1vw,14px);--gap-sm:clamp(12px,1.5vw,20px);--gap-md:clamp(20px,2.5vw,36px);--gap-lg:clamp(32px,4vw,64px);--t-hero:clamp(32px,5.5vw,82px);--t-h2:clamp(26px,3.8vw,56px);--t-h3:clamp(17px,1.8vw,25px);--t-body:clamp(16px,1.1vw,24px);--t-sm:clamp(15px,.95vw,20px);--t-label:clamp(13px,.8vw,16px)}
     *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
     html{scroll-behavior:smooth;scroll-padding-top:80px;overflow-x:hidden}
     body{font-family:'Inter',sans-serif;background:var(--bg);color:#fff;overflow-x:hidden}
     a,button{cursor:pointer}img{max-width:100%;display:block}
-    ::selection{background:rgba(212,175,55,.3);color:#fff}
-    ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#D4AF37,#8B6914);border-radius:4px}
+    ::selection{background:rgba(255,61,46,.3);color:#fff}
+    ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#ff3d2e,#a3221a);border-radius:4px}
     #particleCanvas,#trailCanvas{position:fixed;inset:0;z-index:0;pointer-events:none}
     .h-hero{font-family:'Playfair Display',serif;font-size:var(--t-hero);font-weight:900;line-height:1.02;letter-spacing:-.03em}
     .h-lg{font-family:'Playfair Display',serif;font-size:var(--t-h2);font-weight:800;line-height:1.08;letter-spacing:-.02em}
@@ -42,7 +42,7 @@
     .grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--gap-md)}
     .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--gap-md)}
     .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--gap-md)}
-    .gold-line{width:100%;height:1px;background:linear-gradient(90deg,transparent,rgba(212,175,55,.15),transparent);position:relative;z-index:1}
+    .gold-line{width:100%;height:1px;background:linear-gradient(90deg,transparent,rgba(255,61,46,.15),transparent);position:relative;z-index:1}
     #header{position:fixed;top:0;left:0;right:0;z-index:100;padding:18px 0;transition:all .5s cubic-bezier(.4,0,.2,1)}
     .header-inner{max-width:var(--ctr);width:100%;margin:0 auto;padding:0 var(--sec-x);display:flex;align-items:center;justify-content:space-between}
     .logo{font-family:'Playfair Display',serif;font-size:clamp(15px,1.2vw,19px);font-weight:800;letter-spacing:.08em;color:#fff;text-decoration:none;text-transform:uppercase}
@@ -51,25 +51,25 @@
     .nav-link::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1px;background:var(--gold);transition:width .3s}
     .nav-link:hover::after{width:100%}
     .hide-mobile{display:block}.show-mobile{display:none}
-    .btn-gold{display:inline-flex;align-items:center;gap:10px;padding:clamp(14px,1.2vw,20px) clamp(28px,3vw,48px);background:linear-gradient(135deg,var(--gold2),var(--gold));color:#000;font-weight:700;font-size:var(--t-sm);text-transform:uppercase;letter-spacing:2.5px;border:none;border-radius:60px;text-decoration:none;transition:all .5s cubic-bezier(.4,0,.2,1);position:relative;overflow:hidden;font-family:'Inter',sans-serif;box-shadow:0 4px 30px rgba(212,175,55,.2);white-space:nowrap;cursor:pointer}
-    .btn-gold:hover{transform:translateY(-2px);box-shadow:0 8px 40px rgba(212,175,55,.35)}
+    .btn-gold{display:inline-flex;align-items:center;gap:10px;padding:clamp(14px,1.2vw,20px) clamp(28px,3vw,48px);background:linear-gradient(135deg,var(--gold2),var(--gold));color:#000;font-weight:700;font-size:var(--t-sm);text-transform:uppercase;letter-spacing:2.5px;border:none;border-radius:60px;text-decoration:none;transition:all .5s cubic-bezier(.4,0,.2,1);position:relative;overflow:hidden;font-family:'Inter',sans-serif;box-shadow:0 4px 30px rgba(255,61,46,.2);white-space:nowrap;cursor:pointer}
+    .btn-gold:hover{transform:translateY(-2px);box-shadow:0 8px 40px rgba(255,61,46,.35)}
     .btn-gold::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent);transition:left .6s}
     .btn-gold:hover::before{left:100%}
     .glass{background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.07);border-radius:20px;padding:clamp(20px,2.5vw,36px);backdrop-filter:blur(10px);transition:all .4s cubic-bezier(.4,0,.2,1)}
-    .glass:hover{background:rgba(255,255,255,.04);border-color:rgba(212,175,55,.15);transform:translateY(-2px)}
+    .glass:hover{background:rgba(255,255,255,.04);border-color:rgba(255,61,46,.15);transform:translateY(-2px)}
     .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s cubic-bezier(.4,0,.2,1),transform .7s cubic-bezier(.4,0,.2,1)}
     .reveal.visible{opacity:1;transform:translateY(0)}
     .orb{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none}
     /* ===== AMBIENT AURORA ===== */
     #ambient{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
     #ambient span{position:absolute;display:block;border-radius:50%;filter:blur(100px);mix-blend-mode:screen}
-    #ambient .a1{width:55vw;height:55vw;background:radial-gradient(circle,rgba(212,175,55,.16),transparent 62%);top:-15vw;left:-12vw;animation:auroraA 22s ease-in-out infinite}
+    #ambient .a1{width:55vw;height:55vw;background:radial-gradient(circle,rgba(255,61,46,.16),transparent 62%);top:-15vw;left:-12vw;animation:auroraA 22s ease-in-out infinite}
     #ambient .a2{width:48vw;height:48vw;background:radial-gradient(circle,rgba(191,149,63,.12),transparent 62%);bottom:-16vw;right:-14vw;animation:auroraB 28s ease-in-out infinite}
     #ambient .a3{width:40vw;height:40vw;background:radial-gradient(circle,rgba(18,112,89,.09),transparent 62%);top:42%;right:6%;animation:auroraA 32s ease-in-out infinite reverse}
     @keyframes auroraA{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(4vw,5vh) scale(1.1)}}
     @keyframes auroraB{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-5vw,-4vh) scale(1.14)}}
     @media(prefers-reduced-motion:reduce){#ambient span{animation:none}}
-    .section-hero h1 .gold{text-shadow:0 0 44px rgba(212,175,55,.22)}
+    .section-hero h1 .gold{text-shadow:0 0 44px rgba(255,61,46,.22)}
     @keyframes pulse{0%,100%{opacity:1}50%{opacity:.65}}
     .trust-badges{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px;margin-top:18px}
     .trust-badge{display:inline-flex;align-items:center;gap:7px;padding:8px 14px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:100px;font-size:13px;color:rgba(255,255,255,0.5);white-space:nowrap}
@@ -79,16 +79,16 @@
     .ba-after{text-align:left;color:rgba(255,255,255,.85);font-size:var(--t-body);font-weight:500}
     .ba-arrow{color:var(--gold);font-size:clamp(16px,1.5vw,22px)}
     .accordion-item{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:16px;overflow:hidden;transition:all .3s}
-    .accordion-item.open{border-color:rgba(212,175,55,.2)}
+    .accordion-item.open{border-color:rgba(255,61,46,.2)}
     .accordion-header{padding:clamp(16px,1.5vw,22px) clamp(18px,2vw,28px);display:flex;align-items:center;gap:16px;cursor:pointer;transition:all .3s;user-select:none}
     .accordion-header:hover{background:rgba(255,255,255,.02)}
-    .accordion-icon{width:clamp(32px,3vw,44px);height:clamp(32px,3vw,44px);border-radius:50%;background:rgba(212,175,55,.08);border:1px solid rgba(212,175,55,.15);display:flex;align-items:center;justify-content:center;font-size:clamp(14px,1.3vw,18px);flex-shrink:0}
+    .accordion-icon{width:clamp(32px,3vw,44px);height:clamp(32px,3vw,44px);border-radius:50%;background:rgba(255,61,46,.08);border:1px solid rgba(255,61,46,.15);display:flex;align-items:center;justify-content:center;font-size:clamp(14px,1.3vw,18px);flex-shrink:0}
     .accordion-title{font-size:var(--t-h3);font-weight:600;flex:1;color:rgba(255,255,255,.85)}
     .accordion-arrow{color:rgba(255,255,255,.2);font-size:clamp(16px,1.5vw,22px);transition:transform .3s;flex-shrink:0}
     .accordion-item.open .accordion-arrow{transform:rotate(180deg);color:var(--gold)}
     .accordion-body{max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.4,0,.2,1)}
     .accordion-item.open .accordion-body{max-height:2000px}
-    .accordion-body-inner{padding:0 clamp(18px,2vw,28px) clamp(18px,2vw,24px) clamp(56px,5vw,72px);color:rgba(255,255,255,.75);font-size:var(--t-body);line-height:1.8}
+    .accordion-body-inner{padding:2px clamp(18px,2vw,28px) clamp(18px,2vw,24px);color:rgba(255,255,255,.75);font-size:var(--t-body);line-height:1.8;border-top:1px solid rgba(255,61,46,.1);margin:0 clamp(18px,2vw,28px);padding-left:0;padding-right:0;padding-top:14px}
     .mock-stat{background:rgba(255,255,255,.04);border-radius:12px;padding:clamp(10px,1.2vw,16px);text-align:center}
     .mock-stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--gap-sm)}
     .mock-stat-num{font-family:'Playfair Display',serif;font-size:clamp(20px,2.2vw,28px);font-weight:800}
@@ -103,16 +103,16 @@
     .testimonial-track{display:flex;gap:var(--gap-md);overflow-x:auto;padding-bottom:16px;scrollbar-width:none;cursor:grab}
     .testimonial-track::-webkit-scrollbar{display:none}
     .testimonial-card{min-width:clamp(260px,28vw,320px);max-width:clamp(260px,28vw,320px);background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:clamp(18px,2vw,24px);flex-shrink:0;transition:all .4s}
-    .testimonial-card:hover{background:rgba(255,255,255,.04);border-color:rgba(212,175,55,.2);transform:translateY(-4px)}
+    .testimonial-card:hover{background:rgba(255,255,255,.04);border-color:rgba(255,61,46,.2);transform:translateY(-4px)}
     .tc-name{font-size:var(--t-body);font-weight:700;color:rgba(255,255,255,.9)}.tc-role{font-size:var(--t-sm);color:rgba(255,255,255,.3)}
     .tc-stat{font-size:clamp(16px,1.8vw,20px);font-weight:800;color:var(--gold);margin-bottom:6px;font-family:'Playfair Display',serif}
     .tc-numbers{font-size:var(--t-sm);color:rgba(255,255,255,.35);line-height:1.6;margin-bottom:10px}
-    .tc-link{font-size:var(--t-sm);color:rgba(212,175,55,.6);font-weight:600;letter-spacing:.5px;transition:color .3s}
-    .price-card{background:linear-gradient(160deg,rgba(212,175,55,.08),rgba(212,175,55,.02));border:1px solid rgba(212,175,55,.15);border-radius:24px;padding:clamp(32px,4vw,56px) clamp(24px,4vw,48px);text-align:center;position:relative;overflow:hidden}
+    .tc-link{font-size:var(--t-sm);color:rgba(255,61,46,.6);font-weight:600;letter-spacing:.5px;transition:color .3s}
+    .price-card{background:linear-gradient(160deg,rgba(255,61,46,.08),rgba(255,61,46,.02));border:1px solid rgba(255,61,46,.15);border-radius:24px;padding:clamp(32px,4vw,56px) clamp(24px,4vw,48px);text-align:center;position:relative;overflow:hidden}
     .price-amount{font-family:'Playfair Display',serif;font-size:clamp(52px,6vw,80px);font-weight:900;line-height:1}
     .price-period{font-size:clamp(15px,1.3vw,19px);color:rgba(255,255,255,.7);font-weight:400}
     .audio-player{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:clamp(16px,2vw,24px);display:flex;align-items:center;gap:clamp(14px,1.5vw,20px)}
-    .play-btn{width:clamp(44px,4vw,56px);height:clamp(44px,4vw,56px);border-radius:50%;background:linear-gradient(135deg,var(--gold2),var(--gold));border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:all .3s;box-shadow:0 4px 20px rgba(212,175,55,.3)}
+    .play-btn{width:clamp(44px,4vw,56px);height:clamp(44px,4vw,56px);border-radius:50%;background:linear-gradient(135deg,var(--gold2),var(--gold));border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:all .3s;box-shadow:0 4px 20px rgba(255,61,46,.3)}
     .play-btn:hover{transform:scale(1.05)}
     .progress-bar{flex:1;height:3px;background:rgba(255,255,255,.08);border-radius:2px;cursor:pointer}
     .progress-fill{height:100%;background:linear-gradient(90deg,var(--gold2),var(--gold));border-radius:2px;transition:width .1s linear}
@@ -121,10 +121,10 @@
     .audio-time{font-size:var(--t-sm);color:rgba(255,255,255,.35);margin-top:4px;font-family:monospace}
     .countdown-num{font-family:'Playfair Display',serif;font-size:clamp(36px,4vw,56px);font-weight:900;color:var(--gold);line-height:1}
     .countdown-label{font-size:var(--t-sm);text-transform:uppercase;letter-spacing:2px;color:rgba(255,255,255,.3);margin-top:4px}
-    .countdown-sep{font-family:'Playfair Display',serif;font-size:clamp(28px,3vw,40px);color:rgba(212,175,55,.3);font-weight:800}
+    .countdown-sep{font-family:'Playfair Display',serif;font-size:clamp(28px,3vw,40px);color:rgba(255,61,46,.3);font-weight:800}
     .check-group{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--gap-sm)}
     .check-item{display:flex;align-items:center;gap:10px;padding:clamp(10px,1.2vw,14px) clamp(12px,1.5vw,16px);background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:12px;cursor:pointer;transition:all .3s;user-select:none}
-    .check-item.selected{background:rgba(212,175,55,.06);border-color:rgba(212,175,55,.2)}
+    .check-item.selected{background:rgba(255,61,46,.06);border-color:rgba(255,61,46,.2)}
     .check-box{width:clamp(18px,1.6vw,22px);height:clamp(18px,1.6vw,22px);border-radius:6px;border:2px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;transition:all .3s;flex-shrink:0}
     .check-item.selected .check-box{background:var(--gold);border-color:var(--gold)}
     .check-item label{font-size:var(--t-sm);color:rgba(255,255,255,.7);cursor:pointer;flex:1}
@@ -136,7 +136,7 @@
     #stickyCta .sticky-inner{display:flex;align-items:center;justify-content:center;gap:clamp(12px,2vw,24px);padding:clamp(10px,1.2vw,14px) var(--sec-x);background:rgba(8,11,16,.95);border-top:1px solid rgba(255,255,255,.06);backdrop-filter:blur(20px)}
     .chi-sono-grid{display:grid;grid-template-columns:auto 1fr;gap:var(--gap-lg);align-items:start}
     .form-field{width:100%;padding:clamp(14px,1.5vw,18px) clamp(16px,1.8vw,22px);background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;color:#fff;font-size:var(--t-body);font-family:'Inter',sans-serif;outline:none;transition:all .4s}
-    .form-field:focus{border-color:rgba(212,175,55,.3);background:rgba(255,255,255,.06)}
+    .form-field:focus{border-color:rgba(255,61,46,.3);background:rgba(255,255,255,.06)}
     .hero-photo{position:absolute;right:0;top:0;bottom:0;width:40%;height:100%;object-fit:cover;object-position:center top;z-index:1;pointer-events:none;-webkit-mask-image:linear-gradient(to left,rgba(0,0,0,.8) 0%,rgba(0,0,0,.5) 50%,transparent 100%);mask-image:linear-gradient(to left,rgba(0,0,0,.8) 0%,rgba(0,0,0,.5) 50%,transparent 100%)}
     @media(min-width:769px) and (max-width:1024px){.show-mobile{display:none!important}.grid-3{grid-template-columns:repeat(2,1fr)!important}.grid-4{grid-template-columns:repeat(2,1fr)!important}}
     @media(max-width:1024px){.grid-3{grid-template-columns:repeat(2,1fr)!important}}
@@ -147,43 +147,43 @@
     /* ===== ENTERPRISE THEME ===== */
     :root{--mono:'IBM Plex Mono','Courier New',monospace}
     .mono{font-family:var(--mono)!important;font-feature-settings:'tnum';font-variant-numeric:tabular-nums}
-    .ent-label{font-family:var(--mono);font-size:13px;letter-spacing:3px;text-transform:uppercase;color:rgba(212,175,55,0.6);border-left:2px solid rgba(212,175,55,0.35);padding-left:10px;display:inline-block}
+    .ent-label{font-family:var(--mono);font-size:13px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,61,46,0.6);border-left:2px solid rgba(255,61,46,0.35);padding-left:10px;display:inline-block}
     .price-tier{display:grid;grid-template-columns:1fr auto;gap:8px 24px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.05)}
     .price-tier:last-child{border-bottom:none}
     .price-tier-label{font-size:13px;color:rgba(255,255,255,0.6)}
-    .price-tier-value{font-family:var(--mono);font-size:13px;color:#D4AF37;font-weight:600;text-align:right;white-space:nowrap}
+    .price-tier-value{font-family:var(--mono);font-size:13px;color:#ff3d2e;font-weight:600;text-align:right;white-space:nowrap}
     .mock-table td,.mock-table th{font-family:var(--mono)}
 
     /* ===== RESOURCE CARDS ===== */
     .res-card{
       position:relative;overflow:hidden;border-radius:16px;
       background:rgba(255,255,255,0.03);
-      border:1px solid rgba(212,175,55,0.12);
+      border:1px solid rgba(255,61,46,0.12);
       cursor:pointer;transition:border-color .3s,transform .1s;
       transform-style:preserve-3d;
       animation-delay:var(--delay,0ms);
     }
-    .res-card:hover{border-color:rgba(212,175,55,0.45);}
+    .res-card:hover{border-color:rgba(255,61,46,0.45);}
     .res-card-inner{padding:32px;position:relative;z-index:1;}
     .res-tag{
       display:inline-block;font-size:13px;letter-spacing:2.5px;
-      text-transform:uppercase;color:#D4AF37;font-weight:600;
-      background:rgba(212,175,55,0.08);border:1px solid rgba(212,175,55,0.2);
+      text-transform:uppercase;color:#ff3d2e;font-weight:600;
+      background:rgba(255,61,46,0.08);border:1px solid rgba(255,61,46,0.2);
       padding:4px 10px;border-radius:20px;margin-bottom:20px;font-family:'Inter',sans-serif;
     }
     .res-icon{
       width:48px;height:48px;border-radius:12px;
-      background:linear-gradient(135deg,rgba(212,175,55,0.15),rgba(212,175,55,0.05));
-      border:1px solid rgba(212,175,55,0.2);
+      background:linear-gradient(135deg,rgba(255,61,46,0.15),rgba(255,61,46,0.05));
+      border:1px solid rgba(255,61,46,0.2);
       display:flex;align-items:center;justify-content:center;
-      color:#D4AF37;margin-bottom:16px;
+      color:#ff3d2e;margin-bottom:16px;
       transition:transform .3s,background .3s;
     }
-    .res-card:hover .res-icon{transform:scale(1.1) rotate(5deg);background:linear-gradient(135deg,rgba(212,175,55,0.25),rgba(212,175,55,0.1));}
+    .res-card:hover .res-icon{transform:scale(1.1) rotate(5deg);background:linear-gradient(135deg,rgba(255,61,46,0.25),rgba(255,61,46,0.1));}
     .res-title{font-size:18px;font-weight:700;font-family:'Playfair Display',serif;margin-bottom:10px;line-height:1.3;}
     .res-desc{font-size:14px;color:rgba(255,255,255,0.55);line-height:1.65;margin-bottom:24px;}
     .res-cta{
-      font-size:13px;font-weight:600;color:#D4AF37;
+      font-size:13px;font-weight:600;color:#ff3d2e;
       display:flex;align-items:center;gap:6px;font-family:'Inter',sans-serif;letter-spacing:.5px;
     }
     .res-arrow{transition:transform .3s;display:inline-block;}
@@ -191,68 +191,226 @@
     /* scan line effect */
     .res-scan{
       position:absolute;top:-100%;left:0;right:0;height:60%;
-      background:linear-gradient(180deg,transparent,rgba(212,175,55,0.04),transparent);
+      background:linear-gradient(180deg,transparent,rgba(255,61,46,0.04),transparent);
       pointer-events:none;transition:top .6s ease;
     }
     .res-card:hover .res-scan{top:140%;}
     /* glow bottom on hover */
     .res-card::after{
       content:'';position:absolute;bottom:0;left:10%;right:10%;height:1px;
-      background:linear-gradient(90deg,transparent,rgba(212,175,55,0.5),transparent);
+      background:linear-gradient(90deg,transparent,rgba(255,61,46,0.5),transparent);
       opacity:0;transition:opacity .3s;
     }
     .res-card:hover::after{opacity:1;}
     #resTrack::-webkit-scrollbar{display:none}
-    #resPrev:hover,#resNext:hover{background:rgba(212,175,55,0.25)!important}
+    #resPrev:hover,#resNext:hover{background:rgba(255,61,46,0.25)!important}
     @media(max-width:640px){#resTrack{padding:12px 40px 20px!important} #resPrev{left:4px!important} #resNext{right:4px!important}}
   </style>
 <style>
-.wk-live-badge{display:inline-flex;align-items:center;gap:12px;font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(14px,1.4vw,18px);letter-spacing:2px;text-transform:uppercase;color:#fff;background:rgba(212,175,55,0.1);border:1.5px solid rgba(212,175,55,0.55);border-radius:999px;padding:14px 28px;box-shadow:0 0 34px rgba(212,175,55,0.16)}
-.wk-live-badge b{color:#D4AF37;font-weight:900}
+.wk-live-badge{display:inline-flex;align-items:center;gap:12px;font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(14px,1.4vw,18px);letter-spacing:2px;text-transform:uppercase;color:#fff;background:rgba(255,61,46,0.1);border:1.5px solid rgba(255,61,46,0.55);border-radius:999px;padding:14px 28px;box-shadow:0 0 34px rgba(255,61,46,0.16)}
+.wk-live-badge b{color:#ff3d2e;font-weight:900}
 .wk-live-dot{width:10px;height:10px;border-radius:50%;background:#e5484d;flex:none;animation:wkPulse 1.4s ease-in-out infinite}
 @keyframes wkPulse{0%,100%{box-shadow:0 0 0 0 rgba(229,72,77,0.55)}50%{box-shadow:0 0 0 9px rgba(229,72,77,0)}}
 .wk-pills{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin:26px 0 8px}
-.wk-pill{font-family:'Inter',sans-serif;font-weight:700;font-size:14.5px;color:#fff;background:rgba(212,175,55,0.07);border:1px solid rgba(212,175,55,0.4);border-radius:999px;padding:12px 22px}
-.wk-pill b{color:#D4AF37;font-weight:800}
+.wk-pill{font-family:'Inter',sans-serif;font-weight:700;font-size:14.5px;color:#fff;background:rgba(255,61,46,0.07);border:1px solid rgba(255,61,46,0.4);border-radius:999px;padding:12px 22px}
+.wk-pill b{color:#ff3d2e;font-weight:800}
 .wk-cd-label{font-size:12px;text-transform:uppercase;letter-spacing:4px;color:rgba(255,255,255,0.4);text-align:center;margin:26px 0 14px}
 .wk-cd{display:flex;gap:12px;justify-content:center;margin-bottom:34px}
-.wk-cd .t{background:rgba(255,255,255,0.03);border:1px solid rgba(212,175,55,0.25);border-radius:16px;width:86px;padding:14px 0 10px;text-align:center}
-.wk-cd .t b{display:block;font-family:'Playfair Display',serif;font-weight:900;font-size:34px;background:linear-gradient(180deg,#FCF6BA,#D4AF37,#AA771C);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.wk-cd .t{background:rgba(255,255,255,0.03);border:1px solid rgba(255,61,46,0.25);border-radius:16px;width:86px;padding:14px 0 10px;text-align:center}
+.wk-cd .t b{display:block;font-family:'Playfair Display',serif;font-weight:900;font-size:34px;background:linear-gradient(180deg,#ff6a5e,#ff3d2e,#a3221a);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
 .wk-cd .t i{font-style:normal;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.4)}
-.wk-num{flex:0 0 auto;width:44px;height:44px;border-radius:50%;background:rgba(212,175,55,0.1);border:1px solid rgba(212,175,55,0.4);color:#D4AF37;font-family:'Playfair Display',serif;font-weight:900;font-size:19px;display:flex;align-items:center;justify-content:center}
+.wk-num{flex:0 0 auto;width:44px;height:44px;border-radius:50%;background:rgba(255,61,46,0.1);border:1px solid rgba(255,61,46,0.4);color:#ff3d2e;font-family:'Playfair Display',serif;font-weight:900;font-size:19px;display:flex;align-items:center;justify-content:center}
 .wk-ag{display:flex;gap:20px;align-items:flex-start;text-align:left}
 .wk-ag h4{font-size:17px;font-weight:800;color:#fff;margin-bottom:8px;font-family:'Inter',sans-serif}
 .wk-ag p{font-size:14.5px;color:rgba(255,255,255,0.6);line-height:1.75}
 .wk-ag p b{color:rgba(255,255,255,0.85)}
 .wk-field{width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.12);border-radius:12px;color:#fff;font-family:'Inter',sans-serif;font-size:15px;padding:15px 16px;outline:none;transition:border 0.15s}
-.wk-field:focus{border-color:#D4AF37}
+.wk-field:focus{border-color:#ff3d2e}
 .wk-field.error{border-color:#e5484d}
 .wk-priv{display:flex;gap:10px;align-items:flex-start;font-size:12px;color:rgba(255,255,255,0.5);line-height:1.5;text-align:left}
-.wk-priv a{color:#D4AF37;text-decoration:none}
-.wk-priv input{margin-top:2px;accent-color:#D4AF37}
+.wk-priv a{color:#ff3d2e;text-decoration:none}
+.wk-priv input{margin-top:2px;accent-color:#ff3d2e}
 .wk-priv input.checkbox-error{outline:2px solid #e5484d;outline-offset:2px}
 .wk-modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(5,5,8,0.85);z-index:99;padding:24px}
 .wk-modal.open{display:flex}
-.wk-modal .box{background:#0d1117;border:1px solid rgba(212,175,55,0.3);border-radius:22px;max-width:450px;width:100%;padding:40px 34px;text-align:center}
+.wk-modal .box{background:#0d1120;border:1px solid rgba(255,61,46,0.3);border-radius:22px;max-width:450px;width:100%;padding:40px 34px;text-align:center}
 .wk-modal h4{font-family:'Playfair Display',serif;font-weight:900;font-size:26px;color:#fff;margin-bottom:12px}
 .wk-modal p{color:rgba(255,255,255,0.6);font-size:14.5px;line-height:1.6;margin-bottom:10px}
 @media(max-width:768px){.wk-cd .t{width:70px}.wk-cd .t b{font-size:26px}.hero-photo{display:none}.section-hero .btn-gold{font-size:15px!important;padding:18px 24px!important;max-width:100%;box-sizing:border-box;white-space:normal;line-height:1.3}}
+.lp-nav{position:relative;z-index:590;display:flex;align-items:center;justify-content:space-between;max-width:1240px;margin:0 auto;padding:14px 32px;gap:24px}
+.lp-nav-logo{font-family:'Playfair Display',serif;font-weight:900;font-size:20px;color:#fff;text-decoration:none;white-space:nowrap;border-bottom:2px solid #ff3d2e;padding-bottom:3px}
+.lp-nav-links{display:flex;align-items:center;gap:6px}
+.lp-nav-item{position:relative}
+.lp-nav-item>a,.lp-nav-item>button{font-family:'Inter',sans-serif;font-size:13.5px;font-weight:600;color:rgba(255,255,255,0.7);background:none;border:none;cursor:pointer;padding:10px 12px;text-decoration:none;display:inline-flex;align-items:center;gap:5px;letter-spacing:0.2px}
+.lp-nav-item>a:hover,.lp-nav-item>button:hover{color:#ff3d2e}
+.lp-chev{font-size:9px;opacity:0.5}
+.lp-dropdown{position:absolute;top:100%;left:0;min-width:250px;background:#0d1120;border:1px solid rgba(255,61,46,0.2);border-radius:12px;padding:8px;display:none;flex-direction:column;box-shadow:0 18px 40px rgba(0,0,0,0.55)}
+.lp-nav-item:hover .lp-dropdown,.lp-nav-item:focus-within .lp-dropdown{display:flex}
+.lp-dropdown a{font-size:13.5px;color:rgba(255,255,255,0.75);text-decoration:none;padding:9px 12px;border-radius:8px;white-space:nowrap}
+.lp-dropdown a:hover{background:rgba(255,61,46,0.08);color:#ff3d2e}
+.lp-nav-cta{font-family:'Inter',sans-serif;font-size:13px;font-weight:800;letter-spacing:0.5px;color:#05070e;background:linear-gradient(135deg,#ff3d2e,#c62d20);padding:11px 20px;border-radius:999px;text-decoration:none;white-space:nowrap;margin-left:8px}
+.lp-nav-cta:hover{filter:brightness(1.1)}
+.lp-burger{display:none;background:none;border:none;cursor:pointer;padding:8px;flex-direction:column;gap:5px}
+.lp-burger span{display:block;width:24px;height:2px;background:#ff3d2e;border-radius:2px}
+.lp-mobile-menu{display:none}
+@media(max-width:1024px){.lp-nav-links{display:none}.lp-burger{display:flex}
+.lp-mobile-menu{position:fixed;inset:0;background:#05070e;z-index:650;padding:90px 32px 40px;flex-direction:column;gap:4px;overflow-y:auto}
+.lp-mobile-menu.open{display:flex}
+.lp-mobile-menu a{font-size:19px;font-weight:600;color:rgba(255,255,255,0.85);text-decoration:none;padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.06)}
+.lp-mm-cta{color:#ff3d2e!important;font-weight:800!important}}
 </style>
+
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* == sezioni copiate da home.davidecaiazzo.it (identiche) == */
+.dchome,#lb{--navy:#05070e;--navy-2:#090c16;--navy-3:#0d1120;--cream:#fcfbf6;--cream-70:rgba(252,251,246,.72);--cream-50:rgba(252,251,246,.5);--cream-30:rgba(252,251,246,.3);--verm:#ff3d2e;--verm-soft:rgba(255,61,46,.12);--line:rgba(252,251,246,.1);--display:'Anton',sans-serif;--serif:'Fraunces',Georgia,serif;--body:'Instrument Sans',sans-serif;--mono:'JetBrains Mono',monospace}
+.dchome{font-family:var(--body);font-size:17px;line-height:1.65;color:var(--cream);position:relative;z-index:3}
+.dchome img{max-width:100%;display:block}
+@keyframes tick{to{transform:translateX(-25%)}}
+.dchome .wrap{max-width:1320px;margin:0 auto;padding:0 clamp(20px,4vw,56px)}
+.dchome .sec-head{position:relative;margin-bottom:clamp(44px,6vw,84px)}
+.dchome .sec-watermark{position:absolute;top:50%;right:-.04em;transform:translateY(-58%);font-family:var(--display);font-size:clamp(120px,19vw,300px);line-height:1;color:transparent;-webkit-text-stroke:1px rgba(252,251,246,.07);pointer-events:none;user-select:none;z-index:0}
+.dchome .sec-label{font-family:var(--mono);font-size:12.5px;letter-spacing:.38em;text-transform:uppercase;color:var(--verm);margin-bottom:16px;display:flex;align-items:center;gap:14px;font-weight:700;position:relative;z-index:1}
+.dchome .sec-label::before{content:"";width:40px;height:3px;background:var(--verm)}
+.dchome .sec-title{font-family:var(--display);font-size:clamp(42px,6.4vw,92px);line-height:.98;text-transform:uppercase;font-weight:400;position:relative;z-index:1}
+.dchome .sec-title em{font-family:var(--serif);font-style:italic;font-weight:400;text-transform:none;color:var(--verm);letter-spacing:0}
+.dchome .rv{opacity:0;transform:translateY(36px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)}
+.dchome .rv.in{opacity:1;transform:none}
+.dchome .rv-d1{transition-delay:.1s}.dchome .rv-d2{transition-delay:.2s}
+.video-feature{background:var(--navy);border-bottom:1px solid var(--line);padding:clamp(56px,7vw,90px) 0}
+.vf-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:clamp(32px,5vw,64px);align-items:center}
+.vf-media{position:relative;aspect-ratio:16/10;overflow:hidden;cursor:pointer;outline:1px solid var(--line);outline-offset:-1px;transition:outline-color .4s}
+.vf-media:hover{outline-color:rgba(255,61,46,.7)}
+.vf-media img{width:100%;height:100%;object-fit:cover;filter:grayscale(.35) contrast(1.04);transition:filter .5s,transform .8s cubic-bezier(.16,1,.3,1)}
+.vf-media:hover img{filter:grayscale(0);transform:scale(1.05)}
+.vf-media .vf-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,7,14,.15),rgba(5,7,14,.65))}
+.vf-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:clamp(64px,7vw,92px);height:clamp(64px,7vw,92px);border-radius:50%;background:var(--verm);display:flex;align-items:center;justify-content:center;transition:transform .35s,box-shadow .35s;box-shadow:0 0 0 0 rgba(255,61,46,.5)}
+.vf-media:hover .vf-play{transform:translate(-50%,-50%) scale(1.1);box-shadow:0 0 0 16px rgba(255,61,46,0)}
+.vf-play::before{content:"";border-style:solid;border-width:12px 0 12px 19px;border-color:transparent transparent transparent var(--navy);margin-left:5px}
+.vf-tag{position:absolute;left:20px;bottom:18px;font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--cream)}
+.vf-copy p.sec-label{margin-bottom:14px}
+.vf-title{font-family:var(--display);font-size:clamp(28px,3.4vw,48px);line-height:1.08;color:var(--cream);text-transform:uppercase;letter-spacing:.01em}
+.vf-title em{color:var(--verm);font-style:normal}
+.vf-sub{margin-top:20px;font-size:clamp(15px,1.3vw,17px);line-height:1.7;color:var(--cream-70);max-width:46ch}
+.vf-cta{margin-top:28px;display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:12.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--verm);cursor:pointer}
+.vf-cta::after{content:"\2192";transition:transform .3s}
+.vf-cta:hover::after{transform:translateX(6px)}
+@media(max-width:860px){.vf-grid{grid-template-columns:1fr}}
+.palchi{padding:clamp(84px,11vw,150px) 0 0;background:var(--navy-2);border-top:1px solid var(--line)}
+.palchi-rail{overflow:hidden;position:relative;padding:8px 0 clamp(84px,11vw,150px)}
+.palchi-rail::before,.palchi-rail::after{content:"";position:absolute;top:0;bottom:0;width:120px;z-index:4;pointer-events:none}
+.palchi-rail::before{left:0;background:linear-gradient(90deg,var(--navy-2),transparent)}
+.palchi-rail::after{right:0;background:linear-gradient(270deg,var(--navy-2),transparent)}
+.palchi-track{display:flex;gap:24px;width:max-content;animation:tick 48s linear infinite;padding:70px 0}
+.palchi-rail:hover .palchi-track{animation-play-state:paused}
+.palco{width:360px;height:268px;flex-shrink:0;position:relative;overflow:hidden;cursor:zoom-in;outline:1px solid var(--line);outline-offset:-1px;transition:transform .4s cubic-bezier(.16,1,.3,1),outline-color .4s,box-shadow .4s}
+.palco:hover{transform:scale(1.42);z-index:20;outline-color:rgba(255,61,46,.7);box-shadow:0 40px 110px rgba(0,0,0,.85)}
+.palco img{width:100%;height:100%;object-fit:cover;filter:grayscale(.5) contrast(1.04);transition:filter .5s,transform .8s cubic-bezier(.16,1,.3,1)}
+.palco:hover img{filter:grayscale(0);transform:scale(1.07)}
+.palco .shade{position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(5,7,14,.92) 100%)}
+.palco .tag{position:absolute;left:18px;bottom:16px;right:18px;font-family:var(--mono);font-size:12.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase}
+.palco .tag::before{content:"";display:block;width:28px;height:3px;background:var(--verm);margin-bottom:10px;transition:width .35s}
+.palco:hover .tag::before{width:54px}
+.palco .play{position:absolute;top:16px;right:16px;width:38px;height:38px;border-radius:50%;background:rgba(5,7,14,.6);border:1px solid rgba(255,255,255,.35);display:flex;align-items:center;justify-content:center;transition:background .35s,transform .35s}
+.palco .play::before{content:"";border-style:solid;border-width:7px 0 7px 11px;border-color:transparent transparent transparent var(--cream);margin-left:3px}
+.palco:hover .play{background:var(--verm);transform:scale(1.1)}
+@media(max-width:560px){.palco{width:290px;height:218px}}
+#lb{position:fixed;inset:0;z-index:9500;background:rgba(5,7,14,.95);display:none;align-items:center;justify-content:center;padding:28px;cursor:zoom-out}
+#lb.open{display:flex}
+#lb img{max-width:92vw;max-height:84vh;object-fit:contain;outline:1px solid var(--line);animation:lbIn .3s cubic-bezier(.16,1,.3,1)}
+#lb video{max-width:92vw;max-height:84vh;width:min(92vw,1100px);background:#000;outline:1px solid var(--line);animation:lbIn .3s cubic-bezier(.16,1,.3,1);cursor:auto}
+@keyframes lbIn{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:scale(1)}}
+#lb .cap{position:fixed;bottom:34px;left:0;right:0;text-align:center;font-family:var(--mono);font-size:13px;letter-spacing:.28em;text-transform:uppercase;color:var(--cream-70)}
+#lb .x{position:fixed;top:22px;right:30px;font-size:32px;color:var(--cream-70);cursor:pointer;line-height:1}
+#lb .x:hover{color:var(--verm)}
+.testi{padding:clamp(84px,11vw,150px) 0;background:var(--navy);border-top:1px solid var(--line)}
+.testi-cols{columns:3;column-gap:24px}
+.testi-card{break-inside:avoid;margin-bottom:24px;border:1px solid var(--line);background:var(--navy-2);padding:32px 30px;position:relative;transition:border-color .35s,transform .35s,box-shadow .35s}
+.testi-card:hover{border-color:rgba(255,61,46,.5);transform:translateY(-4px);box-shadow:0 20px 50px rgba(0,0,0,.4)}
+.testi-card::before{content:"\201C";position:absolute;top:12px;right:22px;font-family:var(--serif);font-size:70px;line-height:1;color:rgba(255,61,46,.18);font-weight:700}
+.testi-card p{font-size:15.5px;line-height:1.75;color:var(--cream-70)}
+.testi-who{margin-top:22px;padding-top:18px;border-top:1px solid var(--line);display:flex;align-items:center;gap:14px}
+.testi-who img{width:52px;height:52px;border-radius:50%;object-fit:cover;flex-shrink:0;outline:2px solid rgba(255,61,46,.45);outline-offset:2px;transition:outline-color .3s,transform .3s}
+.testi-card:hover .testi-who img{outline-color:var(--verm);transform:scale(1.06)}
+.testi-name{font-family:var(--display);font-size:16px;letter-spacing:.05em;text-transform:uppercase}
+.testi-role{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--cream-50);margin-top:4px;text-transform:uppercase;line-height:1.5}
+.testi-link{display:inline-flex;align-items:center;gap:7px;margin-top:16px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--cream-50);text-decoration:none;transition:color .25s,gap .25s}
+.testi-link:hover{color:var(--verm);gap:11px}
+.testi-link svg{width:15px;height:15px;fill:currentColor;flex-shrink:0}
+.testi-note{margin-top:32px;font-family:var(--mono);font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--cream-50);text-align:center}
+.testi-note a{color:var(--cream-70)}
+.testi-note a:hover{color:var(--verm)}
+@media(max-width:1023px){.testi-cols{columns:2}}
+@media(max-width:680px){.testi-cols{columns:1}}
+.stampa{padding:clamp(84px,11vw,150px) 0;background:var(--navy-2);border-top:1px solid var(--line)}
+.stampa-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;align-items:stretch}
+.art{border:1px solid var(--line);text-decoration:none;display:flex;flex-direction:column;background:var(--navy);overflow:hidden;transition:transform .4s,border-color .4s,box-shadow .4s;position:relative;border-radius:14px}
+.art:hover{transform:translateY(-6px);border-color:rgba(255,61,46,.5);box-shadow:0 24px 56px rgba(0,0,0,.45)}
+.art .thumb{background:#f4efe6;border-bottom:1px solid var(--line);overflow:hidden;border-radius:13px 13px 0 0;aspect-ratio:1/1.05}
+.art .thumb img{width:100%;height:100%;display:block;object-fit:cover;object-position:top;transition:transform .7s cubic-bezier(.16,1,.3,1)}
+.art:hover .thumb img{transform:scale(1.03)}
+.art-body{padding:26px 26px 30px;display:flex;flex-direction:column;flex:1}
+.art-src{font-family:var(--mono);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--verm);margin-bottom:12px;font-weight:700}
+.art h3{font-family:var(--serif);font-weight:500;font-size:18.5px;line-height:1.45;flex:1;color:var(--cream)}
+.art-go{margin-top:20px;font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--cream-50);transition:color .3s,padding-left .3s;font-weight:700}
+.art:hover .art-go{color:var(--cream);padding-left:8px}
+@media(max-width:1023px){.stampa-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){.stampa-grid{grid-template-columns:1fr}}
+/* widget chat SofIA: ricolora da oro a rosso home */
+#dc-chat-launcher{background:linear-gradient(135deg,#ff3d2e,#c62d20)!important}
+#dc-chat-header{background:linear-gradient(135deg,#c62d20,#ff3d2e)!important}
+#dc-chat-send{background:#ff3d2e!important}
+#dc-chat-widget .dc-msg.dc-user{background:rgba(255,61,46,.16)!important}
+</style>
+
 </head>
 <body>
 <canvas id="particleCanvas"></canvas>
 <canvas id="trailCanvas"></canvas>
-<div style="position:relative;z-index:3;text-align:center;padding:10px 16px 0;font-size:10.5px;color:rgba(255,255,255,0.28);letter-spacing:0.4px">Sito di DC Academy S.r.l. I contenuti di questo sito hanno natura pubblicitaria a favore della DC Academy S.r.l. · Per approfondimenti su servizi, clienti, testimonianze e numeri citati: <a href="https://www.davidecaiazzo.it/trasparenza" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.4);text-decoration:underline">davidecaiazzo.it/trasparenza</a></div>
-<div style="position:relative;z-index:3;display:flex;align-items:center;justify-content:space-between;max-width:1160px;margin:0 auto;padding:20px 32px 0">
-<span style="font-family:'Inter',sans-serif;font-weight:900;font-size:19px;letter-spacing:1px;border-bottom:3px solid #D4AF37;padding-bottom:5px">DC ACADEMY</span>
-<span style="font-size:12px;font-weight:700;letter-spacing:2px;color:rgba(255,255,255,0.4)">DAVIDECAIAZZO.IT</span>
+<div class="lp-disclaimer" style="position:relative;z-index:600;text-align:center;padding:8px 16px;font-size:10.5px;color:rgba(255,255,255,0.35);letter-spacing:0.3px;line-height:1.5;background:rgba(255,255,255,0.02);border-bottom:1px solid rgba(255,255,255,0.05)"><strong>I contenuti di questo sito hanno natura pubblicitaria</strong> a favore della DC Academy S.r.l. · Per qualsiasi approfondimento sui nostri servizi, clienti, testimonianze, testate e sui numeri citati su questo sito visita la pagina: <a href="https://www.davidecaiazzo.it/trasparenza" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.5);text-decoration:underline">www.davidecaiazzo.it/trasparenza</a></div>
+<nav class="lp-nav" aria-label="Navigazione principale">
+<a href="https://www.davidecaiazzo.it/" class="lp-nav-logo">Davide Caiazzo</a>
+<div class="lp-nav-links">
+<div class="lp-nav-item"><a href="https://www.davidecaiazzo.it/#credenziali" rel="noopener">Chi sono</a></div>
+<div class="lp-nav-item"><button type="button" aria-haspopup="true">Trasparenza <span class="lp-chev">&#9662;</span></button><div class="lp-dropdown">
+<a href="https://www.davidecaiazzo.it/#testimonianze" rel="noopener">Testimonianze</a>
+<a href="https://www.davidecaiazzo.it/parlano-di-me" rel="noopener">Articoli su di me</a>
+<a href="https://www.davidecaiazzo.it/primato" rel="noopener">Affermazioni di primato</a>
+<a href="https://www.davidecaiazzo.it/casi-studio" rel="noopener">Casi studio</a>
+<a href="https://www.davidecaiazzo.it/alcuni-miei-clienti" rel="noopener">I miei clienti</a>
+</div></div>
+<div class="lp-nav-item"><button type="button" aria-haspopup="true">Risorse <span class="lp-chev">&#9662;</span></button><div class="lp-dropdown">
+<a href="https://open.spotify.com/show/0GbOtmZRorC2GgIJEkpkkM" target="_blank" rel="noopener noreferrer">&#127897;&#65039; Podcast</a>
+<a href="https://www.davidecaiazzo.it/blog" rel="noopener">&#128240; Newsletter</a>
+<a href="https://dcacademy.it/" target="_blank" rel="noopener noreferrer">&#128193; Guide Gratuite</a>
+<a href="https://www.amazon.it/dp/8858056310" target="_blank" rel="noopener noreferrer">&#128213; Libro Feltrinelli (LinkedIn)</a>
+<a href="https://www.amazon.it/personal-branding-Ottenere-immagine-attrarre/dp/8858041399" target="_blank" rel="noopener noreferrer">&#128215; Libro Feltrinelli (Personal Branding)</a>
+</div></div>
+<div class="lp-nav-item"><button type="button" aria-haspopup="true">Servizi <span class="lp-chev">&#9662;</span></button><div class="lp-dropdown">
+<a href="https://www.davidecaiazzo.it/#servizi" rel="noopener">Coaching 1:1</a>
+<a href="https://www.davidecaiazzo.it/#servizi" rel="noopener">Delega Totale</a>
+<a href="https://automazioni.davidecaiazzo.it?utm_source=workshop-commercialisti&utm_medium=navbar" target="_blank" rel="noopener noreferrer">&#9889; Automatizza Tutto</a>
+</div></div>
+<div class="lp-nav-item"><a href="https://www.davidecaiazzo.it/login" target="_blank" rel="noopener noreferrer">Login</a></div>
+<a class="lp-nav-cta" href="#iscrizione">Riserva il posto</a>
+</div>
+<button class="lp-burger" aria-label="Apri menu" aria-expanded="false" onclick="lpToggleMenu()"><span></span><span></span><span></span></button>
+</nav>
+<div class="lp-mobile-menu" id="lpMobileMenu">
+<a href="https://www.davidecaiazzo.it/#credenziali" rel="noopener">Chi sono</a>
+<a href="https://www.davidecaiazzo.it/parlano-di-me" rel="noopener">Articoli su di me</a>
+<a href="https://www.davidecaiazzo.it/casi-studio" rel="noopener">Casi studio</a>
+<a href="https://www.davidecaiazzo.it/blog" rel="noopener">Newsletter</a>
+<a href="https://dcacademy.it/" target="_blank" rel="noopener noreferrer">Guide Gratuite</a>
+<a href="https://www.davidecaiazzo.it/login" target="_blank" rel="noopener noreferrer">Login</a>
+<a href="#iscrizione" class="lp-mm-cta" onclick="lpToggleMenu()">Riserva il posto al workshop</a>
 </div>
 
 <section class="section-hero" style="position:relative">
 <img src="https://kajabi-storefronts-production.kajabi-cdn.com/kajabi-storefronts-production/themes/2152024008/settings_images/WKdGUgfVTdel6xcpXgaS_file.jpg" alt="Davide Caiazzo" class="hero-photo" style="position:absolute;right:0;top:0;bottom:0;width:40%;height:100%;object-fit:cover;object-position:center top;z-index:1;pointer-events:none;-webkit-mask-image:linear-gradient(to left,rgba(0,0,0,0.8) 0%,rgba(0,0,0,0.5) 50%,transparent 100%);mask-image:linear-gradient(to left,rgba(0,0,0,0.8) 0%,rgba(0,0,0,0.5) 50%,transparent 100%)">
 <div class="ctr" style="margin:0 auto;text-align:center;position:relative;z-index:2">
 <div class="reveal" style="margin-bottom:16px"><span class="wk-live-badge"><span class="wk-live-dot"></span>Workshop <b>LIVE</b> gratuito su Zoom</span></div>
-<p class="reveal" style="font-family:var(--mono);font-size:13px;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,0.55);margin-bottom:28px">Giovedì <b style="color:#D4AF37">18 settembre</b> · ore <b style="color:#D4AF37">18:30</b> · <b style="color:#D4AF37">Solo per commercialisti</b></p>
+<p class="reveal" style="font-family:var(--mono);font-size:13px;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,0.55);margin-bottom:28px">Giovedì <b style="color:#ff3d2e">18 settembre</b> · ore <b style="color:#ff3d2e">18:30</b> · <b style="color:#ff3d2e">Solo per commercialisti</b></p>
 <h1 class="reveal" style="font-family:'Playfair Display',serif;font-size:clamp(30px,4.6vw,58px);font-weight:900;line-height:1.12;margin-bottom:22px;max-width:1060px;margin-left:auto;margin-right:auto">
 <span class="gold">Commercialista, basta routine:</span><br>
 <span class="gold">solleciti, scadenze e circolari li fa&nbsp;l'AI.</span>
@@ -275,22 +433,22 @@
 <a href="#iscrizione" class="btn-gold reveal" style="font-size:17px;padding:20px 46px">RISERVA IL TUO POSTO A 0&euro; &darr;</a>
 <p class="reveal" style="font-size:12.5px;color:rgba(255,255,255,0.35);margin-top:14px">I posti su Zoom sono limitati. Il link per entrare arriva via email.</p>
 </div></section>
-<section class="section" style="position:relative;overflow:hidden"><p class="reveal" style="font-size:12px;text-transform:uppercase;letter-spacing:4px;color:rgba(212,175,55,0.7);text-align:center;margin-bottom:16px">La scaletta, punto per punto</p>
+<section class="section" style="position:relative;overflow:hidden"><p class="reveal" style="font-size:12px;text-transform:uppercase;letter-spacing:4px;color:rgba(255,61,46,0.7);text-align:center;margin-bottom:16px">La scaletta, punto per punto</p>
 <h2 class="h-md reveal" style="text-align:center">Ecco cosa scoprirai <span class='gold'>dal vivo</span></h2>
-<div class="gold-line reveal" style="margin:22px auto 46px"></div><div style="display:grid;grid-template-columns:1fr;gap:16px;max-width:820px;margin:0 auto"><div class="glass reveal" style="padding:28px 30px"><div class="wk-ag"><div class="wk-num">1</div><div><h4>La risposta perfetta al cliente, in 30 secondi</h4><p>Prendo l'email vera di un cliente, la incollo e l'AI scrive la risposta <b>nel tono esatto del tuo studio</b>. Ti mostro il metodo per addestrarla a rispondere come te, una volta sola, senza saper programmare. E la regola d'oro sulla riservatezza, perché con i dati dei clienti non si scherza.</p></div></div></div><div class="glass reveal" style="padding:28px 30px"><div class="wk-ag"><div class="wk-num">2</div><div><h4>I solleciti documenti che si scrivono da soli</h4><p>La lista dei ritardatari, anche disordinata, diventa una serie di solleciti personalizzati. <b>Tono gentile al primo ritardo, fermo al secondo, perentorio al terzo.</b> In 2 minuti hai il lavoro di un pomeriggio intero. Ogni mese.</p></div></div></div><div class="glass reveal" style="padding:28px 30px"><div class="wk-ag"><div class="wk-num">3</div><div><h4>Lo scadenzario che avvisa i clienti al posto tuo</h4><p>Dallo scadenzario del mese ai promemoria su misura, <b>cliente per cliente</b>, con le sole scadenze che lo riguardano spiegate in parole semplici. Mai più la telefonata del 15, quella che inizia con &#8220;nessuno mi aveva avvisato&#8221;.</p></div></div></div><div class="glass reveal" style="padding:28px 30px"><div class="wk-ag"><div class="wk-num">4</div><div><h4>Dalla fattura alla bozza di prima nota, senza ricopiare</h4><p>Carico un estratto conto in PDF e l'AI lo trasforma in una <b>tabella di movimenti con classificazione contabile proposta</b>, pronta per il gestionale. Con le 2 regole che proteggono la tua responsabilità professionale, l'AI propone e il professionista approva.</p></div></div></div><div class="glass reveal" style="padding:28px 30px"><div class="wk-ag"><div class="wk-num">5</div><div><h4>Circolari, lettere di incarico e preventivi in 5 minuti</h4><p>Esce una novità normativa e il tuo studio manda la circolare <b>prima di tutti gli altri</b>. Poi lettere di incarico, preventivi, verbali. Ogni documento ripetitivo diventa un modello che si compila da solo.</p></div></div></div><div class="glass reveal" style="padding:28px 30px"><div class="wk-ag"><div class="wk-num">★</div><div><h4>BONUS. Le tue 3 attività analizzate in diretta</h4><p>Porta la lista delle 3 attività che ripeti ogni settimana e che vorresti non fare mai più. <b>Le guardiamo insieme dal vivo</b> e ti dico quali puoi automatizzare già da venerdì mattina, e come.</p></div></div></div></div><p class="reveal" style="text-align:center;margin-top:30px;font-size:16px;font-weight:700;color:#D4AF37">E le risposte alle TUE domande, in diretta. Per questo è live e non registrato.</p></section>
-<section class="section" style="position:relative;overflow:hidden"><p class="reveal" style="font-size:12px;text-transform:uppercase;letter-spacing:4px;color:rgba(212,175,55,0.7);text-align:center;margin-bottom:16px">Semplice, in 3 passi</p>
+<div class="gold-line reveal" style="margin:22px auto 46px"></div><div style="display:grid;grid-template-columns:1fr;gap:16px;max-width:820px;margin:0 auto"><div class="glass reveal" style="padding:28px 30px"><div class="wk-ag"><div class="wk-num">1</div><div><h4>La risposta perfetta al cliente, in 30 secondi</h4><p>Prendo l'email vera di un cliente, la incollo e l'AI scrive la risposta <b>nel tono esatto del tuo studio</b>. Ti mostro il metodo per addestrarla a rispondere come te, una volta sola, senza saper programmare. E la regola d'oro sulla riservatezza, perché con i dati dei clienti non si scherza.</p></div></div></div><div class="glass reveal" style="padding:28px 30px"><div class="wk-ag"><div class="wk-num">2</div><div><h4>I solleciti documenti che si scrivono da soli</h4><p>La lista dei ritardatari, anche disordinata, diventa una serie di solleciti personalizzati. <b>Tono gentile al primo ritardo, fermo al secondo, perentorio al terzo.</b> In 2 minuti hai il lavoro di un pomeriggio intero. Ogni mese.</p></div></div></div><div class="glass reveal" style="padding:28px 30px"><div class="wk-ag"><div class="wk-num">3</div><div><h4>Lo scadenzario che avvisa i clienti al posto tuo</h4><p>Dallo scadenzario del mese ai promemoria su misura, <b>cliente per cliente</b>, con le sole scadenze che lo riguardano spiegate in parole semplici. Mai più la telefonata del 15, quella che inizia con &#8220;nessuno mi aveva avvisato&#8221;.</p></div></div></div><div class="glass reveal" style="padding:28px 30px"><div class="wk-ag"><div class="wk-num">4</div><div><h4>Dalla fattura alla bozza di prima nota, senza ricopiare</h4><p>Carico un estratto conto in PDF e l'AI lo trasforma in una <b>tabella di movimenti con classificazione contabile proposta</b>, pronta per il gestionale. Con le 2 regole che proteggono la tua responsabilità professionale, l'AI propone e il professionista approva.</p></div></div></div><div class="glass reveal" style="padding:28px 30px"><div class="wk-ag"><div class="wk-num">5</div><div><h4>Circolari, lettere di incarico e preventivi in 5 minuti</h4><p>Esce una novità normativa e il tuo studio manda la circolare <b>prima di tutti gli altri</b>. Poi lettere di incarico, preventivi, verbali. Ogni documento ripetitivo diventa un modello che si compila da solo.</p></div></div></div><div class="glass reveal" style="padding:28px 30px"><div class="wk-ag"><div class="wk-num">★</div><div><h4>BONUS. Le tue 3 attività analizzate in diretta</h4><p>Porta la lista delle 3 attività che ripeti ogni settimana e che vorresti non fare mai più. <b>Le guardiamo insieme dal vivo</b> e ti dico quali puoi automatizzare già da venerdì mattina, e come.</p></div></div></div></div><p class="reveal" style="text-align:center;margin-top:30px;font-size:16px;font-weight:700;color:#ff3d2e">E le risposte alle TUE domande, in diretta. Per questo è live e non registrato.</p></section>
+<section class="section" style="position:relative;overflow:hidden"><p class="reveal" style="font-size:12px;text-transform:uppercase;letter-spacing:4px;color:rgba(255,61,46,0.7);text-align:center;margin-bottom:16px">Semplice, in 3 passi</p>
 <h2 class="h-md reveal" style="text-align:center">Come <span class='gold'>funziona</span></h2>
 <div class="gold-line reveal" style="margin:22px auto 46px"></div><div class="grid-3" style="max-width:960px;margin:0 auto"><div class="glass reveal" style="padding:34px 28px;text-align:center"><div class="wk-num" style="margin:0 auto 16px">1</div><h4 style="font-size:17px;font-weight:800;margin-bottom:10px">Riserva il posto a 0€</h4><p style="font-size:14px;color:rgba(255,255,255,0.6);line-height:1.7">Compila il modulo in fondo alla pagina. Ricevi subito l'email di conferma con le istruzioni e il video di benvenuto.</p></div><div class="glass reveal" style="padding:34px 28px;text-align:center"><div class="wk-num" style="margin:0 auto 16px">2</div><h4 style="font-size:17px;font-weight:800;margin-bottom:10px">Ricevi il link Zoom</h4><p style="font-size:14px;color:rgba(255,255,255,0.6);line-height:1.7">Il link per entrare arriva via email prima della diretta, insieme ai promemoria. Ti basta cliccare, dal computer va benissimo.</p></div><div class="glass reveal" style="padding:34px 28px;text-align:center"><div class="wk-num" style="margin:0 auto 16px">3</div><h4 style="font-size:17px;font-weight:800;margin-bottom:10px">Giovedì 18/09, ore 18:30</h4><p style="font-size:14px;color:rgba(255,255,255,0.6);line-height:1.7">Entri, guardi le dimostrazioni dal vivo sul lavoro vero di uno studio e fai le tue domande in diretta.</p></div></div></section>
-<section class="section" style="position:relative;overflow:hidden"><p class="reveal" style="font-size:12px;text-transform:uppercase;letter-spacing:4px;color:rgba(212,175,55,0.7);text-align:center;margin-bottom:16px">Parliamoci chiaro</p>
+<section class="section" style="position:relative;overflow:hidden"><p class="reveal" style="font-size:12px;text-transform:uppercase;letter-spacing:4px;color:rgba(255,61,46,0.7);text-align:center;margin-bottom:16px">Parliamoci chiaro</p>
 <h2 class="h-md reveal" style="text-align:center">Per chi è <span class='gold'>(e per chi no)</span></h2>
 <div class="gold-line reveal" style="margin:22px auto 46px"></div><div class="grid-2" style="max-width:960px;margin:0 auto;align-items:start">
-<div class="glass reveal" style="padding:34px 30px;border-color:rgba(212,175,55,0.35)">
-<h4 style="font-size:17px;font-weight:800;margin-bottom:18px;color:#D4AF37">Il workshop è perfetto per te se…</h4>
+<div class="glass reveal" style="padding:34px 30px;border-color:rgba(255,61,46,0.35)">
+<h4 style="font-size:17px;font-weight:800;margin-bottom:18px;color:#ff3d2e">Il workshop è perfetto per te se…</h4>
 <div style="display:flex;flex-direction:column;gap:12px">
-<p style="font-size:14.5px;color:rgba(255,255,255,0.75);line-height:1.7"><span style="color:#D4AF37;font-weight:900">✓</span>&nbsp; Hai uno studio, da solo o associato, e le attività ripetitive ti mangiano le giornate tra risposte, solleciti, scadenze e documenti sempre uguali</p>
-<p style="font-size:14.5px;color:rgba(255,255,255,0.75);line-height:1.7"><span style="color:#D4AF37;font-weight:900">✓</span>&nbsp; Senti parlare di intelligenza artificiale ovunque ma vuoi vederla applicata al lavoro VERO di uno studio, non l'ennesima teoria</p>
-<p style="font-size:14.5px;color:rgba(255,255,255,0.75);line-height:1.7"><span style="color:#D4AF37;font-weight:900">✓</span>&nbsp; Vuoi risposte sul TUO caso, in diretta, non un corso registrato che finisce nel cassetto</p>
-<p style="font-size:14.5px;color:rgba(255,255,255,0.75);line-height:1.7"><span style="color:#D4AF37;font-weight:900">✓</span>&nbsp; Non hai competenze tecniche. Se sai scrivere un'email, hai già tutto quello che serve</p>
+<p style="font-size:14.5px;color:rgba(255,255,255,0.75);line-height:1.7"><span style="color:#ff3d2e;font-weight:900">✓</span>&nbsp; Hai uno studio, da solo o associato, e le attività ripetitive ti mangiano le giornate tra risposte, solleciti, scadenze e documenti sempre uguali</p>
+<p style="font-size:14.5px;color:rgba(255,255,255,0.75);line-height:1.7"><span style="color:#ff3d2e;font-weight:900">✓</span>&nbsp; Senti parlare di intelligenza artificiale ovunque ma vuoi vederla applicata al lavoro VERO di uno studio, non l'ennesima teoria</p>
+<p style="font-size:14.5px;color:rgba(255,255,255,0.75);line-height:1.7"><span style="color:#ff3d2e;font-weight:900">✓</span>&nbsp; Vuoi risposte sul TUO caso, in diretta, non un corso registrato che finisce nel cassetto</p>
+<p style="font-size:14.5px;color:rgba(255,255,255,0.75);line-height:1.7"><span style="color:#ff3d2e;font-weight:900">✓</span>&nbsp; Non hai competenze tecniche. Se sai scrivere un'email, hai già tutto quello che serve</p>
 </div></div>
 <div class="glass reveal" style="padding:34px 30px">
 <h4 style="font-size:17px;font-weight:800;margin-bottom:18px;color:rgba(255,255,255,0.85)">Non fa per te se…</h4>
@@ -299,35 +457,123 @@
 <p style="font-size:14.5px;color:rgba(255,255,255,0.6);line-height:1.7"><span style="color:#e5484d;font-weight:900">✗</span>&nbsp; Pensi che il tuo studio possa lavorare come 10 anni fa per altri 10 anni</p>
 <p style="font-size:14.5px;color:rgba(255,255,255,0.6);line-height:1.7"><span style="color:#e5484d;font-weight:900">✗</span>&nbsp; Vuoi solo la registrazione da guardare &#8220;prima o poi&#8221;. Il valore è nel live e nelle domande</p>
 </div></div></div></section>
-<section class="section" style="position:relative;overflow:hidden"><p class="reveal" style="font-size:12px;text-transform:uppercase;letter-spacing:4px;color:rgba(212,175,55,0.7);text-align:center;margin-bottom:16px">Chi tiene il workshop</p>
+<section class="section" style="position:relative;overflow:hidden"><p class="reveal" style="font-size:12px;text-transform:uppercase;letter-spacing:4px;color:rgba(255,61,46,0.7);text-align:center;margin-bottom:16px">Chi tiene il workshop</p>
 <h2 class="h-md reveal" style="text-align:center">I tuoi <span class='gold'>speaker</span></h2>
 <div class="gold-line reveal" style="margin:22px auto 46px"></div><div class="glass reveal" style="max-width:860px;margin:0 auto;padding:38px 36px;display:flex;gap:30px;align-items:center">
-<img src="https://kajabi-storefronts-production.kajabi-cdn.com/kajabi-storefronts-production/themes/2152024008/settings_images/WKdGUgfVTdel6xcpXgaS_file.jpg" alt="Davide Caiazzo" style="width:130px;height:130px;border-radius:50%;object-fit:cover;object-position:75% top;border:2px solid rgba(212,175,55,0.5);flex:0 0 auto" class="hide-mobile"/>
+<img src="davide-linkedin.jpg" alt="Davide Caiazzo" style="width:130px;height:130px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,61,46,0.5);flex:0 0 auto" class="hide-mobile"/>
 <div>
 <h3 style="font-family:'Playfair Display',serif;font-weight:900;font-size:24px;margin-bottom:10px">Davide <span class="gold">Caiazzo</span></h3>
-<p style="font-size:15px;color:rgba(255,255,255,0.75);line-height:1.8">Imprenditore seriale con un <b style="color:#D4AF37">exit da 10 milioni di euro</b>, startup venduta al gruppo Zucchetti, e <b style="color:#D4AF37">TOP 20 al mondo</b> in &#8220;LinkedIn&#174; Growth&#8221; secondo Favikon 2025.<br/><br/>
+<p style="font-size:15px;color:rgba(255,255,255,0.75);line-height:1.8">Imprenditore seriale con un <b style="color:#ff3d2e">exit da 10 milioni di euro</b>, startup venduta al gruppo Zucchetti, e <b style="color:#ff3d2e">TOP 20 al mondo</b> in &#8220;LinkedIn&#174; Growth&#8221; secondo Favikon 2025.<br/><br/>
 Con DC Academy ha automatizzato con l'intelligenza artificiale i processi delle sue aziende e di quelle dei suoi clienti. Email, report, documenti, funnel. Giovedì 18 settembre apre il computer e mostra dal vivo come si fa, applicato al lavoro quotidiano di uno studio di commercialisti.</p>
 <p style="font-size:11px;text-transform:uppercase;letter-spacing:3px;color:rgba(255,255,255,0.25);margin:22px 0 10px">Parlano di me</p>
-<div style="display:flex;flex-wrap:wrap;gap:16px;align-items:center;opacity:0.45">
-<span style="font-size:14px;font-weight:700;color:rgba(255,255,255,0.7)">Il Sole 24 Ore</span><span style="color:rgba(255,255,255,0.2)">&bull;</span>
-<span style="font-size:14px;font-weight:700;color:rgba(255,255,255,0.7)">Vanity Fair</span><span style="color:rgba(255,255,255,0.2)">&bull;</span>
-<span style="font-size:14px;font-weight:700;color:rgba(255,255,255,0.7)">Affaritaliani</span><span style="color:rgba(255,255,255,0.2)">&bull;</span>
-<span style="font-size:14px;font-weight:700;color:rgba(255,255,255,0.7)">Il Tempo</span><span style="color:rgba(255,255,255,0.2)">&bull;</span>
-<span style="font-size:14px;font-weight:700;color:rgba(255,255,255,0.7)">Leggo</span>
+<div style="display:flex;flex-wrap:wrap;gap:16px;align-items:center;opacity:0.55">
+<a href="https://ntplusdiritto.ilsole24ore.com/art/zucchetti-acquisisce-my-governance-valutazione-oltre-10-milioni-caiazzo-confermato-ad-AHraItpC" target="_blank" rel="noopener noreferrer" style="font-size:14px;font-weight:700;color:rgba(255,255,255,0.7);text-decoration:underline;text-decoration-color:rgba(255,61,46,0.4);text-underline-offset:3px">Il Sole 24 Ore</a><span style="color:rgba(255,255,255,0.2)">&bull;</span>
+<a href="https://www.vanityfair.it/article/davide-caiazzo-consigli-linkedin" target="_blank" rel="noopener noreferrer" style="font-size:14px;font-weight:700;color:rgba(255,255,255,0.7);text-decoration:underline;text-decoration-color:rgba(255,61,46,0.4);text-underline-offset:3px">Vanity Fair</a><span style="color:rgba(255,255,255,0.2)">&bull;</span>
+<a href="https://www.affaritaliani.it/mediatech/davide-caiazzo-vi-svelo-i-miei-segreti-sul-personal-branding-803312.html" target="_blank" rel="noopener noreferrer" style="font-size:14px;font-weight:700;color:rgba(255,255,255,0.7);text-decoration:underline;text-decoration-color:rgba(255,61,46,0.4);text-underline-offset:3px">Affaritaliani</a><span style="color:rgba(255,255,255,0.2)">&bull;</span>
+<a href="https://www.iltempo.it/tv-news/2026/03/11/video/libri-arriva-il-potere-di-linkedin-di-davide-caiazzo-46755479/" target="_blank" rel="noopener noreferrer" style="font-size:14px;font-weight:700;color:rgba(255,255,255,0.7);text-decoration:underline;text-decoration-color:rgba(255,61,46,0.4);text-underline-offset:3px">Il Tempo</a><span style="color:rgba(255,255,255,0.2)">&bull;</span>
+<a href="https://www.leggo.it/video/libri_arriva_il_potere_di_linkedin_di_davide_caiazzo-9409483.html" target="_blank" rel="noopener noreferrer" style="font-size:14px;font-weight:700;color:rgba(255,255,255,0.7);text-decoration:underline;text-decoration-color:rgba(255,61,46,0.4);text-underline-offset:3px">Leggo</a>
 </div></div></div>
 <div class="glass reveal" style="max-width:860px;margin:20px auto 0;padding:38px 36px;display:flex;gap:30px;align-items:center">
-<img src="alessia-dorigo.jpg" alt="Alessia Dorigo" style="width:130px;height:130px;border-radius:50%;object-fit:cover;border:2px solid rgba(212,175,55,0.5);flex:0 0 auto" class="hide-mobile"/>
+<img src="alessia-dorigo.jpg" alt="Alessia Dorigo" style="width:130px;height:130px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,61,46,0.5);flex:0 0 auto" class="hide-mobile"/>
 <div>
 <h3 style="font-family:'Playfair Display',serif;font-weight:900;font-size:24px;margin-bottom:10px">Alessia <span class="gold">Dorigo</span></h3>
-<p style="font-size:15px;color:rgba(255,255,255,0.75);line-height:1.8"><b style="color:#D4AF37">Social Media Manager e Content Strategist</b> del team di Davide Caiazzo. Conduce il workshop insieme a lui.<br/><br/>
-Figlia di un commercialista, conosce da vicino le giornate di uno studio: solleciti, scadenze, documenti sempre uguali. <b style="color:#D4AF37">Questo workshop è nato da una sua idea.</b></p>
+<p style="font-size:15px;color:rgba(255,255,255,0.75);line-height:1.8"><b style="color:#ff3d2e">Social Media Manager e Content Strategist</b> del team di Davide Caiazzo. Conduce il workshop insieme a lui.<br/><br/>
+Figlia di un commercialista, conosce da vicino le giornate di uno studio: solleciti, scadenze, documenti sempre uguali. <b style="color:#ff3d2e">Questo workshop è nato da una sua idea.</b></p>
 </div></div></section>
-<section id="faq" class="section" style="position:relative;overflow:hidden"><p class="reveal" style="font-size:12px;text-transform:uppercase;letter-spacing:4px;color:rgba(212,175,55,0.7);text-align:center;margin-bottom:16px">Domande frequenti</p>
+
+<div class="dchome">
+<!-- == video senato (copiato da home.davidecaiazzo.it) == -->
+<section class="video-feature">
+  <div class="wrap vf-grid">
+    <div class="vf-media rv" id="vfSenato" role="button" tabindex="0" data-video="https://home.davidecaiazzo.it/senato-intervento-ai.mp4" data-label="Senato della Repubblica">
+      <img src="https://home.davidecaiazzo.it/img/eventi/senato-podio.jpg" alt="Davide Caiazzo parla di intelligenza artificiale al Senato della Repubblica" loading="lazy">
+      <div class="vf-shade"></div>
+      <div class="vf-play" aria-hidden="true"></div>
+      <div class="vf-tag">Senato della Repubblica &middot; 8 Luglio 2026</div>
+    </div>
+    <div class="vf-copy rv">
+      <p class="sec-label">Guarda il video</p>
+      <h2 class="vf-title">Ho parlato di <em>intelligenza artificiale</em> al Senato della Repubblica</h2>
+      <p class="vf-sub">Invitato a portare la mia esperienza sull'intelligenza artificiale applicata al lavoro davanti alle istituzioni. Il video integrale dell'intervento.</p>
+      <span class="vf-cta" onclick="document.getElementById('vfSenato').click()">Guarda il video</span>
+    </div>
+  </div>
+</section>
+<!-- == palchi e istituzioni == -->
+<section class="palchi">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-watermark" aria-hidden="true">02</div>
+      <p class="sec-label">Dove sono stato invitato</p>
+      <h2 class="sec-title">Palchi e <em>Istituzioni</em></h2>
+    </div>
+  </div>
+  <div class="palchi-rail">
+    <div class="palchi-track" id="palchiTrack"></div>
+  </div>
+</section>
+<!-- == testimonianze == -->
+<section class="testi" id="testimonianze">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-watermark" aria-hidden="true">07</div>
+      <p class="sec-label">Cosa dicono di me</p>
+      <h2 class="sec-title">Parole dei <em>clienti</em></h2>
+    </div>
+    <div class="testi-cols" id="testiCols"></div>
+    <p class="testi-note rv">Testimonianze verificabili su LinkedIn &rarr; <a href="https://www.davidecaiazzo.it/testimonianze" rel="noopener">tutte le testimonianze</a></p>
+  </div>
+</section>
+<!-- == articoli stampa == -->
+<section class="stampa">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="sec-watermark" aria-hidden="true">08</div>
+      <p class="sec-label">Nessun articolo &egrave; mai stato pagato</p>
+      <h2 class="sec-title">Articoli <em>su di me</em></h2>
+    </div>
+    <div class="stampa-grid">
+      <a class="art rv" href="https://ntplusdiritto.ilsole24ore.com/art/zucchetti-acquisisce-my-governance-valutazione-oltre-10-milioni-caiazzo-confermato-ad-AHraItpC" target="_blank" rel="noopener noreferrer">
+        <div class="thumb"><img src="https://home.davidecaiazzo.it/assets/press-sole24ore-zucchetti-oLIeB0Oo.jpg" alt="Il Sole 24 Ore: Zucchetti acquisisce My Governance" loading="lazy"></div>
+        <div class="art-body"><div class="art-src">Il Sole 24 Ore</div><h3>Zucchetti acquisisce My Governance: valutazione oltre 10 milioni, Caiazzo confermato AD</h3><div class="art-go">Leggi l'articolo &rarr;</div></div>
+      </a>
+      <a class="art rv rv-d1" href="https://ntplusdiritto.ilsole24ore.com/art/mygo-premiata-oscar-fintech-le-migliori-soluzioni-legaltech-e-compliance-AHqnuR9C" target="_blank" rel="noopener noreferrer">
+        <div class="thumb"><img src="https://home.davidecaiazzo.it/assets/press-sole24ore-fintech-IanVw6N_.jpg" alt="Il Sole 24 Ore: MYGO premiata agli Oscar del FinTech" loading="lazy"></div>
+        <div class="art-body"><div class="art-src">Il Sole 24 Ore</div><h3>MYGO premiata agli Oscar del FinTech per le migliori soluzioni LegalTech e Compliance</h3><div class="art-go">Leggi l'articolo &rarr;</div></div>
+      </a>
+      <a class="art rv rv-d2" href="https://www.vanityfair.it/article/davide-caiazzo-consigli-linkedin" target="_blank" rel="noopener noreferrer">
+        <div class="thumb"><img src="https://home.davidecaiazzo.it/assets/press-vanityfair-BddLa0Ky.jpg" alt="Vanity Fair: 11 consigli per crescere su LinkedIn" loading="lazy"></div>
+        <div class="art-body"><div class="art-src">Vanity Fair</div><h3>Davide Caiazzo: 11 consigli su come crescere su LinkedIn</h3><div class="art-go">Leggi l'articolo &rarr;</div></div>
+      </a>
+      <a class="art rv" href="https://www.affaritaliani.it/mediatech/davide-caiazzo-vi-svelo-i-miei-segreti-sul-personal-branding-803312.html" target="_blank" rel="noopener noreferrer">
+        <div class="thumb"><img src="https://home.davidecaiazzo.it/assets/press-affaritaliani-CX_cMMX8.jpg" alt="Affaritaliani: i segreti del Personal Branding" loading="lazy"></div>
+        <div class="art-body"><div class="art-src">Affaritaliani</div><h3>Davide Caiazzo, il Re di LinkedIn: "Vi svelo i segreti del Personal Branding"</h3><div class="art-go">Leggi l'articolo &rarr;</div></div>
+      </a>
+      <a class="art rv rv-d1" href="https://www.iltempo.it/tv-news/2026/03/11/video/libri-arriva-il-potere-di-linkedin-di-davide-caiazzo-46755479/" target="_blank" rel="noopener noreferrer">
+        <div class="thumb"><img src="https://home.davidecaiazzo.it/assets/press-iltempo-DsLWH3k8.jpg" alt="Il Tempo: premio Impresa Etica e Innovativa" loading="lazy"></div>
+        <div class="art-body"><div class="art-src">Il Tempo</div><h3>Assegnato il premio "Impresa Etica e Innovativa" a Davide Caiazzo e Savino Novelli</h3><div class="art-go">Leggi l'articolo &rarr;</div></div>
+      </a>
+      <a class="art rv rv-d2" href="https://www.leggo.it/video/libri_arriva_il_potere_di_linkedin_di_davide_caiazzo-9409483.html" target="_blank" rel="noopener noreferrer">
+        <div class="thumb"><img src="https://home.davidecaiazzo.it/assets/press-leggo-Clldgqu6.jpg" alt="Leggo: arriva Il Potere di LinkedIn" loading="lazy"></div>
+        <div class="art-body"><div class="art-src">Leggo</div><h3>Libri, arriva Il Potere di LinkedIn di Davide Caiazzo</h3><div class="art-go">Guarda il video &rarr;</div></div>
+      </a>
+    </div>
+  </div>
+</section>
+<div id="lb" role="dialog" aria-label="Immagine ingrandita">
+  <span class="x" aria-label="Chiudi">&#10005;</span>
+  <img src="" alt="" aria-hidden="true">
+  <video controls playsinline style="display:none"></video>
+  <div class="cap"></div>
+</div>
+</div>
+
+<section id="faq" class="section" style="position:relative;overflow:hidden"><p class="reveal" style="font-size:12px;text-transform:uppercase;letter-spacing:4px;color:rgba(255,61,46,0.7);text-align:center;margin-bottom:16px">Domande frequenti</p>
 <h2 class="h-md reveal" style="text-align:center">Prima che me lo <span class='gold'>chiedi</span></h2>
 <div class="gold-line reveal" style="margin:22px auto 46px"></div><div style="max-width:760px;margin:0 auto"><div class="accordion-item reveal" onclick="toggleAccordion(this)"><div class="accordion-header"><span class="accordion-title">Quanto costa partecipare?</span><span class="accordion-arrow">&#9662;</span></div><div class="accordion-body"><div class="accordion-body-inner"><p style="font-size:14.5px;color:rgba(255,255,255,0.6);line-height:1.8">Niente, il workshop è gratuito. A fine serata ti racconto anche come lavorare con me e il mio team, se vorrai approfondire, senza nessun obbligo. Il valore delle dimostrazioni te lo porti a casa comunque.</p></div></div></div><div class="accordion-item reveal" onclick="toggleAccordion(this)"><div class="accordion-header"><span class="accordion-title">Devo saper programmare o essere esperto di tecnologia?</span><span class="accordion-arrow">&#9662;</span></div><div class="accordion-body"><div class="accordion-body-inner"><p style="font-size:14.5px;color:rgba(255,255,255,0.6);line-height:1.8">No. Al workshop guardi il mio schermo mentre lavoro. Quello che serve a te è scrivere in italiano cosa vuoi ottenere. Se sai scrivere un'email a un cliente, sai già fare tutto.</p></div></div></div><div class="accordion-item reveal" onclick="toggleAccordion(this)"><div class="accordion-header"><span class="accordion-title">Serve installare qualcosa?</span><span class="accordion-arrow">&#9662;</span></div><div class="accordion-body"><div class="accordion-body-inner"><p style="font-size:14.5px;color:rgba(255,255,255,0.6);line-height:1.8">No. Ti basta il link Zoom che ricevi via email, si apre anche dal browser del computer. Niente installazioni, niente configurazioni.</p></div></div></div><div class="accordion-item reveal" onclick="toggleAccordion(this)"><div class="accordion-header"><span class="accordion-title">Ci sarà la registrazione?</span><span class="accordion-arrow">&#9662;</span></div><div class="accordion-body"><div class="accordion-body-inner"><p style="font-size:14.5px;color:rgba(255,255,255,0.6);line-height:1.8">Non è prevista. Il valore del workshop è nel live. Porti i tuoi casi, fai le tue domande e ricevi risposte sul tuo studio. Una registrazione finirebbe nel cassetto come tutti i corsi registrati.</p></div></div></div><div class="accordion-item reveal" onclick="toggleAccordion(this)"><div class="accordion-header"><span class="accordion-title">E i dati dei miei clienti? La riservatezza?</span><span class="accordion-arrow">&#9662;</span></div><div class="accordion-body"><div class="accordion-body-inner"><p style="font-size:14.5px;color:rgba(255,255,255,0.6);line-height:1.8">Tema centrale della serata. Ti mostro le regole esatte per usare l'AI in uno studio senza esporre dati sensibili. Quali strumenti usare, quali evitare, e il principio per cui l'AI propone e il professionista approva. Sempre.</p></div></div></div><div class="accordion-item reveal" onclick="toggleAccordion(this)"><div class="accordion-header"><span class="accordion-title">Non posso esserci giovedì 18. Che faccio?</span><span class="accordion-arrow">&#9662;</span></div><div class="accordion-body"><div class="accordion-body-inner"><p style="font-size:14.5px;color:rgba(255,255,255,0.6);line-height:1.8">Iscriviti comunque e scrivi ad academy@davidecaiazzo.it, ti diremo se sono in programma nuove date. Ma se puoi liberarti, liberati. Le domande in diretta sono la parte che vale di più.</p></div></div></div></div></section>
-<section id="iscrizione" class="section" style="position:relative;overflow:hidden"><p class="reveal" style="font-size:12px;text-transform:uppercase;letter-spacing:4px;color:rgba(212,175,55,0.7);text-align:center;margin-bottom:16px">Ci vediamo in diretta</p>
+<section id="iscrizione" class="section" style="position:relative;overflow:hidden"><p class="reveal" style="font-size:12px;text-transform:uppercase;letter-spacing:4px;color:rgba(255,61,46,0.7);text-align:center;margin-bottom:16px">Ci vediamo in diretta</p>
 <h2 class="h-md reveal" style="text-align:center">Giovedì 18 settembre, <span class='gold'>ore 18:30</span></h2>
-<div class="gold-line reveal" style="margin:22px auto 46px"></div><div class="glass reveal" style="max-width:560px;margin:0 auto;padding:40px 36px;border-color:rgba(212,175,55,0.35)">
+<div class="gold-line reveal" style="margin:22px auto 46px"></div><div class="glass reveal" style="max-width:560px;margin:0 auto;padding:40px 36px;border-color:rgba(255,61,46,0.35)">
 <h3 style="font-family:'Playfair Display',serif;font-weight:900;font-size:26px;text-align:center;margin-bottom:6px">Riserva il tuo posto <span class="gold">a 0&euro;</span></h3>
 <p style="text-align:center;font-size:13.5px;color:rgba(255,255,255,0.5);margin-bottom:24px">Giovedì 18 settembre, ore 18:30 · Live su Zoom</p>
 <form id="leadForm" onsubmit="submitForm(event)" novalidate style="display:flex;flex-direction:column;gap:13px">
@@ -349,7 +595,7 @@ Figlia di un commercialista, conosce da vicino le giornate di uno studio: sollec
 <a href="https://docs.google.com/document/d/1K6WGjt9aFTRN-zWMvEOh5bw2A32nNag-/edit" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.4)">Condizioni di Vendita</a></p>
 </footer>
 <div class="wk-modal" id="confirmModal"><div class="box">
-<div style="width:64px;height:64px;border-radius:50%;background:rgba(212,175,55,0.15);display:flex;align-items:center;justify-content:center;margin:0 auto 18px;color:#D4AF37;font-size:30px;font-weight:900">✓</div>
+<div style="width:64px;height:64px;border-radius:50%;background:rgba(255,61,46,0.15);display:flex;align-items:center;justify-content:center;margin:0 auto 18px;color:#ff3d2e;font-size:30px;font-weight:900">✓</div>
 <h4>Posto riservato!</h4>
 <p>Il tuo posto per giovedì 18 settembre alle 18:30 è confermato. C'è un video di Davide che devi vedere prima.</p>
 <p style="font-size:12px;color:rgba(255,255,255,0.4)">L'email di conferma sta arrivando. Non la trovi? Controlla Spam o Promozioni.</p>
@@ -360,7 +606,7 @@ Figlia di un commercialista, conosce da vicino le giornate di uno studio: sollec
 // ===== PARTICLE CANVAS =====
 // Particles, static dots, no animation loop (performance)
 const canvas=document.getElementById('particleCanvas');const ctx=canvas.getContext('2d');
-function drawParticles(){canvas.width=window.innerWidth;canvas.height=document.body.scrollHeight;const n=Math.min(30,Math.floor(window.innerWidth/40));for(let i=0;i<n;i++){const x=Math.random()*canvas.width,y=Math.random()*canvas.height,s=Math.random()*1.2+0.3,o=Math.random()*0.15+0.03;ctx.beginPath();ctx.arc(x,y,s,0,Math.PI*2);ctx.fillStyle='rgba(212,175,55,'+o+')';ctx.fill()}}
+function drawParticles(){canvas.width=window.innerWidth;canvas.height=document.body.scrollHeight;const n=Math.min(30,Math.floor(window.innerWidth/40));for(let i=0;i<n;i++){const x=Math.random()*canvas.width,y=Math.random()*canvas.height,s=Math.random()*1.2+0.3,o=Math.random()*0.15+0.03;ctx.beginPath();ctx.arc(x,y,s,0,Math.PI*2);ctx.fillStyle='rgba(255,61,46,'+o+')';ctx.fill()}}
 drawParticles();window.addEventListener('resize',drawParticles);
 
 // ===== GOLD TRAIL (mouse) =====
@@ -382,9 +628,9 @@ drawParticles();window.addEventListener('resize',drawParticles);
       p.alpha-=0.03;p.size*=0.97;
       if(p.alpha<=0){trail.splice(i,1);continue}
       ctx2.beginPath();ctx2.arc(p.x,p.y,p.size,0,Math.PI*2);
-      ctx2.fillStyle='rgba(212,175,55,'+p.alpha*0.6+')';ctx2.fill();
+      ctx2.fillStyle='rgba(255,61,46,'+p.alpha*0.6+')';ctx2.fill();
       ctx2.beginPath();ctx2.arc(p.x,p.y,p.size*3,0,Math.PI*2);
-      ctx2.fillStyle='rgba(212,175,55,'+p.alpha*0.08+')';ctx2.fill();
+      ctx2.fillStyle='rgba(255,61,46,'+p.alpha*0.08+')';ctx2.fill();
     }
     if(trail.length>MAX*3) trail.splice(0,trail.length-MAX*3);
     requestAnimationFrame(drawTrail);
@@ -396,6 +642,19 @@ drawParticles();window.addEventListener('resize',drawParticles);
 const observer=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}})},{threshold:0.15,rootMargin:'0px 0px -40px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
 
+
+// ===== MOBILE MENU =====
+function lpToggleMenu(){
+  const m=document.getElementById('lpMobileMenu');
+  const b=document.querySelector('.lp-burger');
+  const open=m.classList.toggle('open');
+  b.setAttribute('aria-expanded',open?'true':'false');
+  document.body.style.overflow=open?'hidden':'';
+}
+document.querySelectorAll('#lpMobileMenu a').forEach(a=>a.addEventListener('click',()=>{
+  const m=document.getElementById('lpMobileMenu');
+  if(m.classList.contains('open')){m.classList.remove('open');document.body.style.overflow=''}
+}));
 
 // ===== ACCORDION =====
 function toggleAccordion(el){
@@ -459,5 +718,115 @@ function submitForm(e){
 }
 </script>
 <script src="https://dc-chatbot-vswb.onrender.com/widget.js" data-bot="commercialisti" data-auto-open="false"></script>
+
+<script>
+/* == sezioni home: testimonianze + palchi + lightbox + reveal (copiate da home.davidecaiazzo.it) == */
+(function(){
+  var FB = 'https://firebasestorage.googleapis.com/v0/b/testimonialto.appspot.com/o/linkedin-profile-image%2F';
+  var POST = 'https://www.linkedin.com/feed/update/urn:li:ugcPost:7429420474478256128';
+  var T = [
+    {n:"Silvia Pistolesi", r:"Coach di Leadership Realizzativa\u00AE",
+     t:"Non ti conoscevo prima di ieri. Sono rimasta piacevolmente sorpresa dalla professionalit\u00E0, leadership, conoscenza, generosit\u00E0 e umanit\u00E0 che incarni. Seguirti \u00E8 un'esperienza che arricchisce chiunque, a qualsiasi livello.",
+     img:FB+'b408b1e0-c9c8-4735-83b4-7a35d6050a90?alt=media&token=93e761ad-9904-4158-abcf-2c8c1249d22e',
+     l:POST+'?commentUrn=urn:li:comment:(activity:7429420474478256128,7429649108329631744)'},
+    {n:"Sonia Vicino", r:"Strategic Aviation Advisor | Private Aviation",
+     t:"Su LinkedIn non vince chi pubblica di pi\u00F9, ma chi costruisce continuit\u00E0 relazionale. Grazie al tuo approccio ho compreso che essere protagonisti su questa piattaforma significa passare da una logica di semplice esposizione a una logica di relazione strategica.",
+     img:FB+'f6be55cc-48e3-4632-be70-da0835788ed5?alt=media&token=40c80898-b2db-4945-96f9-766bad0b15f5',
+     l:POST+'?commentUrn=urn:li:comment:(activity:7429420474478256128,7429652356599791616)'},
+    {n:"Dr. Roberto Ferrario", r:"Master Trainer e Coach ICF | +5k ore coaching",
+     t:"La fiducia non nasce da un picco di visibilit\u00E0, ma da una presenza che torna, riconoscibile e coerente. Su LinkedIn non vince chi parla di pi\u00F9, ma chi resta nella memoria senza alzare la voce.",
+     img:FB+'b48f5c0b-a9f9-4adf-a96e-5ea6e7facdba?alt=media&token=87811209-d9b5-40e6-822a-2ac0dcb78420',
+     l:POST+'?commentUrn=urn:li:comment:(activity:7429420474478256128,7429650964661338112)'},
+    {n:"Silvio Scala", r:"Freelance Graphic e Web Designer",
+     t:"Uno dei workshop pi\u00F9 utili che abbia mai seguito e sicuramente quello con il maggior valore ricevuto. Grazie al workshop, sto riuscendo finalmente a intravedere una luce e a capirne i meccanismi.",
+     img:FB+'ff03ce05-0769-4630-b103-cb0848acf899?alt=media&token=b7ebf66d-d3bb-46c2-b70f-001711c538da',
+     l:POST+'?commentUrn=urn:li:comment:(activity:7429420474478256128,7429648396841488384)'},
+    {n:"Gabriela H.", r:"Founder B.O.N.D. System\u2122 | Copywriter Strategica",
+     t:"Si percepisce la tua profonda conoscenza dell'ecosistema LinkedIn, unita a un'empatia rara nel modo in cui la trasmetti, sempre con attenzione acuta e una leggerezza che rende tutto pi\u00F9 accessibile senza perdere spessore.",
+     img:FB+'77f6322f-a876-4ed4-b1a0-dd1646ee2ee2?alt=media&token=94d4d09f-c2cb-4603-8ab4-16640cc521a7',
+     l:POST+'?commentUrn=urn:li:comment:(activity:7429420474478256128,7429668029921222656)'},
+    {n:"Luca Mastella", r:"Founder Learnn | Digital Marketing",
+     t:"Davide ha una capacit\u00E0 unica di rendere semplici concetti complessi. Il suo metodo su LinkedIn \u00E8 tra i pi\u00F9 strutturati e completi che abbia mai visto nel panorama italiano. Risultati concreti e misurabili.",
+     img:FB+'005b07ea-4842-4711-b5e2-6715e955894b?alt=media&token=bc03217f-d400-4001-90da-a1da81730d0d',
+     l:POST},
+    {n:"Marco Buscarino", r:"Sales Consultant | Gestione del Rischio di Credito",
+     t:"Seconda serata del tuo corso e un'altra lezione ricca di spunti concreti. Grazie davvero per la tua disponibilit\u00E0 nel guidarci passo passo su come posizionarci al meglio su LinkedIn.",
+     img:FB+'0df0c69a-08c7-4481-8b04-ce22648cfec4?alt=media&token=9e3e7bee-2709-4501-a824-dbe4398bff07',
+     l:POST+'?commentUrn=urn:li:comment:(activity:7429420474478256128,7429647704626020352)'},
+    {n:"Danilo De Lum\u00E8", r:"HR Manager | 30.000+ Followers",
+     t:"Grazie Davide per il workshop gratuito su LinkedIn! Essere a contatto con il tuo know how fa la differenza tra essere sbandati ed avere una strategia!",
+     img:FB+'005b07ea-4842-4711-b5e2-6715e955894b?alt=media&token=bc03217f-d400-4001-90da-a1da81730d0d',
+     l:POST+'?commentUrn=urn:li:comment:(activity:7429420474478256128,7429647678138929153)'},
+    {n:"Alessandro Rolfo", r:"Founder Best Life | Welfare aziendale",
+     t:"Quello che apprezzo di pi\u00F9 nei tuoi contenuti \u00E8 il livello di analisi che porti: riesci a scomporre dinamiche complesse e sfaccettate in principi chiari e applicabili.",
+     img:FB+'2d81bb8f-d138-4968-b613-36c2acbe8c54?alt=media&token=ae05a693-ee2e-4fcf-9731-72542aae6288',
+     l:POST+'?commentUrn=urn:li:comment:(activity:7429420474478256128,7429647310491570176)'}
+  ];
+  var IN_SVG = '<svg viewBox="0 0 24 24"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.55V9h3.57v11.45z"/></svg>';
+  var cols = document.getElementById('testiCols');
+  var delays = ['','rv-d1','rv-d2'];
+  cols.innerHTML = T.map(function(x,i){
+    return '<div class="testi-card rv '+delays[i%3]+'">'
+      + '<p>'+x.t+'</p>'
+      + '<div class="testi-who">'
+      + '<img src="'+x.img+'" alt="'+x.n+'" loading="lazy">'
+      + '<div><div class="testi-name">'+x.n+'</div><div class="testi-role">'+x.r+'</div></div>'
+      + '</div>'
+      + '<a class="testi-link" href="'+x.l+'" target="_blank" rel="noopener noreferrer">'+IN_SVG+' Vedi su LinkedIn \u2192</a>'
+      + '</div>';
+  }).join('');
+})();
+(function(){
+  var BASE = 'https://home.davidecaiazzo.it';
+  var CARDS = [
+    {img:"ev-4.jpg", label:"TEDx Lerici"},
+    {img:"ev-7.jpg", label:"Premio \u00B7 Avvocatura dello Stato"},
+    {img:"ev-1.jpg", label:"Camera dei Deputati"},
+    {img:"ev-5.jpg", label:"TEDx Cagliari"},
+    {img:"ev-2.jpg", label:"Confcommercio"},
+    {img:"ev-3.jpg", label:"Autore \u00B7 Gruppo Feltrinelli"},
+    {img:"senato-podio.jpg", label:"Senato della Repubblica", video:BASE+"/senato-intervento-ai.mp4"},
+    {img:"ev-8.jpg", label:"Confindustria"}
+  ];
+  var track = document.getElementById('palchiTrack');
+  function html(c, dupe){
+    return '<div class="palco" data-img="'+BASE+'/img/eventi/'+c.img+'" data-label="'+c.label+'"'
+      + (c.video ? ' data-video="'+c.video+'"' : '')
+      + (dupe ? ' aria-hidden="true" tabindex="-1"' : ' role="button" tabindex="0"') + '>'
+      + '<img src="'+BASE+'/img/eventi/'+c.img+'" alt="'+c.label+'" loading="lazy">'
+      + '<div class="shade"></div>' + (c.video ? '<div class="play" aria-hidden="true"></div>' : '') + '<div class="tag">'+c.label+'</div></div>';
+  }
+  track.innerHTML = CARDS.map(function(c){return html(c,false)}).join('')
+                  + CARDS.map(function(c){return html(c,true)}).join('');
+  var lb = document.getElementById('lb');
+  var lbImg = lb.querySelector('img');
+  var lbVideo = lb.querySelector('video');
+  var lbCap = lb.querySelector('.cap');
+  function open(src,label,video){
+    if(video){
+      lbVideo.src = video; lbVideo.style.display='block'; lbImg.style.display='none'; lbVideo.play();
+    } else {
+      lbImg.src=src; lbImg.alt=label; lbImg.style.display='block'; lbVideo.style.display='none'; lbVideo.pause(); lbVideo.src='';
+    }
+    lbCap.textContent=label; lb.classList.add('open'); document.body.style.overflow='hidden';
+  }
+  function close(){ lb.classList.remove('open'); document.body.style.overflow=''; lbVideo.pause(); lbVideo.src=''; }
+  document.querySelectorAll('.palco').forEach(function(p){
+    if(p.getAttribute('aria-hidden')==='true') return;
+    p.addEventListener('click', function(){ open(this.dataset.img, this.dataset.label, this.dataset.video); });
+    p.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); open(this.dataset.img, this.dataset.label, this.dataset.video); } });
+  });
+  lb.addEventListener('click', function(e){ if(e.target===lbVideo) return; close(); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape') close(); });
+  var vfSenato = document.getElementById('vfSenato');
+  if(vfSenato){
+    vfSenato.addEventListener('click', function(){ open(this.querySelector('img').src, this.dataset.label, this.dataset.video); });
+    vfSenato.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); this.click(); } });
+  }
+  var obs = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); obs.unobserve(e.target); } }); }, {threshold:0.12});
+  document.querySelectorAll('.dchome .rv').forEach(function(el){ obs.observe(el); });
+})();
+</script>
+
 </body>
 </html>
