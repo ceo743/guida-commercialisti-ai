@@ -250,6 +250,9 @@
 .lp-dropdown a:hover{background:rgba(255,61,46,0.08);color:#ff3d2e}
 .lp-nav-cta{font-family:'Inter',sans-serif;font-size:13px;font-weight:800;letter-spacing:0.5px;color:#05070e;background:linear-gradient(135deg,#ff3d2e,#c62d20);padding:11px 20px;border-radius:999px;text-decoration:none;white-space:nowrap;margin-left:8px}
 .lp-nav-cta:hover{filter:brightness(1.1)}
+.lp-nav--stuck{position:fixed;top:0;left:0;right:0;max-width:none;margin:0;padding:12px max(32px,calc((100vw - 1240px)/2 + 32px));background:rgba(5,7,14,.94);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.07);box-shadow:0 8px 30px rgba(0,0,0,.35);animation:lpNavIn .3s ease}
+@keyframes lpNavIn{from{transform:translateY(-100%)}to{transform:translateY(0)}}
+@media(max-width:1024px){.lp-nav--stuck{padding:12px 20px}}
 .lp-burger{display:none;background:none;border:none;cursor:pointer;padding:8px;flex-direction:column;gap:5px}
 .lp-burger span{display:block;width:24px;height:2px;background:#ff3d2e;border-radius:2px}
 .lp-mobile-menu{display:none}
@@ -477,8 +480,8 @@ Con DC Academy ha automatizzato con l'intelligenza artificiale i processi delle 
 <img src="alessia-dorigo.jpg" alt="Alessia Dorigo" style="width:130px;height:130px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,61,46,0.5);flex:0 0 auto" class="hide-mobile"/>
 <div>
 <h3 style="font-family:'Playfair Display',serif;font-weight:900;font-size:24px;margin-bottom:10px">Alessia <span class="gold">Dorigo</span></h3>
-<p style="font-size:15px;color:rgba(255,255,255,0.75);line-height:1.8"><b style="color:#ff3d2e">Social Media Manager e Content Strategist</b> del team di Davide Caiazzo. Conduce il workshop insieme a lui.<br/><br/>
-Figlia di un commercialista, conosce da vicino le giornate di uno studio: solleciti, scadenze, documenti sempre uguali. <b style="color:#ff3d2e">Questo workshop è nato da una sua idea.</b></p>
+<p style="font-size:15px;color:rgba(255,255,255,0.75);line-height:1.8"><b style="color:#ff3d2e">Social Media Manager e Content Strategist</b> di DC Academy: ogni giorno usa l'intelligenza artificiale per costruire contenuti e comunicazione. Non assiste da dietro le quinte: <b style="color:#ff3d2e">co-conduce il workshop</b> con Davide.<br/><br/>
+Figlia di un commercialista, è cresciuta tra scadenze, solleciti e fascicoli: le giornate di uno studio le conosce da dentro, non per sentito dire. <b style="color:#ff3d2e">Il workshop è nato da una sua idea</b>: ha visto quanto tempo l'AI poteva restituire a suo padre e ha voluto costruire l'evento che lo mostra a tutti i commercialisti.</p>
 </div></div></section>
 
 <div class="dchome">
@@ -825,6 +828,37 @@ function submitForm(e){
   }
   var obs = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); obs.unobserve(e.target); } }); }, {threshold:0.12});
   document.querySelectorAll('.dchome .rv').forEach(function(el){ obs.observe(el); });
+})();
+</script>
+
+<script>
+(function(){
+  var nav=document.querySelector('.lp-nav');
+  if(!nav) return;
+  var spacer=document.createElement('div');
+  spacer.style.display='none';
+  nav.parentNode.insertBefore(spacer,nav.nextSibling);
+  var navTop=null, stuck=false, ticking=false;
+  function measure(){ if(!stuck){ navTop=nav.getBoundingClientRect().top+window.scrollY; } }
+  function update(){
+    ticking=false;
+    if(navTop===null) measure();
+    var shouldStick=window.scrollY>navTop+nav.offsetHeight;
+    if(shouldStick && !stuck){
+      spacer.style.height=nav.offsetHeight+'px';
+      spacer.style.display='block';
+      nav.classList.add('lp-nav--stuck');
+      stuck=true;
+    }else if(!shouldStick && stuck){
+      nav.classList.remove('lp-nav--stuck');
+      spacer.style.display='none';
+      stuck=false;
+      measure();
+    }
+  }
+  window.addEventListener('scroll',function(){ if(!ticking){ ticking=true; requestAnimationFrame(update); } },{passive:true});
+  window.addEventListener('resize',function(){ if(stuck){ spacer.style.height=nav.offsetHeight+'px'; } else { navTop=null; } },{passive:true});
+  measure(); update();
 })();
 </script>
 
