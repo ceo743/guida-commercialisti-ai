@@ -835,30 +835,27 @@ function submitForm(e){
 (function(){
   var nav=document.querySelector('.lp-nav');
   if(!nav) return;
+  // sentinella prima della nav: quando esce dallo schermo (scroll giu'), la nav si fissa
+  var sentinel=document.createElement('div');
+  sentinel.setAttribute('aria-hidden','true');
+  sentinel.style.cssText='position:absolute;height:1px;width:1px;pointer-events:none';
+  nav.parentNode.insertBefore(sentinel,nav);
   var spacer=document.createElement('div');
   spacer.style.display='none';
   nav.parentNode.insertBefore(spacer,nav.nextSibling);
-  var navTop=null, stuck=false, ticking=false;
-  function measure(){ if(!stuck){ navTop=nav.getBoundingClientRect().top+window.scrollY; } }
-  function update(){
-    ticking=false;
-    if(navTop===null) measure();
-    var shouldStick=window.scrollY>navTop+nav.offsetHeight;
-    if(shouldStick && !stuck){
+  var io=new IntersectionObserver(function(es){
+    var visibile=es[0].isIntersecting;
+    if(!visibile){
       spacer.style.height=nav.offsetHeight+'px';
       spacer.style.display='block';
       nav.classList.add('lp-nav--stuck');
-      stuck=true;
-    }else if(!shouldStick && stuck){
+    }else{
       nav.classList.remove('lp-nav--stuck');
       spacer.style.display='none';
-      stuck=false;
-      measure();
     }
-  }
-  window.addEventListener('scroll',function(){ if(!ticking){ ticking=true; requestAnimationFrame(update); } },{passive:true});
-  window.addEventListener('resize',function(){ if(stuck){ spacer.style.height=nav.offsetHeight+'px'; } else { navTop=null; } },{passive:true});
-  measure(); update();
+  },{rootMargin:'60px 0px 0px 0px'});
+  io.observe(sentinel);
+  window.addEventListener('resize',function(){ if(nav.classList.contains('lp-nav--stuck')){ spacer.style.height=nav.offsetHeight+'px'; } },{passive:true});
 })();
 </script>
 
