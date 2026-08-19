@@ -212,11 +212,11 @@ function submitForm(e){
   var data=new URLSearchParams({
     'form_submission[name]':fieldName.value.trim(),
     'form_submission[email]':fieldEmail.value.trim(),
-    'form_submission[phone]':fieldPhone.value.trim(),
-    'form_submission[utm_source]':document.getElementById('utm_source').value,
-    'form_submission[utm_medium]':document.getElementById('utm_medium').value,
-    'form_submission[utm_campaign]':document.getElementById('utm_campaign').value,
-    'form_submission[utm_content]':document.getElementById('utm_content').value
+    'form_submission[phone_number]':fieldPhone.value.trim(),
+    'form_submission[custom_70]':document.getElementById('utm_source').value,
+    'form_submission[custom_71]':document.getElementById('utm_medium').value,
+    'form_submission[custom_74]':document.getElementById('utm_campaign').value,
+    'form_submission[custom_75]':document.getElementById('utm_content').value
   });
   // POST diretto al form Kajabi (form 2149685424) -> email 1 subito + iscrizione sequenza 7 email
   fetch('https://www.davidecaiazzo.it/forms/2149685424/form_submissions',{

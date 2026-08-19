@@ -705,11 +705,11 @@ function submitForm(e){
   var data=new URLSearchParams({
     'form_submission[name]':fN.value.trim(),
     'form_submission[email]':fE.value.trim(),
-    'form_submission[phone]':fP.value.trim(),
-    'form_submission[utm_source]':document.getElementById('utm_source').value,
-    'form_submission[utm_medium]':document.getElementById('utm_medium').value,
-    'form_submission[utm_campaign]':document.getElementById('utm_campaign').value,
-    'form_submission[utm_content]':document.getElementById('utm_content').value
+    'form_submission[phone_number]':fP.value.trim(),
+    'form_submission[custom_70]':document.getElementById('utm_source').value,
+    'form_submission[custom_71]':document.getElementById('utm_medium').value,
+    'form_submission[custom_74]':document.getElementById('utm_campaign').value,
+    'form_submission[custom_75]':document.getElementById('utm_content').value
   });
   fetch('https://www.davidecaiazzo.it/forms/2149685500/form_submissions',{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:data}).catch(function(){});
   setTimeout(function(){
