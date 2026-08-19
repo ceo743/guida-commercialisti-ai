@@ -279,12 +279,13 @@ function submitSurvey(e){
   btn.disabled=true;
   // Le 4 risposte viaggiano impacchettate in utm_content (limite campi personalizzati Kajabi raggiunto:
   // si riusano i campi utm già esistenti). utm_campaign marca le submission del sondaggio.
+  // Kajabi accetta solo i nomi interni dei campi: custom_74 = utm_campaign, custom_75 = utm_content.
   var packed='attivita: '+answers.attivita+' || priorita: '+answers.priorita+' || casella: '+answers.casella+' || studio: '+answers.dimensione;
   var data=new URLSearchParams({
     'form_submission[name]':fieldName.value.trim(),
     'form_submission[email]':em,
-    'form_submission[utm_campaign]':'sondaggio-tool-commercialisti',
-    'form_submission[utm_content]':packed
+    'form_submission[custom_74]':'sondaggio-tool-commercialisti',
+    'form_submission[custom_75]':packed
   });
   fetch('https://www.davidecaiazzo.it/forms/2149685673/form_submissions',{
     method:'POST',mode:'no-cors',
