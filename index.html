@@ -758,8 +758,13 @@ function submitForm(e){
   // Kajabi non manda intestazioni CORS: un invio diretto dal browser e' cieco
   // (mode:'no-cors'), quindi la pagina non puo' sapere se l'iscrizione e'
   // passata. Si passa dal nostro ponte, che la inoltra e legge l'esito vero.
-  fetch(PONTE_ISCRIZIONI,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({form_id:KAJABI_FORM_WORKSHOP,campi:campi})})
-    .then(function(r){return r.json();})
+  // Il ponte sta su un piano gratuito che puo' dormire: se non risponde
+  // entro 8 secondi si passa all'invio diretto, senza lasciare il
+  // visitatore fermo su "INVIO IN CORSO...".
+  var taglia = (typeof AbortController!=='undefined') ? new AbortController() : null;
+  var scaduto = setTimeout(function(){ if(taglia) taglia.abort(); }, 8000);
+  fetch(PONTE_ISCRIZIONI,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({form_id:KAJABI_FORM_WORKSHOP,campi:campi}),signal:taglia?taglia.signal:undefined})
+    .then(function(r){clearTimeout(scaduto);return r.json();},function(err){clearTimeout(scaduto);throw err;})
     .then(function(esito){
       if(!esito||typeof esito.ok!=='boolean') throw new Error('risposta non leggibile');
       return esito.ok;
