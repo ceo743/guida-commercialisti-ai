@@ -234,6 +234,8 @@ fbq('track','PageView');
 .wk-field{width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.12);border-radius:12px;color:#fff;font-family:'Inter',sans-serif;font-size:15px;padding:15px 16px;outline:none;transition:border 0.15s}
 .wk-field:focus{border-color:#ff3d2e}
 .wk-field.error{border-color:#e5484d}
+.wk-errore{background:rgba(229,72,77,0.12);border:1px solid #e5484d;border-radius:10px;padding:11px 13px;font-size:13px;color:#ffb9b9;line-height:1.55;text-align:left}
+.wk-errore a{color:#ff3d2e;text-decoration:underline}
 .wk-priv{display:flex;gap:10px;align-items:flex-start;font-size:12px;color:rgba(255,255,255,0.5);line-height:1.5;text-align:left}
 .wk-priv a{color:#ff3d2e;text-decoration:none}
 .wk-priv input{margin-top:2px;accent-color:#ff3d2e}
@@ -601,6 +603,7 @@ Figlia di un commercialista, è cresciuta tra scadenze, solleciti e fascicoli: l
 <input type="hidden" name="utm_source" id="utm_source"/><input type="hidden" name="utm_medium" id="utm_medium"/><input type="hidden" name="utm_campaign" id="utm_campaign"/><input type="hidden" name="utm_content" id="utm_content"/>
 <label class="wk-priv"><input type="checkbox" id="fieldPrivacy" required/><span>Accetto la <a href="https://docs.google.com/document/d/1qUNgRcZ0W9aZxutDu1Fv2k5aM6Nti4V0/edit" target="_blank" rel="noopener">Privacy Policy</a> e il trattamento dei dati per iscrivermi al workshop.</span></label>
 <label class="wk-priv"><input type="checkbox" id="fieldMarketing"/><span>Voglio ricevere anche consigli su automazioni e intelligenza artificiale.</span></label>
+<div class="wk-errore" id="formErrore" role="alert" style="display:none"></div>
 <button type="submit" class="btn-gold" id="submitBtn" style="width:100%;justify-content:center"><span id="btnText">ISCRIVIMI AL WORKSHOP GRATUITO</span></button>
 </form>
 <p style="text-align:center;font-size:12px;color:rgba(255,255,255,0.35);margin-top:14px">Il link Zoom arriva via email prima della diretta. Nessuno spam.</p>
@@ -707,6 +710,22 @@ function toggleAccordion(el){
   tick();
 })();
 function dcPhoneOk(raw){var p=String(raw||'').replace(/[\s\-\+\.\(\)]/g,'');if(p.slice(0,2)==='00')p=p.slice(2);if(!/^\d+$/.test(p))return false;if(p.length<9||p.length>13)return false;if(/^(\d)\1+$/.test(p))return false;var u={},n=0,i;for(i=0;i<p.length;i++){if(!u[p[i]]){u[p[i]]=1;n++;}}if(n<3)return false;return true;}
+var KAJABI_FORM_WORKSHOP='2149685500';
+var PONTE_ISCRIZIONI='https://dc-chatbot-vswb.onrender.com/lead-kajabi';
+function mostraErrore(testo){
+  var btn=document.getElementById('submitBtn');
+  btn.disabled=false;
+  document.getElementById('btnText').textContent='ISCRIVIMI AL WORKSHOP GRATUITO';
+  var box=document.getElementById('formErrore');
+  box.innerHTML=testo;
+  box.style.display='block';
+  box.scrollIntoView({behavior:'smooth',block:'center'});
+}
+function mostraConferma(){
+  document.getElementById('confirmModal').classList.add('open');
+  var sec=3,ce=document.getElementById('countdownSec');
+  var t=setInterval(function(){sec--;ce.textContent=sec;if(sec<=0){clearInterval(t);window.location.href='https://commercialisti.davidecaiazzo.it/grazie/';}},1000);
+}
 function submitForm(e){
   e.preventDefault();
   var fN=document.getElementById('fieldName'),fE=document.getElementById('fieldEmail'),fP=document.getElementById('fieldPhone'),pv=document.getElementById('fieldPrivacy');
@@ -718,21 +737,42 @@ function submitForm(e){
   if(!pv.checked){pv.classList.add('checkbox-error');bad=true}
   if(bad) return;
   var btn=document.getElementById('submitBtn');btn.disabled=true;document.getElementById('btnText').textContent='INVIO IN CORSO...';
-  var data=new URLSearchParams({
-    'form_submission[name]':fN.value.trim(),
-    'form_submission[email]':fE.value.trim(),
-    'form_submission[phone_number]':fP.value.trim(),
-    'form_submission[custom_70]':document.getElementById('utm_source').value,
-    'form_submission[custom_71]':document.getElementById('utm_medium').value,
-    'form_submission[custom_74]':document.getElementById('utm_campaign').value,
-    'form_submission[custom_75]':document.getElementById('utm_content').value
-  });
-  fetch('https://www.davidecaiazzo.it/forms/2149685500/form_submissions',{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:data}).catch(function(){});
-  setTimeout(function(){
-    document.getElementById('confirmModal').classList.add('open');
-    var sec=3,ce=document.getElementById('countdownSec');
-    var t=setInterval(function(){sec--;ce.textContent=sec;if(sec<=0){clearInterval(t);window.location.href='https://commercialisti.davidecaiazzo.it/grazie/';}},1000);
-  },800);
+  document.getElementById('formErrore').style.display='none';
+
+  var campi={
+    name:fN.value.trim(),
+    email:fE.value.trim(),
+    phone_number:fP.value.trim(),
+    custom_70:document.getElementById('utm_source').value,
+    custom_71:document.getElementById('utm_medium').value,
+    custom_74:document.getElementById('utm_campaign').value,
+    custom_75:document.getElementById('utm_content').value
+  };
+  var data=new URLSearchParams();
+  Object.keys(campi).forEach(function(k){data.append('form_submission['+k+']',campi[k]);});
+
+  var SCRIVICI='<a href="mailto:academy@davidecaiazzo.it?subject=Iscrizione%20workshop%2030%20settembre">academy@davidecaiazzo.it</a>';
+  var ERR_RIFIUTO='Non siamo riusciti a registrare la tua iscrizione. Controlla i dati e riprova, oppure scrivi a '+SCRIVICI+' e ti iscriviamo noi.';
+  var ERR_RETE='Iscrizione non riuscita: la connessione si &egrave; interrotta. Riprova tra un istante, oppure scrivi a '+SCRIVICI+' e ti iscriviamo noi.';
+
+  // Kajabi non manda intestazioni CORS: un invio diretto dal browser e' cieco
+  // (mode:'no-cors'), quindi la pagina non puo' sapere se l'iscrizione e'
+  // passata. Si passa dal nostro ponte, che la inoltra e legge l'esito vero.
+  fetch(PONTE_ISCRIZIONI,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({form_id:KAJABI_FORM_WORKSHOP,campi:campi})})
+    .then(function(r){return r.json();})
+    .then(function(esito){
+      if(!esito||typeof esito.ok!=='boolean') throw new Error('risposta non leggibile');
+      return esito.ok;
+    })
+    .then(function(accettata){
+      if(accettata){ mostraConferma(); } else { mostraErrore(ERR_RIFIUTO); }
+    },function(){
+      // Ponte irraggiungibile: invio diretto, cosi' l'iscrizione non si perde.
+      // L'esito resta illeggibile, ma se la richiesta non parte proprio la
+      // promessa viene respinta e la conferma NON compare.
+      fetch('https://www.davidecaiazzo.it/forms/'+KAJABI_FORM_WORKSHOP+'/form_submissions',{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:data})
+        .then(function(){mostraConferma();},function(){mostraErrore(ERR_RETE);});
+    });
 }
 </script>
 <script src="https://dc-chatbot-vswb.onrender.com/widget.js" data-bot="commercialisti" data-auto-open="false"></script>
