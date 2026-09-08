@@ -210,7 +210,8 @@ footer a { color: var(--muted); }
       </div>
     </div>
 
-    <button type="submit" class="primary" id="submitBtn"><span id="btnText">Invia le risposte →</span></button>
+    <div id="formErrore" role="alert" style="display:none;background:rgba(229,72,77,0.12);border:1px solid #e5484d;border-radius:10px;padding:11px 13px;font-size:13px;color:#ff9b9b;line-height:1.55;text-align:left;margin:4px 0"></div>
+<button type="submit" class="primary" id="submitBtn"><span id="btnText">Invia le risposte →</span></button>
     <p class="reassure">Gli studi che rispondono hanno la precedenza per l'uso gratuito.</p>
   </form>
 
@@ -250,6 +251,31 @@ function val(name){
   return sel.value;
 }
 
+/* La conferma non parte piu' da un timer. Kajabi non manda intestazioni CORS,
+   quindi un invio diretto dal browser e' cieco: si passa dal nostro ponte, che
+   inoltra la registrazione e legge la risposta vera. */
+var KAJABI_FORM_GUIDA='2149685673';
+var PONTE_ISCRIZIONI='https://dc-chatbot-vswb.onrender.com/lead-kajabi';
+var ERR_RIFIUTO_ISCRIZIONE='Non siamo riusciti a registrare la tua richiesta. Controlla i dati e riprova, oppure scrivi a <a href=\"mailto:academy@davidecaiazzo.it\" style=\"color:#ff3d2e\">academy@davidecaiazzo.it</a> e ci pensiamo noi.';
+var ERR_RETE_ISCRIZIONE='Invio non riuscito: la connessione si &egrave; interrotta. Riprova tra un istante, oppure scrivi a <a href=\"mailto:academy@davidecaiazzo.it\" style=\"color:#ff3d2e\">academy@davidecaiazzo.it</a> e ci pensiamo noi.';
+(function(){
+  function cattura(){var b=document.getElementById('btnText');if(b&&!window.__testoPulsante)window.__testoPulsante=b.textContent;}
+  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',cattura);}else{cattura();}
+})();
+function mostraErroreIscrizione(testo){
+  var btn=document.getElementById('submitBtn');
+  if(btn){btn.disabled=false;}
+  var bt=document.getElementById('btnText');
+  if(bt&&window.__testoPulsante){bt.textContent=window.__testoPulsante;}
+  var box=document.getElementById('formErrore');
+  if(!box){alert(testo.replace(/<[^>]*>/g,''));return;}
+  box.innerHTML=testo;
+  box.style.display='block';
+  box.scrollIntoView({behavior:'smooth',block:'center'});
+}
+function mostraConfermaIscrizione(){
+  document.getElementById('confirmModal').classList.add('open')
+}
 function submitSurvey(e){
   e.preventDefault();
   var hasError=false;
@@ -281,18 +307,35 @@ function submitSurvey(e){
   // si riusano i campi utm già esistenti). utm_campaign marca le submission del sondaggio.
   // Kajabi accetta solo i nomi interni dei campi: custom_74 = utm_campaign, custom_75 = utm_content.
   var packed='attivita: '+answers.attivita+' || priorita: '+answers.priorita+' || casella: '+answers.casella+' || studio: '+answers.dimensione;
-  var data=new URLSearchParams({
-    'form_submission[name]':fieldName.value.trim(),
-    'form_submission[email]':em,
-    'form_submission[custom_74]':'sondaggio-tool-commercialisti',
-    'form_submission[custom_75]':packed
-  });
-  fetch('https://www.davidecaiazzo.it/forms/2149685673/form_submissions',{
-    method:'POST',mode:'no-cors',
-    headers:{'Content-Type':'application/x-www-form-urlencoded'},
-    body:data
-  }).catch(function(){});
-  setTimeout(function(){document.getElementById('confirmModal').classList.add('open')},700);
+  var campi={
+    name:fieldName.value.trim(),
+    email:em,
+    custom_74:'sondaggio-tool-commercialisti',
+    custom_75:packed
+  };
+  var data=new URLSearchParams();
+  Object.keys(campi).forEach(function(k){data.append('form_submission['+k+']',campi[k]);});
+  var box=document.getElementById('formErrore');
+  if(box){box.style.display='none';}
+
+  // Il ponte sta su un piano gratuito che puo' dormire: se non risponde entro
+  // 8 secondi si passa all'invio diretto, senza lasciare fermo chi si iscrive.
+  var taglia=(typeof AbortController!=='undefined')?new AbortController():null;
+  var scaduto=setTimeout(function(){if(taglia){taglia.abort();}},8000);
+  fetch(PONTE_ISCRIZIONI,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({form_id:KAJABI_FORM_GUIDA,campi:campi}),signal:taglia?taglia.signal:undefined})
+    .then(function(r){clearTimeout(scaduto);return r.json();},function(err){clearTimeout(scaduto);throw err;})
+    .then(function(esito){
+      if(!esito||typeof esito.ok!=='boolean'){throw new Error('risposta non leggibile');}
+      return esito.ok;
+    })
+    .then(function(accettata){
+      if(accettata){mostraConfermaIscrizione();}else{mostraErroreIscrizione(ERR_RIFIUTO_ISCRIZIONE);}
+    },function(){
+      // Ponte irraggiungibile: invio diretto, cosi' la richiesta non si perde.
+      // L'esito resta illeggibile, ma se non parte proprio la conferma non compare.
+      fetch('https://www.davidecaiazzo.it/forms/'+KAJABI_FORM_GUIDA+'/form_submissions',{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:data})
+        .then(function(){mostraConfermaIscrizione();},function(){mostraErroreIscrizione(ERR_RETE_ISCRIZIONE);});
+    });
 }
 </script>
 </body>
