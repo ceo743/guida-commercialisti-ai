@@ -765,6 +765,16 @@ function submitForm(e){
   var data=new URLSearchParams();
   Object.keys(campi).forEach(function(k){data.append('form_submission['+k+']',campi[k]);});
 
+  // Enrolled browsers use the measured confirmation endpoint, never a blind no-cors success.
+  var misurata=window.DCWorkshopExperiment && window.DCWorkshopExperiment.submit(campi);
+  if(misurata){
+    misurata.then(function(esito){
+      if(esito.ok){mostraConferma();}
+      else{mostraErrore('Iscrizione non confermata. Controlla i dati e riprova.');}
+    }).catch(function(){mostraErrore('Non abbiamo potuto verificare l’iscrizione. Riprova: i tuoi dati sono ancora compilati.');});
+    return;
+  }
+
   var SCRIVICI='<a href="mailto:academy@davidecaiazzo.it?subject=Iscrizione%20workshop%2030%20settembre">academy@davidecaiazzo.it</a>';
   var ERR_RIFIUTO='Non siamo riusciti a registrare la tua iscrizione. Controlla i dati e riprova, oppure scrivi a '+SCRIVICI+' e ti iscriviamo noi.';
   var ERR_RETE='Iscrizione non riuscita: la connessione si &egrave; interrotta. Riprova tra un istante, oppure scrivi a '+SCRIVICI+' e ti iscriviamo noi.';
@@ -933,5 +943,6 @@ function submitForm(e){
 })();
 </script>
 
+<script src="workshop-experiment.js?v=20260914a"></script>
 </body>
 </html>
