@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /sondaggio
+Disallow: /grazie
+
+Sitemap: https://commercialisti.davidecaiazzo.it/sitemap.xml
