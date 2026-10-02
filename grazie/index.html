@@ -49,6 +49,22 @@ fbq('track','Lead');
     .btn-gold{display:block;width:100%;border:0;cursor:pointer;text-align:center;text-decoration:none;font-family:'Outfit',sans-serif;font-weight:900;font-size:16px;letter-spacing:.4px;color:#131313;background:linear-gradient(90deg,var(--gold),var(--gold2));border-radius:999px;padding:18px 20px;box-shadow:0 10px 32px rgba(240,180,41,.35);transition:transform .12s}
     .btn-gold:hover{transform:translateY(-2px)}
     .reassure{text-align:center;font-size:11.5px;color:#7c7c86;margin-top:10px}
+    /* [CLAUDE] 02/10/2026: due domande a un clic (piano v3 del webinar 15/10, sezione 4) */
+    .domande{background:var(--ink2);border:1px solid var(--line);border-radius:20px;padding:22px 20px 20px;margin-bottom:30px}
+    .domande-titolo{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:12px;letter-spacing:1px;color:var(--gold);text-transform:uppercase;margin-bottom:16px}
+    .domanda+.domanda{margin-top:22px;padding-top:20px;border-top:1px solid var(--line)}
+    .domanda h5{font-family:'Outfit',sans-serif;font-weight:700;font-size:17px;line-height:1.35;margin-bottom:12px}
+    .scelte{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+    .scelta{font-family:'Work Sans',sans-serif;font-weight:600;font-size:15.5px;line-height:1.3;color:#fff;background:rgba(240,180,41,.08);border:1.5px solid rgba(240,180,41,.45);border-radius:14px;min-height:54px;padding:12px 14px;cursor:pointer;transition:background .15s,border-color .15s,opacity .15s}
+    .scelta:hover:not(:disabled){background:rgba(240,180,41,.18)}
+    .scelta:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+    .scelta.scelta-ok{background:linear-gradient(90deg,var(--gold),var(--gold2));border-color:var(--gold);color:#131313;font-weight:700}
+    .scelta:disabled{cursor:default}
+    .scelta:disabled:not(.scelta-ok){opacity:.4}
+    .dopo-clic{margin-top:14px;font-family:'Outfit',sans-serif;font-weight:700;font-size:16px;color:var(--gold);line-height:1.4}
+    .francesca{margin-top:20px;padding-top:18px;border-top:1px solid var(--line);font-size:14px;color:var(--grey);line-height:1.55}
+    .per-attivare{margin-top:22px;text-align:center;font-size:14px;color:var(--grey);line-height:1.55}
+    @media(max-width:560px){.scelte{grid-template-columns:1fr}.scelta{font-size:16px}}
     footer{border-top:1px solid var(--line);margin-top:44px;padding:22px 0 30px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between}
     footer .fb{font-weight:700;font-size:12.5px;color:var(--gold);letter-spacing:1px}
     footer .fright{font-size:11px;color:#6f6f79;max-width:660px}
@@ -76,6 +92,31 @@ fbq('track','Lead');
       <noscript><video src="../grazie-a.mp4" controls playsinline preload="metadata" poster="../grazie-a-poster.jpg" style="width:100%;aspect-ratio:16/9;display:block;background:#000"></video></noscript>
     </div>
 
+    <!-- [CLAUDE] 02/10/2026: due domande, un clic ciascuna. Le risposte vanno allo stesso modulo Google degli eventi
+         della prova video (evento domanda_clienti:<risposta> e domanda_ore:<risposta>), con l'email dell'iscrizione.
+         Servono a Francesca per decidere chi chiamare prima. Una risposta sola per domanda. -->
+    <div class="domande" id="domande">
+      <p class="domande-titolo">Due domande, un clic ciascuna</p>
+      <div class="domanda" data-domanda="clienti">
+        <h5>Quanti clienti ricevono l'F24 dal tuo studio?</h5>
+        <div class="scelte" role="group" aria-label="Quanti clienti ricevono l'F24 dal tuo studio?">
+          <button type="button" class="scelta" aria-pressed="false">Fino a 30</button>
+          <button type="button" class="scelta" aria-pressed="false">Da 31 a 100</button>
+          <button type="button" class="scelta" aria-pressed="false">Più di 100</button>
+        </div>
+      </div>
+      <div class="domanda" data-domanda="ore">
+        <h5>Pensa all'ultimo 16 del mese. Quanto tempo hai passato a mandare gli F24 e a rincorrere chi non rispondeva?</h5>
+        <div class="scelte" role="group" aria-label="Quanto tempo hai passato l'ultimo 16 del mese?">
+          <button type="button" class="scelta" aria-pressed="false">Meno di 2 ore</button>
+          <button type="button" class="scelta" aria-pressed="false">Mezza giornata</button>
+          <button type="button" class="scelta" aria-pressed="false">Una giornata o più</button>
+        </div>
+        <p class="dopo-clic" id="dopo-clic-ore" hidden>Giovedì guarda il signor Rossi pensando a quel pomeriggio.</p>
+      </div>
+      <p class="francesca">Nei prossimi giorni Francesca del nostro team ti chiama, pochi minuti. Vuole sapere com'è fatto il tuo studio: così giovedì, in chat, sappiamo già rispondere sul tuo studio.</p>
+    </div>
+
     <div class="steps">
       <div class="step"><div class="n">1</div><div><h5>Scarica la guida di 7 pagine</h5><p>«Il 16 del mese con Commercialista AI»: un caso dall'inizio alla fine, in immagini. Se in studio decidete in due, girala al tuo socio. <a href="../il-16-del-mese-con-commercialista-ai.pdf" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">Scarica la guida in PDF &rarr;</a></p></div></div>
       <div class="step"><div class="n">2</div><div><h5>Salva la data in calendario</h5><p>Giovedì 15 ottobre, ore 21:00, su Zoom. Usa il pulsante qui sotto.</p></div></div>
@@ -84,6 +125,7 @@ fbq('track','Lead');
 
     <a class="btn-gold" href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Commercialista+AI+dal+vivo&dates=20261015T190000Z/20261015T203000Z&details=Dimostrazione+dal+vivo+su+Zoom+con+Gianfranco+Motta.+Il+link+Zoom+%C3%A8+nella+tua+email+di+conferma.&location=Zoom" target="_blank" rel="noopener">AGGIUNGI AL CALENDARIO &rarr;</a>
     <p class="reassure">Ci vediamo giovedì 15 ottobre alle 21:00. Alla fine ti diciamo quanto costa e come si attiva. Nessun obbligo.</p>
+    <p class="per-attivare">Se giovedì decidi di attivare, ci vogliono pochi minuti. Ti servono la partita IVA dello studio, il codice SDI o la PEC, e una carta.</p>
 
     <footer>
       <span class="fb">DC ACADEMY</span>
@@ -160,7 +202,52 @@ fbq('track','Lead');
     if (cal) cal.addEventListener('click', function () { invia('calendario', schermo); });
     var guida = document.querySelector('a[href$=".pdf"]');
     if (guida) guida.addEventListener('click', function () { invia('guida', schermo); });
-    window.DCGrazie = {variante: variante, visitatore: visitatore, email: email};
+    window.DCGrazie = {variante: variante, visitatore: visitatore, email: email, invia: invia, schermo: schermo, prova: prova};
+  }());
+  </script>
+  <script>
+  /* [CLAUDE] 02/10/2026 — due domande a un clic (piano v3 del webinar commercialisti 15/10, sezione 4).
+     Ogni risposta va allo stesso modulo Google della prova video (scheda GRAZIE del foglio Lead), con la stessa
+     email (dc_iscrizione_email) e lo stesso visitatore: evento «domanda_clienti:<risposta>» o «domanda_ore:<risposta>».
+     Una risposta sola per domanda: dopo il clic la scelta resta evidenziata e i pulsanti si bloccano, anche
+     ricaricando la pagina (localStorage, con try/catch). Con ?prova=1 le risposte vanno come prova e si ricordano a parte. */
+  (function () {
+    'use strict';
+    var G = window.DCGrazie || {};
+    var prefisso = G.prova ? 'dc_grazie_prova_domanda_' : 'dc_grazie_domanda_';
+    function leggi(k) { try { return window.localStorage.getItem(k); } catch (e) { return null; } }
+    function scrivi(k, v) { try { window.localStorage.setItem(k, v); } catch (e) {} }
+    function blocca(box, scelta) {
+      var bottoni = box.querySelectorAll('.scelta');
+      for (var i = 0; i < bottoni.length; i++) {
+        var b = bottoni[i], giusto = b.textContent.trim() === scelta;
+        b.disabled = true;
+        b.setAttribute('aria-pressed', giusto ? 'true' : 'false');
+        if (giusto) b.classList.add('scelta-ok');
+      }
+      if (box.getAttribute('data-domanda') === 'ore') {
+        var frase = document.getElementById('dopo-clic-ore');
+        if (frase) frase.hidden = false;
+      }
+    }
+    var domande = document.querySelectorAll('.domanda[data-domanda]');
+    for (var d = 0; d < domande.length; d++) {
+      (function (box) {
+        var nome = box.getAttribute('data-domanda');
+        var gia = leggi(prefisso + nome);
+        if (gia) { blocca(box, gia); return; }
+        var bottoni = box.querySelectorAll('.scelta');
+        for (var i = 0; i < bottoni.length; i++) {
+          bottoni[i].addEventListener('click', function () {
+            if (this.disabled) return;
+            var risposta = this.textContent.trim();
+            blocca(box, risposta);
+            scrivi(prefisso + nome, risposta);
+            if (typeof G.invia === 'function') G.invia('domanda_' + nome + ':' + risposta, G.schermo || '');
+          });
+        }
+      }(domande[d]));
+    }
   }());
   </script>
 </body>
