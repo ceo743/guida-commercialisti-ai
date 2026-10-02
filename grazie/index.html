@@ -12,8 +12,8 @@ fbq('track','Lead');
 
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Posto riservato. Guarda il caso del signor Rossi</title>
-  <meta name="description" content="Il tuo posto per la dimostrazione dal vivo di Commercialista AI è riservato. Guarda il video del signor Rossi e salva la data in calendario."/>
+  <title>Posto riservato. Guarda il video prima della diretta</title>
+  <meta name="description" content="Il tuo posto per la dimostrazione dal vivo di Commercialista AI è riservato. Guarda il video e salva la data in calendario."/>
   <meta name="robots" content="noindex"/>
   <link rel="canonical" href="https://commercialisti.davidecaiazzo.it/grazie/"/>
   <link rel="icon" type="image/png" href="https://automazioni.davidecaiazzo.it/favicon.png"/>
@@ -65,14 +65,19 @@ fbq('track','Lead');
 
     <span class="chip">POSTO RISERVATO ✓ // GIOVEDÌ 15 OTTOBRE, ORE 21:00</span>
     <h1>SEI DENTRO.<br/>ORA GUARDA QUESTO <span class="gold">VIDEO</span></h1>
-    <p class="sub">90 secondi: il caso del signor Rossi, dall'F24 caricato al «ricevuto». Così alla diretta sai già cosa guardare.</p>
+    <p class="sub">Meno di un minuto. Così alla diretta sai già cosa guardare.</p>
 
     <div class="videobox">
-      <video src="../video-rossi.mp4" controls playsinline preload="metadata" poster="../video-rossi-poster.jpg" aria-label="Il caso del signor Rossi: gli F24 a tutti i clienti con Commercialista AI" style="width:100%;aspect-ratio:16/9;display:block;background:#000"></video>
+      <!-- [CLAUDE] 02/10/2026: prova di 3 video (A, B, C) a rotazione, la variante resta la stessa per chi ricarica.
+           Misura: visita, video visto al 75 %, clic su calendario e guida -> modulo Google -> scheda GRAZIE del foglio
+           «Lead Workshop Commercialisti 30-09». Come leggere il risultato: Projects/Tool-Commercialisti/Webinar/15-10/
+           [CLAUDE] video pagina grazie/LEGGIMI.md (Drive «2. Claude»). -->
+      <video id="video-grazie" controls playsinline preload="metadata" aria-label="Video di presentazione della diretta: Commercialista AI per lo studio" style="width:100%;aspect-ratio:16/9;display:block;background:#000"></video>
+      <noscript><video src="../grazie-a.mp4" controls playsinline preload="metadata" poster="../grazie-a-poster.jpg" style="width:100%;aspect-ratio:16/9;display:block;background:#000"></video></noscript>
     </div>
 
     <div class="steps">
-      <div class="step"><div class="n">1</div><div><h5>Scarica la guida di 7 pagine</h5><p>«Il 16 del mese con Commercialista AI»: lo stesso caso del video, in immagini. Se in studio decidete in due, girala al tuo socio. <a href="../il-16-del-mese-con-commercialista-ai.pdf" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">Scarica la guida in PDF &rarr;</a></p></div></div>
+      <div class="step"><div class="n">1</div><div><h5>Scarica la guida di 7 pagine</h5><p>«Il 16 del mese con Commercialista AI»: un caso dall'inizio alla fine, in immagini. Se in studio decidete in due, girala al tuo socio. <a href="../il-16-del-mese-con-commercialista-ai.pdf" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">Scarica la guida in PDF &rarr;</a></p></div></div>
       <div class="step"><div class="n">2</div><div><h5>Salva la data in calendario</h5><p>Giovedì 15 ottobre, ore 21:00, su Zoom. Usa il pulsante qui sotto.</p></div></div>
       <div class="step"><div class="n">3</div><div><h5>Controlla la tua email</h5><p>Ti è appena arrivata la conferma, con il link Zoom per entrare. Non la trovi? Guarda in Spam o Promozioni. Entra dal computer: la dimostrazione si vede meglio.</p></div></div>
     </div>
@@ -88,5 +93,75 @@ fbq('track','Lead');
       </span>
     </footer>
   </div>
+
+  <script>
+  /* [CLAUDE] 02/10/2026 — prova dei 3 video della pagina grazie (A, B, C).
+     Variante a caso alla prima visita, poi sempre la stessa (localStorage, con try/catch: se il browser lo blocca
+     la pagina funziona lo stesso). Eventi inviati al modulo Google collegato alla scheda GRAZIE del foglio Lead:
+     visita, video_avvio, video_75, calendario, guida. Email: quella lasciata dal modulo di iscrizione su questo sito
+     (dc_iscrizione_email), altrimenti vuota; «visitatore» è un codice anonimo a caso.
+     Prove: ?variante=B forza una variante senza salvarla; ?prova=1 marca le righe come prova. */
+  (function () {
+    'use strict';
+    var MODULO = 'https://docs.google.com/forms/d/e/1FAIpQLScIE7ZE1P1eKVEilQk_lTO4Nx5CY_VgljBQIn9LNftH2DkRKw/formResponse';
+    var CAMPI = {visitatore: 'entry.491521358', email: 'entry.1233226114', variante: 'entry.1781041701',
+                 evento: 'entry.2099289393', dettaglio: 'entry.1395317553'};
+    var VARIANTI = ['A', 'B', 'C'];
+    function leggi(k) { try { return window.localStorage.getItem(k); } catch (e) { return null; } }
+    function scrivi(k, v) { try { window.localStorage.setItem(k, v); } catch (e) {} }
+    var qs = new URLSearchParams(location.search);
+    var prova = qs.get('prova') === '1';
+    var forzata = (qs.get('variante') || '').toUpperCase();
+    var variante = VARIANTI.indexOf(forzata) >= 0 ? forzata : leggi('dc_grazie_variante');
+    if (VARIANTI.indexOf(variante) < 0) {
+      variante = VARIANTI[Math.floor(Math.random() * VARIANTI.length)];
+      scrivi('dc_grazie_variante', variante);
+    }
+    var visitatore = leggi('dc_grazie_visitatore'), ritorno = !!visitatore;
+    if (!visitatore) {
+      var b = new Uint8Array(8);
+      try { crypto.getRandomValues(b); } catch (e) { for (var i = 0; i < 8; i++) b[i] = Math.floor(Math.random() * 256); }
+      visitatore = Array.prototype.map.call(b, function (x) { return ('0' + x.toString(16)).slice(-2); }).join('');
+      scrivi('dc_grazie_visitatore', visitatore);
+    }
+    if (prova) visitatore = 'prova-' + visitatore;
+    var email = (leggi('dc_iscrizione_email') || '').trim().toLowerCase();
+    var schermo = (window.matchMedia && window.matchMedia('(max-width: 760px)').matches) ? 'telefono' : 'computer';
+    document.documentElement.setAttribute('data-variante-video', variante);
+
+    function invia(evento, dettaglio) {
+      var dati = new URLSearchParams();
+      dati.append(CAMPI.visitatore, visitatore); dati.append(CAMPI.email, email);
+      dati.append(CAMPI.variante, variante); dati.append(CAMPI.evento, evento);
+      dati.append(CAMPI.dettaglio, (dettaglio || '') + (prova ? ' · prova' : ''));
+      try {
+        if (navigator.sendBeacon && navigator.sendBeacon(MODULO, dati)) return;
+      } catch (e) {}
+      try { fetch(MODULO, {method: 'POST', mode: 'no-cors', body: dati, keepalive: true}); } catch (e) {}
+    }
+
+    var video = document.getElementById('video-grazie');
+    var nome = variante.toLowerCase();
+    if (video) {
+      video.setAttribute('poster', '../grazie-' + nome + '-poster.jpg');
+      video.setAttribute('src', '../grazie-' + nome + '.mp4');
+      var avviato = false, visto75 = false;
+      video.addEventListener('play', function () {
+        if (!avviato) { avviato = true; invia('video_avvio', schermo); }
+      });
+      video.addEventListener('timeupdate', function () {
+        if (!visto75 && video.duration && video.currentTime / video.duration >= 0.75) {
+          visto75 = true; invia('video_75', schermo + ' · ' + Math.round(video.currentTime) + ' s');
+        }
+      });
+    }
+    invia('visita', schermo + (ritorno ? ' · ritorno' : ''));
+    var cal = document.querySelector('a.btn-gold[href*="calendar.google.com"]');
+    if (cal) cal.addEventListener('click', function () { invia('calendario', schermo); });
+    var guida = document.querySelector('a[href$=".pdf"]');
+    if (guida) guida.addEventListener('click', function () { invia('guida', schermo); });
+    window.DCGrazie = {variante: variante, visitatore: visitatore, email: email};
+  }());
+  </script>
 </body>
 </html>

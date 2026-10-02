@@ -664,7 +664,7 @@ Usa l'intelligenza artificiale ogni giorno nelle sue aziende. Commercialista AI 
 <div class="wk-modal" id="confirmModal"><div class="box">
 <div style="width:64px;height:64px;border-radius:50%;background:rgba(255,61,46,0.15);display:flex;align-items:center;justify-content:center;margin:0 auto 18px;color:#ff3d2e;font-size:30px;font-weight:900">✓</div>
 <h4>Posto riservato!</h4>
-<p>Il tuo posto per giovedì 15 ottobre alle 21:00 è confermato. Nella pagina che si apre c'è il video del signor Rossi: guardalo prima della diretta.</p>
+<p>Il tuo posto per giovedì 15 ottobre alle 21:00 è confermato. Nella pagina che si apre c'è un video di meno di un minuto: guardalo prima della diretta.</p>
 <p style="font-size:12px;color:rgba(255,255,255,0.4)">L'email di conferma sta arrivando. Non la trovi? Controlla Spam o Promozioni.</p>
 <a class="btn-gold" style="margin-top:14px;width:100%;justify-content:center" href="https://commercialisti.davidecaiazzo.it/grazie/">GUARDA IL VIDEO &rarr;</a>
 <p style="margin-top:16px;font-size:12.5px;color:rgba(255,255,255,0.45)">Verrai reindirizzato tra <span id="countdownSec">3</span> secondi...</p>
@@ -782,6 +782,8 @@ function submitForm(e){
   if(!dcPhoneOk(fP.value)){fP.classList.add('error');bad=true;}
   if(!pv.checked){pv.classList.add('checkbox-error');bad=true}
   if(bad) return;
+  // [CLAUDE] 02/10/2026: l'email resta in questo browser per la pagina grazie (misura dei 3 video, scheda GRAZIE del foglio Lead)
+  try{localStorage.setItem('dc_iscrizione_email',fE.value.trim().toLowerCase());}catch(err){}
   var btn=document.getElementById('submitBtn');btn.disabled=true;document.getElementById('btnText').textContent='INVIO IN CORSO...';
   document.getElementById('formErrore').style.display='none';
 
