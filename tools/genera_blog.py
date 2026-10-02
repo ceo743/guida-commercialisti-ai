@@ -214,7 +214,7 @@ def build_article(d):
 {d['body_html']}
 {faq_html}
 <div class="cta-box">
-<a class="btn-gold" href="{esc(d['cta_url'])}">ATTIVA IL TUO STUDIO</a>
+<a class="btn-gold" href="{esc(d['cta_url'])}">GUARDA COME FUNZIONA</a>
 <p class="cta-note">{d['cta_note']}</p>
 </div>
 {related_html}
