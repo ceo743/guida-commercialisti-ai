@@ -50,12 +50,11 @@
   <span class="chip">Webinar per commercialisti</span>
   <h1>Registrazione del webinar per <em>commercialisti</em></h1>
 
-  <!-- REGISTRAZIONE:INIZIO (portale protetto; transizione top-level) -->
+  <!-- REGISTRAZIONE:INIZIO (registrazione chiusa il 03/10/2026, decisione di Davide) -->
   <div class="box">
-    <p>La registrazione si consulta nel portale protetto.</p>
-    <p class="small">Accedi con l’email usata per iscriverti al webinar. Se non eri ancora iscritto, potrai registrarti nel portale.</p>
-    <a class="btn big" data-portal-link href="https://registrazione-commercialisti.davidecaiazzo.chatgpt.site/registrazione/" target="_top" rel="noopener">Apri il portale della registrazione &rarr;</a>
-    <p class="after">Se il pulsante non apre il portale, <a data-portal-link href="https://registrazione-commercialisti.davidecaiazzo.chatgpt.site/registrazione/" target="_top" rel="noopener">apri qui la registrazione</a>.</p>
+    <p>La registrazione non è più disponibile.</p>
+    <p class="small">Abbiamo deciso di non mostrarla più: nel prossimo webinar facciamo vedere tantissime funzionalità nuove, quindi sarà completamente diverso da quello del 30 settembre.</p>
+    <a class="btn big" href="https://commercialisti.davidecaiazzo.it/?utm_source=webinar&amp;utm_medium=registrazione&amp;utm_campaign=webinar-commercialisti-2026-09-30&amp;utm_content=registrazione-chiusa">Iscriviti al prossimo webinar &rarr;</a>
   </div>
   <!-- REGISTRAZIONE:FINE -->
 
@@ -70,17 +69,5 @@
       <a href="https://docs.google.com/document/d/1K6WGjt9aFTRN-zWMvEOh5bw2A32nNag-/edit" target="_blank" rel="noopener noreferrer">Condizioni di Vendita</a>
       <a href="https://www.davidecaiazzo.it/trasparenza" rel="noopener noreferrer">Trasparenza</a></p></footer>
 </div>
-<script>
-  (() => {
-    const portal = new URL('https://registrazione-commercialisti.davidecaiazzo.chatgpt.site/registrazione/');
-    const source = new URL(window.location.href);
-    for (const key of ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term']) {
-      const value = source.searchParams.get(key);
-      if (value && value.length <= 100 && !value.includes('@')) portal.searchParams.set(key, value);
-    }
-    document.querySelectorAll('[data-portal-link]').forEach((link) => { link.href = portal.href; });
-    window.location.replace(portal.href);
-  })();
-</script>
 </body>
 </html>
