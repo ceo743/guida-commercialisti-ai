@@ -60,7 +60,9 @@ fbq('track','PageView');
   .lp-burger{display:none;background:none;border:none;cursor:pointer;padding:8px;flex-direction:column;gap:5px}
   .lp-burger span{display:block;width:24px;height:2px;background:#ff3d2e;border-radius:2px}
   .lp-mobile-menu{display:none}
+  .lp-cta-telefono{display:none}
   @media(max-width:1024px){.lp-nav-links{display:none}.lp-burger{display:flex}
+  .lp-nav{gap:12px}.lp-cta-telefono{display:inline-flex;margin-left:auto}
   .lp-mobile-menu{position:fixed;inset:0;background:#05070e;z-index:650;padding:90px 32px 40px;flex-direction:column;gap:4px;overflow-y:auto}
   .lp-mobile-menu.open{display:flex}
   .lp-mobile-menu a{font-size:19px;font-weight:600;color:rgba(255,255,255,0.85);text-decoration:none;padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.06)}
@@ -206,6 +208,8 @@ fbq('track','PageView');
 <div class="lp-nav-item"><a href="https://www.davidecaiazzo.it/login" target="_blank" rel="noopener noreferrer">Login</a></div>
 <a class="lp-nav-cta" href="#attiva">Attiva</a>
 </div>
+<!-- Sul telefono il menu è chiuso: «Attiva» resta in alto, accanto al menu, e porta alla scheda del prezzo. -->
+<a class="lp-nav-cta lp-cta-telefono" href="#attiva">Attiva</a>
 <button class="lp-burger" aria-label="Apri menu" aria-expanded="false" onclick="lpToggleMenu()"><span></span><span></span><span></span></button>
 </nav>
 <div class="lp-mobile-menu" id="lpMobileMenu">
