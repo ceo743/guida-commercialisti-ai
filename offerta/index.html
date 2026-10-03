@@ -257,7 +257,7 @@ fbq('track','PageView');
 <p class="of-risparmio" data-solo="anno"><b>Risparmi 3 mesi:</b> paghi 9 mesi e lo usi per 12.</p>
 <p class="of-ricevi-titolo">Cosa ricevi</p>
 <ul class="of-ricevi">
-<li><svg class="of-spunta" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>Tutte le funzioni, anche quelle in arrivo, senza costi in più</span></li>
+<li><svg class="of-spunta" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>Tutte le funzioni, anche quelle in arrivo, senza costi in più (WhatsApp incluso, SMS a consumo)</span></li>
 <li><svg class="of-spunta" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>L'avvio con il nostro team</span></li>
 <li><svg class="of-spunta" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>Sviluppi su misura gratis, se fattibili</span></li>
 <li><svg class="of-spunta" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>Assistenza del nostro team e di SofIA</span></li>
@@ -267,8 +267,8 @@ fbq('track','PageView');
 <a class="btn-gold" data-attiva="alto" data-ciclo="annuale" data-solo="anno" href="https://commercialista-ai.davidecaiazzo.it/registrati?piano=completo&amp;ciclo=annuale&amp;utm_source=webinar&amp;utm_medium=zoom&amp;utm_campaign=webinar-commercialisti-2026-10-15">Attiva per un anno &rarr;</a>
 <a class="btn-gold" data-attiva="alto" data-ciclo="mensile" data-solo="mese" href="https://commercialista-ai.davidecaiazzo.it/registrati?piano=completo&amp;ciclo=mensile&amp;utm_source=webinar&amp;utm_medium=zoom&amp;utm_campaign=webinar-commercialisti-2026-10-15">Attiva mese per mese &rarr;</a>
 </div>
-<!-- Avvio a tempo: nascosto di partenza, lo mostra lo script in fondo (stessa regola del riquadro più sotto). -->
-<p class="of-avvio-riga" data-avvio hidden>Entro <span data-scadenza>venerdì 23 ottobre</span> l'avvio lo facciamo noi, per essere pronti prima del <span data-sedici>16 novembre</span>.</p>
+<!-- Davide, 03/10/2026: l'avvio fatto dal nostro team vale per tutti, senza scadenza, finché il processo non è perfetto. -->
+<p class="of-avvio-riga">L'avvio lo facciamo noi, per essere pronti prima del <span data-sedici>16 novembre</span>.</p>
 <ol class="of-passi">
 <li><span class="of-num">1</span><span><b>Crei l'account</b>: con Gmail basta un clic.</span></li>
 <li><span class="of-num">2</span><span><b>Scrivi i dati per la fattura</b>: partita IVA e codice SDI o PEC.</span></li>
@@ -304,7 +304,7 @@ fbq('track','PageView');
 <li><b>Banche collegate</b> <span class="of-bollino">Prossimo rilascio</span><span class="of-cosa">movimenti abbinati da soli alle fatture</span></li>
 <li><b>Gestionale contabile</b> <span class="of-bollino">Prossimo rilascio</span><span class="of-cosa">prima nota, registri IVA, liquidazioni</span></li>
 <li><b>Rate dell'avviso bonario</b> <span class="of-bollino">Prossimo rilascio</span><span class="of-cosa">piano e F24 di ogni rata</span></li>
-<li><b>WhatsApp e SMS</b> <span class="of-bollino">Prossimo rilascio</span><span class="of-cosa">avvisi ai clienti oltre l'email</span></li>
+<li><b>WhatsApp e SMS</b> <span class="of-bollino">Prossimo rilascio</span><span class="of-cosa">avvisi ai clienti oltre l'email: WhatsApp incluso, SMS a consumo</span></li>
 <li><b>Privacy</b> <span class="of-bollino">Prossimo rilascio</span><span class="of-cosa">informative, nomine e registro dei trattamenti</span></li>
 <li><b>Antiriciclaggio</b> <span class="of-bollino">Prossimo rilascio</span><span class="of-cosa">adeguata verifica e fascicolo di ogni cliente</span></li>
 <li><b>Importa dal gestionale</b> <span class="of-bollino">Prossimo rilascio</span><span class="of-cosa">i clienti presi dal tuo gestionale</span></li>
@@ -317,12 +317,13 @@ fbq('track','PageView');
 <p class="of-altro"><b>Ti serve altro?</b> <a class="of-link" data-telefono="ti-serve-altro" href="https://commercialista-ai.davidecaiazzo.it/consulenza?utm_source=webinar&amp;utm_medium=offerta&amp;utm_campaign=webinar-commercialisti-2026-10-15&amp;utm_content=ti-serve-altro">Dicci cosa</a>: se è fattibile, lo sviluppiamo gratis per te.</p>
 </section>
 
-<!-- Avvio fatto da noi, a tempo: nascosto di partenza. Lo mostra lo script in fondo solo dall'inizio di un'edizione
-     fino alle 23:59 del primo venerdì che cade almeno 7 giorni dopo. Data e giorni li scrive lo script. -->
-<section class="of-blocco glass of-avvio" id="avvio" data-avvio hidden>
-<p class="of-etichetta">Entro <span data-scadenza>venerdì 23 ottobre</span></p>
+<!-- Avvio fatto dal nostro team, per tutti e senza scadenza (Davide, 03/10/2026: vale anche dopo il 23/10, finché il
+     processo non è perfetto). Frase fissa; «16 novembre» lo calcola lo script dall'edizione (il primo 16 del mese
+     dopo il venerdì della settimana seguente), così con le edizioni nuove resta vero. -->
+<section class="of-blocco glass of-avvio" id="avvio">
+<p class="of-etichetta">L'avvio</p>
 <h2>L'avvio lo facciamo noi</h2>
-<p class="of-avvio-testo"><strong>Se attivi entro <span data-scadenza>venerdì 23 ottobre</span>, l'avvio lo facciamo noi:</strong> carichiamo i tuoi clienti, colleghiamo la casella e il primo invio degli F24 lo facciamo insieme.</p>
+<p class="of-avvio-testo"><strong>L'avvio lo facciamo noi:</strong> carichiamo i tuoi clienti, colleghiamo la casella e il primo invio degli F24 lo facciamo insieme.</p>
 <p>Lo facciamo a mano, uno studio alla volta, per essere pronti prima del <span data-sedici>16 novembre</span>.</p>
 <p class="of-nota">Vale per l'anno e per il mese. È nuovo. Per questo l'avvio lo facciamo noi e c'è la Garanzia Avvio.</p>
 </section>
@@ -425,9 +426,9 @@ function lpToggleMenu(){
      utm_source e utm_medium sono webinar e zoom, a meno che la pagina sia aperta con i suoi utm_source,
      utm_medium o utm_content (es. il link di Francesca con utm_source=telefono): allora passano al programma;
    - i link al consulente (/consulenza): stessa utm_campaign dell'edizione;
-   - il riquadro «l'avvio lo facciamo noi» e la riga dell'avvio nella scheda: si vedono dall'inizio dell'edizione
-     fino alle 23:59 del primo venerdì che cade almeno 7 giorni dopo (15/10 -> venerdì 23/10). Fuori da lì
-     spariscono da soli e resta tutto il resto. «Prima del 16 …» = il primo 16 del mese dopo quel venerdì.
+   - «prima del 16 …» nell'avvio: il primo 16 del mese dopo il primo venerdì che cade almeno 7 giorni dopo
+     l'edizione in corso (prima della prima edizione: la prima). 15/10 -> venerdì 23/10 -> 16 novembre.
+     L'avvio fatto dal nostro team vale per tutti, senza scadenza (Davide, 03/10/2026): niente più riquadro a tempo.
 
    Interruttore Annuale · Mensile: due radio; il CSS (:has) e questo script mostrano solo le righe del ciclo scelto
    (attributo data-solo). Annuale scelto all'apertura.
@@ -487,14 +488,11 @@ function lpToggleMenu(){
     for (var i = 0; i < ordinate.length; i++) {
       if (ordinate[i].data + ' ' + ordinate[i].ora <= adesso) corrente = ordinate[i];
     }
-    if (!corrente) return {edizione: null, campagna: 'webinar-commercialisti-' + ordinate[0].data, avvio: false};
-    var venerdi = primoVenerdi(corrente.data);
+    var riferimento = corrente || ordinate[0];
+    var venerdi = primoVenerdi(riferimento.data);
     return {
-      edizione: corrente.data,
-      campagna: 'webinar-commercialisti-' + corrente.data,
-      avvio: adesso <= venerdi + ' 23:59',
-      scadenza: venerdi,
-      scadenzaParole: inParole(venerdi, true),
+      edizione: corrente ? corrente.data : null,
+      campagna: 'webinar-commercialisti-' + riferimento.data,
       sedici: inParole(primoSediciDopo(venerdi), false)
     };
   }
@@ -530,15 +528,8 @@ function lpToggleMenu(){
   function tutti(sel) { return Array.prototype.slice.call(document.querySelectorAll(sel)); }
   function scriviTesto(sel, testo) { tutti(sel).forEach(function (el) { el.textContent = testo; }); }
 
-  if (stato.avvio) {
-    scriviTesto('[data-scadenza]', stato.scadenzaParole);
-    scriviTesto('[data-sedici]', stato.sedici);
-    tutti('[data-avvio]').forEach(function (el) { el.hidden = false; });
-  } else {
-    tutti('[data-avvio]').forEach(function (el) { el.hidden = true; });
-  }
+  scriviTesto('[data-sedici]', stato.sedici);
   document.documentElement.setAttribute('data-offerta-edizione', stato.edizione || '');
-  document.documentElement.setAttribute('data-offerta-avvio', stato.avvio ? 'si' : 'no');
 
   // Interruttore Annuale · Mensile.
   var pagina = document.querySelector('.of-pagina');
@@ -573,7 +564,7 @@ function lpToggleMenu(){
   var schermo = (window.matchMedia && window.matchMedia('(max-width: 760px)').matches) ? 'telefono' : 'computer';
   var ritorno = leggi('dc_offerta_vista') === '1';
   scrivi('dc_offerta_vista', '1');
-  var base = schermo + (video ? ' · video ' + video : '') + ' · ' + stato.campagna + (stato.avvio ? ' · avvio' : '');
+  var base = schermo + (video ? ' · video ' + video : '') + ' · ' + stato.campagna;
 
   function invia(evento, dettaglio) {
     var dati = new URLSearchParams();
