@@ -9,7 +9,7 @@ assert.match(html,/fbq\('track','PageView'\)/);
 assert.doesNotMatch(html,/fbq\('track','Lead'\)/);
 assert.doesNotMatch(script,/DCLanding\.iscrizione\(/);
 
-function harness(server, session=new Map()){
+function harness(server, session=new Map(), options={}){
   let now=0,nextTimer=1,modal=0,abRegistrations=0;
   const timers=new Map(),calls=[],els=new Map();
   function el(id){
@@ -17,8 +17,10 @@ function harness(server, session=new Map()){
       style:{display:'none'},classList:{add(kind){if(id==='confirmModal'&&kind==='open')modal++;},remove(){}},scrollIntoView(){}});
     return els.get(id);
   }
-  el('fieldName').value='Mario Rossi';el('fieldEmail').value='ceo@example.test';
-  el('fieldPhone').value='3331234567';el('fieldPrivacy').checked=true;
+  if(!options.emptyFields){
+    el('fieldName').value='Mario Rossi';el('fieldEmail').value='ceo@example.test';
+    el('fieldPhone').value='3331234567';el('fieldPrivacy').checked=true;
+  }
   for(const id of ['utm_source','utm_medium','utm_campaign','utm_content'])el(id).value='prova';
   const storage={getItem:k=>session.get(k)||null,setItem:(k,v)=>session.set(k,String(v))};
   const document={cookie:'',getElementById:el};
@@ -35,35 +37,43 @@ function harness(server, session=new Map()){
 }
 const response=(body,status=200)=>Promise.resolve({ok:status>=200&&status<300,json:()=>Promise.resolve(body)});
 const posts=h=>h.calls.filter(x=>x.options?.method==='POST');
-function noFalseConfirmation(h){
+function noFalseConfirmation(h,expectedEmail='ceo@example.test'){
   assert.equal(h.modal,0);assert.equal(h.abRegistrations,0);assert.equal(h.window.location.href,'');
   assert.equal(h.el('submitBtn').disabled,true);
   assert.equal(h.el('btnText').textContent,'INVIO DA VERIFICARE');
   assert.match(h.el('formErrore').innerHTML,/Guarda il video/);
-  assert.equal(h.el('fieldEmail').value,'ceo@example.test');
+  assert.equal(h.el('fieldEmail').value,expectedEmail);
 }
 
 const bridge=harness((url)=>url.endsWith('/health')?response({status:'ok'}):response({ok:true,stato_kajabi:302}));
 bridge.submit();await bridge.flush();
 assert.equal(posts(bridge).length,1);assert.equal(posts(bridge)[0].url,'https://dc-chatbot-vswb.onrender.com/lead-kajabi');
-assert.match(bridge.el('formErrore').innerHTML,/Non possiamo ancora verificare/);
+assert.match(bridge.el('formErrore').innerHTML,/Richiesta inviata\. Controlla l’email di conferma; da qui non possiamo verificare l’iscrizione\./);
+assert.equal(bridge.session.get('dc_workshop_invio_2149685500_20261015'),'inviata','marker is scoped to form and edition');
 noFalseConfirmation(bridge);
 bridge.submit();await bridge.flush();assert.equal(posts(bridge).length,1,'same tab cannot repost');
-const refreshed=harness(()=>{throw Error('refresh must not fetch');},bridge.session);
-noFalseConfirmation(refreshed);refreshed.submit();await refreshed.flush();assert.equal(posts(refreshed).length,0);
+const refreshed=harness(()=>{throw Error('refresh must not fetch');},bridge.session,{emptyFields:true});
+noFalseConfirmation(refreshed,'');
+assert.doesNotMatch(refreshed.el('formErrore').innerHTML,/dati restano|dati.*compilat/i,'reload does not promise missing draft fields');
+refreshed.submit();await refreshed.flush();assert.equal(posts(refreshed).length,0);
+
+const oldEdition=new Map([['dc_workshop_invio_da_verificare','incerta'],['dc_workshop_invio_2149685500_20260930','incerta']]);
+const newEdition=harness((url)=>url.endsWith('/health')?response({status:'ok'}):response({ok:true}),oldEdition);
+newEdition.submit();await newEdition.flush();
+assert.equal(posts(newEdition).length,1,'old edition marker cannot block this edition');
 
 const opaque=harness((url)=>url.endsWith('/health')?Promise.reject(Error('bridge asleep')):Promise.resolve({type:'opaque',ok:false}));
 opaque.submit();await opaque.flush();
 assert.equal(posts(opaque).length,1,'bridge failure selects one direct POST');
 assert.equal(posts(opaque)[0].options.mode,'no-cors');
-assert.match(opaque.el('formErrore').innerHTML,/Non possiamo ancora verificare/);
+assert.match(opaque.el('formErrore').innerHTML,/Richiesta inviata\. Controlla l’email di conferma/);
 noFalseConfirmation(opaque);
 
 const timeout=harness((url)=>url.endsWith('/health')?response({status:'ok'}):new Promise(()=>{}));
 timeout.submit();await timeout.flush();await timeout.tick();
 assert.equal(timeout.now,25000);assert.equal(posts(timeout).length,1,'POST timeout never starts a direct fallback');
 assert.equal(posts(timeout)[0].options.signal.aborted,true);
-assert.match(timeout.el('formErrore').innerHTML,/Non sappiamo se la richiesta è arrivata/);
+assert.match(timeout.el('formErrore').innerHTML,/L’invio non è verificato\. Non lo ripetiamo/);
 noFalseConfirmation(timeout);
 timeout.submit();await timeout.flush();assert.equal(posts(timeout).length,1,'uncertain POST cannot be repeated');
 

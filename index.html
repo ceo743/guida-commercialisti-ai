@@ -861,12 +861,12 @@ function toggleAccordion(el){
 function dcPhoneOk(raw){var p=String(raw||'').replace(/[\s\-\+\.\(\)]/g,'');if(p.slice(0,2)==='00')p=p.slice(2);if(!/^\d+$/.test(p))return false;if(p.length<9||p.length>13)return false;if(/^(\d)\1+$/.test(p))return false;var u={},n=0,i;for(i=0;i<p.length;i++){if(!u[p[i]]){u[p[i]]=1;n++;}}if(n<3)return false;return true;}
 var KAJABI_FORM_WORKSHOP='2149685500';
 var PONTE_ISCRIZIONI='https://dc-chatbot-vswb.onrender.com/lead-kajabi';
-var WK_INVIO_KEY='dc_workshop_invio_da_verificare';
+var WK_INVIO_KEY='dc_workshop_invio_'+KAJABI_FORM_WORKSHOP+'_20261015';
 var wkInvioMemoria='',wkInvioInCorso=false;
 function wkInvioLeggi(){
   var value='';
   try{value=sessionStorage.getItem(WK_INVIO_KEY)||'';}catch(err){}
-  if(!value){try{value=decodeURIComponent((document.cookie.match(/(?:^|; )dc_workshop_invio_da_verificare=([^;]*)/)||[])[1]||'');}catch(err){}}
+  if(!value){try{value=decodeURIComponent((document.cookie.match(new RegExp('(?:^|; )'+WK_INVIO_KEY+'=([^;]*)'))||[])[1]||'');}catch(err){}}
   return value==='inviata'||value==='incerta'?value:wkInvioMemoria;
 }
 function wkInvioSalva(value){
@@ -900,10 +900,11 @@ function mostraInvioDaVerificare(stato){
   var btn=document.getElementById('submitBtn');btn.disabled=true;
   document.getElementById('btnText').textContent='INVIO DA VERIFICARE';
   var box=document.getElementById('formErrore');
-  var testo=stato==='inviata'
-    ? 'La richiesta è stata inviata. Non possiamo ancora verificare che la registrazione sia stata salvata. Controlla l’email di conferma.'
-    : 'Non sappiamo se la richiesta è arrivata. I dati restano nel modulo: non la reinviamo per evitare un doppione.';
-  box.innerHTML=testo+' <a href="https://commercialisti.davidecaiazzo.it/grazie/">Guarda il video</a> oppure <a href="mailto:academy@davidecaiazzo.it?subject=Verifica%20iscrizione%2015%20ottobre">scrivici per verificare l’iscrizione</a>.';
+  var video='<a href="https://commercialisti.davidecaiazzo.it/grazie/">Guarda il video</a>';
+  var contatto='<a href="mailto:academy@davidecaiazzo.it?subject=Verifica%20iscrizione%2015%20ottobre">scrivici</a>';
+  box.innerHTML=stato==='inviata'
+    ? 'Richiesta inviata. Controlla l’email di conferma; da qui non possiamo verificare l’iscrizione. '+video+' oppure '+contatto+'.'
+    : 'L’invio non è verificato. Non lo ripetiamo: '+contatto+' e controlliamo noi. '+video+'.';
   box.style.display='block';
   box.scrollIntoView({behavior:'smooth',block:'center'});
 }
