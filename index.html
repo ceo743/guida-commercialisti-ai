@@ -861,16 +861,56 @@ function toggleAccordion(el){
 function dcPhoneOk(raw){var p=String(raw||'').replace(/[\s\-\+\.\(\)]/g,'');if(p.slice(0,2)==='00')p=p.slice(2);if(!/^\d+$/.test(p))return false;if(p.length<9||p.length>13)return false;if(/^(\d)\1+$/.test(p))return false;var u={},n=0,i;for(i=0;i<p.length;i++){if(!u[p[i]]){u[p[i]]=1;n++;}}if(n<3)return false;return true;}
 var KAJABI_FORM_WORKSHOP='2149685500';
 var PONTE_ISCRIZIONI='https://dc-chatbot-vswb.onrender.com/lead-kajabi';
-function mostraErrore(testo){
+var WK_PENDING_KEY='dc_workshop_attempt_pending';
+var wkPendingMemory=null;
+function wkPendingRead(){
+  var value;
+  try{value=localStorage.getItem(WK_PENDING_KEY);if(value)return value;}catch(err){}
+  try{value=sessionStorage.getItem(WK_PENDING_KEY);if(value)return value;}catch(err){}
+  try{value=decodeURIComponent((document.cookie.match(/(?:^|; )dc_workshop_attempt_pending=([^;]*)/)||[])[1]||'');if(value)return value;}catch(err){}
+  return wkPendingMemory;
+}
+function wkPendingSave(value){
+  wkPendingMemory=value;
+  try{localStorage.setItem(WK_PENDING_KEY,value);return 'local';}catch(err){}
+  try{sessionStorage.setItem(WK_PENDING_KEY,value);return 'session';}catch(err){}
+  try{document.cookie=WK_PENDING_KEY+'='+encodeURIComponent(value)+'; Path=/; SameSite=Lax; Secure';var match=document.cookie.match(/(?:^|; )dc_workshop_attempt_pending=([^;]*)/);if(match&&decodeURIComponent(match[1])===value)return 'cookie';}catch(err){}
+  return 'memory';
+}
+function wkPendingRemove(){
+  wkPendingMemory=null;
+  try{localStorage.removeItem(WK_PENDING_KEY);}catch(err){}
+  try{sessionStorage.removeItem(WK_PENDING_KEY);}catch(err){}
+  try{document.cookie=WK_PENDING_KEY+'=; Max-Age=0; Path=/; SameSite=Lax; Secure';}catch(err){}
+}
+function nuovoTentativo(){
+  if(!window.crypto||!window.crypto.getRandomValues)return null;
+  var bytes=new Uint8Array(16);window.crypto.getRandomValues(bytes);
+  return Array.from(bytes,function(b){return b.toString(16).padStart(2,'0');}).join('');
+}
+function tracciaLeadVerificato(id){
+  if(!/^[A-Za-z0-9_-]{1,80}$/.test(String(id||'')))return;
+  var key='dc_workshop_lead_'+id;
+  try{if(localStorage.getItem(key))return;localStorage.setItem(key,'1');}catch(err){return;}
+  if(typeof fbq==='function')fbq('track','Lead',{}, {eventID:'wk-'+id});
+}
+function verificaTentativo(attempt, submissionId){
+  var url=PONTE_ISCRIZIONI+'/workshop-status?attempt_id='+encodeURIComponent(attempt);
+  if(submissionId)url+='&submission_id='+encodeURIComponent(submissionId);
+  return fetch(url).then(function(r){return r.json();});
+}
+function mostraErrore(testo, esitoIncerto){
   var btn=document.getElementById('submitBtn');
-  btn.disabled=false;
-  document.getElementById('btnText').textContent='RISERVA IL MIO POSTO GRATIS';
+  btn.disabled=!!esitoIncerto;
+  document.getElementById('btnText').textContent=esitoIncerto?'VERIFICA PRIMA DI INVIARE DI NUOVO':'RISERVA IL MIO POSTO GRATIS';
   var box=document.getElementById('formErrore');
   box.innerHTML=testo;
   box.style.display='block';
   box.scrollIntoView({behavior:'smooth',block:'center'});
 }
 function mostraConferma(){
+  // La pagina video legge l'email solo dopo l'accettazione tecnica del form.
+  try{var email=document.getElementById('fieldEmail').value.trim();if(email)localStorage.setItem('dc_iscrizione_email',email.toLowerCase());}catch(err){}
   // [CLAUDE] 2026-10-02 prova A/B: segna l'iscrizione riuscita per la variante (non tocca l'invio a Kajabi)
   try{if(window.DCLanding)window.DCLanding.iscrizione();}catch(err){}
   document.getElementById('confirmModal').classList.add('open');
@@ -887,8 +927,6 @@ function submitForm(e){
   if(!dcPhoneOk(fP.value)){fP.classList.add('error');bad=true;}
   if(!pv.checked){pv.classList.add('checkbox-error');bad=true}
   if(bad) return;
-  // [CLAUDE] 02/10/2026: l'email resta in questo browser per la pagina grazie (misura dei 3 video, scheda GRAZIE del foglio Lead)
-  try{localStorage.setItem('dc_iscrizione_email',fE.value.trim().toLowerCase());}catch(err){}
   var btn=document.getElementById('submitBtn');btn.disabled=true;document.getElementById('btnText').textContent='INVIO IN CORSO...';
   document.getElementById('formErrore').style.display='none';
 
@@ -901,8 +939,9 @@ function submitForm(e){
     custom_74:document.getElementById('utm_campaign').value,
     custom_75:document.getElementById('utm_content').value
   };
-  var data=new URLSearchParams();
-  Object.keys(campi).forEach(function(k){data.append('form_submission['+k+']',campi[k]);});
+  var SCRIVICI='<a href="mailto:academy@davidecaiazzo.it?subject=Iscrizione%20dimostrazione%2015%20ottobre">academy@davidecaiazzo.it</a>';
+  var ERR_RIFIUTO='Non siamo riusciti a registrare la tua iscrizione. Controlla i dati e riprova, oppure scrivi a '+SCRIVICI+' e ti iscriviamo noi.';
+  var ERR_RETE='Non possiamo verificare se Kajabi ha ricevuto la richiesta. I tuoi dati restano compilati. Prima di inviare di nuovo, scrivi a '+SCRIVICI+' per controllare l’iscrizione.';
 
   // Enrolled browsers use the measured confirmation endpoint, never a blind no-cors success.
   var misurata=window.DCWorkshopExperiment && window.DCWorkshopExperiment.submit(campi);
@@ -910,38 +949,67 @@ function submitForm(e){
     misurata.then(function(esito){
       if(esito.ok){mostraConferma();}
       else{mostraErrore('Iscrizione non confermata. Controlla i dati e riprova.');}
-    }).catch(function(){mostraErrore('Non abbiamo potuto verificare l’iscrizione. Riprova: i tuoi dati sono ancora compilati.');});
+    }).catch(function(){mostraErrore(ERR_RETE,true);});
     return;
   }
 
-  var SCRIVICI='<a href="mailto:academy@davidecaiazzo.it?subject=Iscrizione%20dimostrazione%2015%20ottobre">academy@davidecaiazzo.it</a>';
-  var ERR_RIFIUTO='Non siamo riusciti a registrare la tua iscrizione. Controlla i dati e riprova, oppure scrivi a '+SCRIVICI+' e ti iscriviamo noi.';
-  var ERR_RETE='Iscrizione non riuscita: la connessione si &egrave; interrotta. Riprova tra un istante, oppure scrivi a '+SCRIVICI+' e ti iscriviamo noi.';
-
-  // Kajabi non manda intestazioni CORS: un invio diretto dal browser e' cieco
-  // (mode:'no-cors'), quindi la pagina non puo' sapere se l'iscrizione e'
-  // passata. Si passa dal nostro ponte, che la inoltra e legge l'esito vero.
-  // Il ponte sta su un piano gratuito che puo' dormire: se non risponde
-  // entro 8 secondi si passa all'invio diretto, senza lasciare il
-  // visitatore fermo su "INVIO IN CORSO...".
+  // Dopo un timeout si cerca la stessa ricevuta Kajabi: mai un secondo POST
+  // dello stesso tentativo. La chiave opaca contiene solo byte casuali.
+  var attempt=wkPendingRead(), precedente=!!attempt;
+  if(!attempt){attempt=nuovoTentativo();if(attempt)wkPendingSave(attempt);}
+  if(!attempt){mostraErrore('Non possiamo avviare l’iscrizione in sicurezza in questo browser. Scrivi a '+SCRIVICI+'.',true);return;}
+  function gestisciEsito(esito){
+    if(esito&&esito.ok){
+      if(esito.verified)tracciaLeadVerificato(esito.submission_id);
+      wkPendingRemove();
+      window.dcWorkshopAttemptInviato=false;
+      mostraConferma();
+    }else if(esito&&esito.motivo==='Kajabi ha rifiutato l\'iscrizione'){
+      wkPendingRemove();
+      window.dcWorkshopAttemptInviato=false;
+      mostraErrore(ERR_RIFIUTO);
+    }else{mostraErrore(ERR_RETE,true);}
+  }
+  // Un tentativo conservato indica un invio precedente dall'esito incerto.
+  // Anche dopo refresh o riavvio del ponte facciamo solo una lettura.
+  if(precedente||window.dcWorkshopAttemptInviato){
+    verificaTentativo(attempt).then(gestisciEsito,function(){mostraErrore(ERR_RETE,true);});
+    return;
+  }
+  window.dcWorkshopAttemptInviato=true;
   var taglia = (typeof AbortController!=='undefined') ? new AbortController() : null;
-  var scaduto = setTimeout(function(){ if(taglia) taglia.abort(); }, 8000);
-  fetch(PONTE_ISCRIZIONI,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({form_id:KAJABI_FORM_WORKSHOP,campi:campi}),signal:taglia?taglia.signal:undefined})
+  var scaduto = setTimeout(function(){ if(taglia) taglia.abort(); }, 30000);
+  fetch(PONTE_ISCRIZIONI,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({form_id:KAJABI_FORM_WORKSHOP,campi:campi,attempt_id:attempt}),signal:taglia?taglia.signal:undefined})
     .then(function(r){clearTimeout(scaduto);return r.json();},function(err){clearTimeout(scaduto);throw err;})
     .then(function(esito){
       if(!esito||typeof esito.ok!=='boolean') throw new Error('risposta non leggibile');
-      return esito.ok;
+      return esito;
     })
-    .then(function(accettata){
-      if(accettata){ mostraConferma(); } else { mostraErrore(ERR_RIFIUTO); }
-    },function(){
-      // Ponte irraggiungibile: invio diretto, cosi' l'iscrizione non si perde.
-      // L'esito resta illeggibile, ma se la richiesta non parte proprio la
-      // promessa viene respinta e la conferma NON compare.
-      fetch('https://www.davidecaiazzo.it/forms/'+KAJABI_FORM_WORKSHOP+'/form_submissions',{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:data})
-        .then(function(){mostraConferma();},function(){mostraErrore(ERR_RETE);});
-    });
+    .then(function(esito){
+      if(esito.pending){verificaTentativo(attempt,esito.submission_id).then(gestisciEsito,function(){mostraErrore(ERR_RETE,true);});}
+      else{gestisciEsito(esito);}
+    },function(){verificaTentativo(attempt).then(gestisciEsito,function(){mostraErrore(ERR_RETE,true);});});
 }
+// Se la risposta del POST si perde, anche un refresh fa soltanto una lettura
+// del tentativo opaco gia' conservato; i campi del form non sono necessari.
+(function(){
+  var pending=wkPendingRead();
+  if(!/^[a-f0-9]{32}$/.test(pending||''))return;
+  window.dcWorkshopAttemptInviato=true;
+  var btn=document.getElementById('submitBtn');
+  btn.disabled=true;
+  document.getElementById('btnText').textContent='VERIFICA ISCRIZIONE...';
+  function nonVerificata(){
+    mostraErrore('Non possiamo verificare se Kajabi ha ricevuto la richiesta. Prima di inviare di nuovo, scrivi a <a href="mailto:academy@davidecaiazzo.it?subject=Iscrizione%20dimostrazione%2015%20ottobre">academy@davidecaiazzo.it</a>.',true);
+  }
+  verificaTentativo(pending).then(function(esito){
+    if(!esito||!esito.ok||!esito.verified){nonVerificata();return;}
+    tracciaLeadVerificato(esito.submission_id);
+    wkPendingRemove();
+    window.dcWorkshopAttemptInviato=false;
+    mostraConferma();
+  },nonVerificata);
+})();
 </script>
 <script src="https://dc-chatbot-vswb.onrender.com/widget.js" data-bot="commercialisti" data-auto-open="false"></script>
 
