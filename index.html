@@ -861,6 +861,32 @@ function toggleAccordion(el){
 function dcPhoneOk(raw){var p=String(raw||'').replace(/[\s\-\+\.\(\)]/g,'');if(p.slice(0,2)==='00')p=p.slice(2);if(!/^\d+$/.test(p))return false;if(p.length<9||p.length>13)return false;if(/^(\d)\1+$/.test(p))return false;var u={},n=0,i;for(i=0;i<p.length;i++){if(!u[p[i]]){u[p[i]]=1;n++;}}if(n<3)return false;return true;}
 var KAJABI_FORM_WORKSHOP='2149685500';
 var PONTE_ISCRIZIONI='https://dc-chatbot-vswb.onrender.com/lead-kajabi';
+var WK_INVIO_KEY='dc_workshop_invio_da_verificare';
+var wkInvioMemoria='',wkInvioInCorso=false;
+function wkInvioLeggi(){
+  var value='';
+  try{value=sessionStorage.getItem(WK_INVIO_KEY)||'';}catch(err){}
+  if(!value){try{value=decodeURIComponent((document.cookie.match(/(?:^|; )dc_workshop_invio_da_verificare=([^;]*)/)||[])[1]||'');}catch(err){}}
+  return value==='inviata'||value==='incerta'?value:wkInvioMemoria;
+}
+function wkInvioSalva(value){
+  wkInvioMemoria=value;
+  try{sessionStorage.setItem(WK_INVIO_KEY,value);return;}catch(err){}
+  try{document.cookie=WK_INVIO_KEY+'='+encodeURIComponent(value)+'; Path=/; SameSite=Lax; Secure';}catch(err){}
+}
+function wkRichiesta(url, options, limite, json){
+  var taglia=(typeof AbortController!=='undefined')?new AbortController():null;
+  return new Promise(function(resolve,reject){
+    var finita=false;
+    var timer=setTimeout(function(){if(finita)return;finita=true;if(taglia)taglia.abort();reject(new Error('tempo scaduto'));},limite);
+    function chiudi(err,value){if(finita)return;finita=true;clearTimeout(timer);if(err)reject(err);else resolve(value);}
+    options.signal=taglia?taglia.signal:undefined;
+    try{
+      fetch(url,options).then(function(r){return json?r.json().then(function(data){return {httpOk:r.ok,data:data};}):{httpOk:r.ok};})
+        .then(function(value){chiudi(null,value);},function(err){chiudi(err);});
+    }catch(err){chiudi(err);}
+  });
+}
 function mostraErrore(testo){
   var btn=document.getElementById('submitBtn');
   btn.disabled=false;
@@ -870,15 +896,22 @@ function mostraErrore(testo){
   box.style.display='block';
   box.scrollIntoView({behavior:'smooth',block:'center'});
 }
-function mostraConferma(){
-  // [CLAUDE] 2026-10-02 prova A/B: segna l'iscrizione riuscita per la variante (non tocca l'invio a Kajabi)
-  try{if(window.DCLanding)window.DCLanding.iscrizione();}catch(err){}
-  document.getElementById('confirmModal').classList.add('open');
-  var sec=3,ce=document.getElementById('countdownSec');
-  var t=setInterval(function(){sec--;ce.textContent=sec;if(sec<=0){clearInterval(t);window.location.href='https://commercialisti.davidecaiazzo.it/grazie/';}},1000);
+function mostraInvioDaVerificare(stato){
+  var btn=document.getElementById('submitBtn');btn.disabled=true;
+  document.getElementById('btnText').textContent='INVIO DA VERIFICARE';
+  var box=document.getElementById('formErrore');
+  var testo=stato==='inviata'
+    ? 'La richiesta è stata inviata. Non possiamo ancora verificare che la registrazione sia stata salvata. Controlla l’email di conferma.'
+    : 'Non sappiamo se la richiesta è arrivata. I dati restano nel modulo: non la reinviamo per evitare un doppione.';
+  box.innerHTML=testo+' <a href="https://commercialisti.davidecaiazzo.it/grazie/">Guarda il video</a> oppure <a href="mailto:academy@davidecaiazzo.it?subject=Verifica%20iscrizione%2015%20ottobre">scrivici per verificare l’iscrizione</a>.';
+  box.style.display='block';
+  box.scrollIntoView({behavior:'smooth',block:'center'});
 }
 function submitForm(e){
   e.preventDefault();
+  if(wkInvioInCorso)return;
+  var precedente=wkInvioLeggi();
+  if(precedente){mostraInvioDaVerificare(precedente);return;}
   var fN=document.getElementById('fieldName'),fE=document.getElementById('fieldEmail'),fP=document.getElementById('fieldPhone'),pv=document.getElementById('fieldPrivacy');
   var bad=false;
   [fN,fE,fP].forEach(function(f){f.classList.remove('error');if(!f.value.trim()){f.classList.add('error');bad=true}});
@@ -904,44 +937,25 @@ function submitForm(e){
   var data=new URLSearchParams();
   Object.keys(campi).forEach(function(k){data.append('form_submission['+k+']',campi[k]);});
 
-  // Enrolled browsers use the measured confirmation endpoint, never a blind no-cors success.
-  var misurata=window.DCWorkshopExperiment && window.DCWorkshopExperiment.submit(campi);
-  if(misurata){
-    misurata.then(function(esito){
-      if(esito.ok){mostraConferma();}
-      else{mostraErrore('Iscrizione non confermata. Controlla i dati e riprova.');}
-    }).catch(function(){mostraErrore('Non abbiamo potuto verificare l’iscrizione. Riprova: i tuoi dati sono ancora compilati.');});
-    return;
-  }
-
-  var SCRIVICI='<a href="mailto:academy@davidecaiazzo.it?subject=Iscrizione%20dimostrazione%2015%20ottobre">academy@davidecaiazzo.it</a>';
-  var ERR_RIFIUTO='Non siamo riusciti a registrare la tua iscrizione. Controlla i dati e riprova, oppure scrivi a '+SCRIVICI+' e ti iscriviamo noi.';
-  var ERR_RETE='Iscrizione non riuscita: la connessione si &egrave; interrotta. Riprova tra un istante, oppure scrivi a '+SCRIVICI+' e ti iscriviamo noi.';
-
-  // Kajabi non manda intestazioni CORS: un invio diretto dal browser e' cieco
-  // (mode:'no-cors'), quindi la pagina non puo' sapere se l'iscrizione e'
-  // passata. Si passa dal nostro ponte, che la inoltra e legge l'esito vero.
-  // Il ponte sta su un piano gratuito che puo' dormire: se non risponde
-  // entro 8 secondi si passa all'invio diretto, senza lasciare il
-  // visitatore fermo su "INVIO IN CORSO...".
-  var taglia = (typeof AbortController!=='undefined') ? new AbortController() : null;
-  var scaduto = setTimeout(function(){ if(taglia) taglia.abort(); }, 8000);
-  fetch(PONTE_ISCRIZIONI,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({form_id:KAJABI_FORM_WORKSHOP,campi:campi}),signal:taglia?taglia.signal:undefined})
-    .then(function(r){clearTimeout(scaduto);return r.json();},function(err){clearTimeout(scaduto);throw err;})
-    .then(function(esito){
-      if(!esito||typeof esito.ok!=='boolean') throw new Error('risposta non leggibile');
-      return esito.ok;
+  // Si sceglie un solo canale prima di inviare: un timeout del POST non
+  // innesca un secondo POST, che potrebbe creare una doppia submission.
+  wkInvioInCorso=true;
+  wkRichiesta(PONTE_ISCRIZIONI.replace(/\/lead-kajabi$/,'/health'),{method:'GET',cache:'no-store'},4000,false)
+    .then(function(salute){return salute.httpOk;},function(){return false;})
+    .then(function(pontePronto){
+      wkInvioSalva('incerta');
+      if(pontePronto){
+        return wkRichiesta(PONTE_ISCRIZIONI,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({form_id:KAJABI_FORM_WORKSHOP,campi:campi})},25000,true)
+          .then(function(esito){return esito.httpOk&&esito.data&&esito.data.ok===true?'inviata':'incerta';});
+      }
+      // Ponte spento: unico POST diretto. La risposta opaca non e' una ricevuta.
+      return wkRichiesta('https://www.davidecaiazzo.it/forms/'+KAJABI_FORM_WORKSHOP+'/form_submissions',{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:data},25000,false)
+        .then(function(){return 'inviata';});
     })
-    .then(function(accettata){
-      if(accettata){ mostraConferma(); } else { mostraErrore(ERR_RIFIUTO); }
-    },function(){
-      // Ponte irraggiungibile: invio diretto, cosi' l'iscrizione non si perde.
-      // L'esito resta illeggibile, ma se la richiesta non parte proprio la
-      // promessa viene respinta e la conferma NON compare.
-      fetch('https://www.davidecaiazzo.it/forms/'+KAJABI_FORM_WORKSHOP+'/form_submissions',{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:data})
-        .then(function(){mostraConferma();},function(){mostraErrore(ERR_RETE);});
-    });
+    .then(function(stato){wkInvioInCorso=false;wkInvioSalva(stato);mostraInvioDaVerificare(stato);},
+      function(){wkInvioInCorso=false;wkInvioSalva('incerta');mostraInvioDaVerificare('incerta');});
 }
+(function(){var stato=wkInvioLeggi();if(stato)mostraInvioDaVerificare(stato);})();
 </script>
 <script src="https://dc-chatbot-vswb.onrender.com/widget.js" data-bot="commercialisti" data-auto-open="false"></script>
 
