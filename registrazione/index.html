@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <meta name="robots" content="noindex, nofollow"/>
 <title>Registrazione del webinar per commercialisti</title>
-<meta name="description" content="La registrazione del webinar per commercialisti di Davide Caiazzo e Alessia Dorigo su Commercialista AI."/>
+<meta name="description" content="La registrazione della dimostrazione dal vivo di Commercialista AI per commercialisti."/>
 <link rel="canonical" href="https://commercialisti.davidecaiazzo.it/registrazione/"/>
 <link rel="icon" type="image/png" href="https://automazioni.davidecaiazzo.it/favicon.png"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -39,6 +39,10 @@
   footer{border-top:1px solid var(--line);margin-top:40px;padding:24px 0 10px;text-align:center}
   footer p{font-size:12px;color:rgba(255,255,255,.35);line-height:1.8}
   footer a{color:rgba(255,255,255,.45)}
+  [hidden]{display:none!important}
+  .codice{font-family:ui-monospace,Menlo,monospace;color:#fff;background:rgba(255,255,255,.08);border:1px solid var(--line);border-radius:8px;padding:3px 8px}
+  .copia{font:inherit;font-size:13px;font-weight:700;color:#fff;background:transparent;border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:4px 12px;margin-left:6px;cursor:pointer}
+  .box .btn{margin-top:22px}
   @media(max-width:480px){.btn{letter-spacing:1.2px;font-size:15px;padding:18px 18px}.brand span{display:none}}
 </style>
 </head>
@@ -50,24 +54,59 @@
   <span class="chip">Webinar per commercialisti</span>
   <h1>Registrazione del webinar per <em>commercialisti</em></h1>
 
-  <!-- REGISTRAZIONE:INIZIO (registrazione chiusa il 03/10/2026, decisione di Davide) -->
-  <div class="box">
-    <p>La registrazione non è più disponibile.</p>
-    <p class="small">Abbiamo deciso di non mostrarla più: nel prossimo webinar facciamo vedere tantissime funzionalità nuove, quindi sarà completamente diverso da quello del 30 settembre.</p>
-    <a class="btn big" href="https://commercialisti.davidecaiazzo.it/?utm_source=webinar&amp;utm_medium=registrazione&amp;utm_campaign=webinar-commercialisti-2026-09-30&amp;utm_content=registrazione-chiusa">Iscriviti al prossimo webinar &rarr;</a>
+  <!-- REGISTRAZIONE:INIZIO edizione=2026-10-15 link=no precedente=2026-09-30 prossima=- -->
+  <!-- Scritto da Scheduled/registrazione-webinar/registrazione.py il 05/10/2026 20:30: non modificare a mano, si riscrive a ogni edizione. -->
+  <div class="box" data-stato="prima" data-dal="" data-al="2026-10-15T21:00:00+02:00">
+    <p>La prossima dimostrazione dal vivo di Commercialista AI è giovedì 15 ottobre alle 21:00.</p>
+    <p class="small">Dopo la diretta la registrazione arriva qui e resta online 48 ore. Le domande però si fanno solo dal vivo.</p>
+    <p class="small">La registrazione della diretta di mercoledì 30 settembre non è più disponibile.</p>
+    <a class="btn big" href="https://commercialisti.davidecaiazzo.it/?utm_source=webinar&amp;utm_medium=registrazione&amp;utm_campaign=webinar-commercialisti-2026-10-15&amp;utm_content=registrazione-prima">Iscriviti alla diretta &rarr;</a>
   </div>
-  <!-- REGISTRAZIONE:FINE -->
+  <div class="box" data-stato="in_corso" data-dal="2026-10-15T21:00:00+02:00" data-al="2026-10-15T23:00:00+02:00" hidden>
+    <p>La diretta è in corso adesso.</p>
+    <p class="small">Per entrare apri questo link e lascia nome ed email: bastano pochi secondi. Usa la stessa email con cui ti sei iscritto.</p>
+    <a class="btn big" href="https://us06web.zoom.us/meeting/register/KCg7c13sTYyH39xPEzq5wQ" target="_blank" rel="noopener">Entra nella diretta &rarr;</a>
+  </div>
+  <div class="box" data-stato="attesa" data-dal="2026-10-15T23:00:00+02:00" data-al="2026-10-17T23:00:00+02:00" hidden>
+    <p>La diretta di giovedì 15 ottobre è finita: stiamo preparando la registrazione.</p>
+    <p class="small">Appena è pronta la trovi qui, su questa pagina. Resta online fino a sabato 17 ottobre alle 23:00.</p>
+  </div>
+  <div class="box" data-stato="chiusa" data-dal="2026-10-17T23:00:00+02:00" data-al="" hidden>
+    <p>La registrazione della diretta di giovedì 15 ottobre non è più disponibile: restava online 48 ore.</p>
+    <p class="small">Iscriviti alla prossima dimostrazione dal vivo: se non puoi esserci, dopo la diretta ti mandiamo la registrazione.</p>
+    <a class="btn big" href="https://commercialisti.davidecaiazzo.it/?utm_source=webinar&amp;utm_medium=registrazione&amp;utm_campaign=webinar-commercialisti-2026-10-15&amp;utm_content=registrazione-chiusa">Iscriviti alla prossima diretta &rarr;</a>
+  </div>
 
   <div class="sep"></div>
 
-  <p class="lead">Hai già visto abbastanza? Iscrivi lo studio e parti subito con Commercialista AI.</p>
-  <a class="btn" href="https://commercialista-ai.davidecaiazzo.it/registrati?utm_source=webinar&amp;utm_medium=registrazione&amp;utm_campaign=webinar-commercialisti-2026-09-30">Attiva il tuo studio &rarr;</a>
-  <p class="after">Hai già deciso? <a href="https://commercialista-ai.davidecaiazzo.it/registrati?utm_source=webinar&amp;utm_medium=registrazione&amp;utm_campaign=webinar-commercialisti-2026-09-30">Attiva il tuo studio</a></p>
+  <p class="lead">Hai già deciso? Attiva lo studio e parti subito con Commercialista AI.</p>
+  <a class="btn" href="https://commercialisti.davidecaiazzo.it/offerta/?utm_source=webinar&amp;utm_medium=registrazione&amp;utm_campaign=webinar-commercialisti-2026-10-15&amp;utm_content=registrazione-offerta">Vedi l'offerta e attiva &rarr;</a>
+  <!-- REGISTRAZIONE:FINE -->
 
   <footer><p>© <span id="yr">2026</span> DC ACADEMY S.r.l. | P.IVA 05125350750 | 📩 <a href="mailto:academy@davidecaiazzo.it">academy@davidecaiazzo.it</a> | Via I. Adriano 9 | Lecce</p><p><a href="https://docs.google.com/document/d/1qUNgRcZ0W9aZxutDu1Fv2k5aM6Nti4V0/edit" target="_blank" rel="noopener noreferrer">Informativa Privacy</a>
       <a href="https://docs.google.com/document/d/1PTTs2QFMqBtZaefLHPrrfMxJRnlGewih/edit" target="_blank" rel="noopener noreferrer">Cookie Policy</a>
       <a href="https://docs.google.com/document/d/1K6WGjt9aFTRN-zWMvEOh5bw2A32nNag-/edit" target="_blank" rel="noopener noreferrer">Condizioni di Vendita</a>
       <a href="https://www.davidecaiazzo.it/trasparenza" rel="noopener noreferrer">Trasparenza</a></p></footer>
 </div>
+<script>
+/* Mostra il riquadro giusto in base all'ora di chi guarda (date scritte dalla routine registrazione-webinar):
+   la registrazione sparisce dalla pagina alla scadenza delle 48 ore anche senza un nuovo aggiornamento. */
+(function () {
+  var adesso = Date.now();
+  var riquadri = document.querySelectorAll('[data-stato]');
+  for (var i = 0; i < riquadri.length; i++) {
+    var dal = riquadri[i].getAttribute('data-dal'), al = riquadri[i].getAttribute('data-al');
+    var dentro = (!dal || adesso >= Date.parse(dal)) && (!al || adesso < Date.parse(al));
+    riquadri[i].hidden = !dentro;
+  }
+  var copia = document.querySelectorAll('.copia');
+  for (var j = 0; j < copia.length; j++) {
+    copia[j].addEventListener('click', function () {
+      var b = this, testo = b.getAttribute('data-copia');
+      if (navigator.clipboard) navigator.clipboard.writeText(testo).then(function () { b.textContent = 'Copiato'; });
+    });
+  }
+})();
+</script>
 </body>
 </html>
