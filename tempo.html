@@ -33,7 +33,7 @@ fbq('track','PageView');
   // Anteprime della pagina aperta da file (non dal sito) contano sempre come prova.
   var prova = param('prova') === '1' || !/^https?:$/.test(window.location.protocol);
   // [CLAUDE] 2026-10-08 pagina C della prova A/B/C (angolo tempo): variante fissa C, non salvata
-  var variante = 'C';
+  var variante = 'pagina-C'; // [CLAUDE] 2026-10-08 prova A/B/C delle pagine
   var radice = document.documentElement;
   if (radice.classList) radice.classList.add('abl-c');
 

@@ -11,6 +11,70 @@ fbq('track','PageView');
 
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<script>
+/* [CLAUDE] 2026-10-02: prova A/B della pagina di iscrizione (A = pagina di sempre, B = titolo e blocco con le parole
+   di un commercialista). La variante si sceglie a caso alla prima visita (meta' e meta') e resta la stessa (localStorage, con
+   try/catch: se il browser lo blocca la pagina funziona lo stesso). Qui, prima che la pagina si disegni, si mette la
+   classe abl-a o abl-b su <html>: i blocchi abl-solo-b sono nascosti se la classe non c'e', quindi senza script resta A.
+   Misura: eventi landing_visita e landing_iscrizione al modulo Google della prova video della pagina grazie (scheda
+   GRAZIE del foglio Lead), variante landing-A / landing-B. Il modulo Kajabi e gli utm NON passano da qui.
+   Prove: ?variante=A o ?variante=B forza la variante senza salvarla; ?prova=1 marca le righe come prova.
+   Resoconto: Drive "2. Claude", Projects/Tool-Commercialisti/Webinar/15-10/[CLAUDE] 2026-10-02 prova AB pagina iscrizione.md */
+(function () {
+  'use strict';
+  var MODULO = 'https://docs.google.com/forms/d/e/1FAIpQLScIE7ZE1P1eKVEilQk_lTO4Nx5CY_VgljBQIn9LNftH2DkRKw/formResponse';
+  var CAMPI = {visitatore: 'entry.491521358', email: 'entry.1233226114', variante: 'entry.1781041701',
+               evento: 'entry.2099289393', dettaglio: 'entry.1395317553'};
+  function leggi(k) { try { return window.localStorage.getItem(k); } catch (e) { return null; } }
+  function scrivi(k, v) { try { window.localStorage.setItem(k, v); } catch (e) {} }
+  var qs = null;
+  try { qs = new URLSearchParams(window.location.search); } catch (e) {}
+  function param(k) { try { return qs ? (qs.get(k) || '') : ''; } catch (e) { return ''; } }
+  // Anteprime della pagina aperta da file (non dal sito) contano sempre come prova.
+  var prova = param('prova') === '1' || !/^https?:$/.test(window.location.protocol);
+  var variante = 'pagina-A'; // [CLAUDE] 2026-10-08 prova A/B/C delle pagine
+  var radice = document.documentElement;
+
+
+  var visitatore = leggi('dc_landing_visitatore'), ritorno = !!visitatore;
+  if (!visitatore) {
+    var b = new Uint8Array(8);
+    try { crypto.getRandomValues(b); } catch (e) { for (var i = 0; i < 8; i++) b[i] = Math.floor(Math.random() * 256); }
+    visitatore = Array.prototype.map.call(b, function (x) { return ('0' + x.toString(16)).slice(-2); }).join('');
+    scrivi('dc_landing_visitatore', visitatore);
+  }
+  if (prova) visitatore = 'prova-' + visitatore;
+  var schermo = 'computer';
+  try { if (window.matchMedia && window.matchMedia('(max-width: 760px)').matches) schermo = 'telefono'; } catch (e) {}
+  var inserzione = param('utm_content').slice(0, 80);
+  // I browser pilotati da programmi (robot) non contano, salvo le prove con ?prova=1.
+  var conta = prova || !navigator.webdriver;
+
+  function invia(evento, email, dettaglio) {
+    if (!conta) return;
+    var dati = new URLSearchParams();
+    dati.append(CAMPI.visitatore, visitatore); dati.append(CAMPI.email, email || '');
+    dati.append(CAMPI.variante, 'landing-' + variante); dati.append(CAMPI.evento, evento);
+    dati.append(CAMPI.dettaglio, (dettaglio || '') + (prova ? ' · prova' : ''));
+    try { if (navigator.sendBeacon && navigator.sendBeacon(MODULO, dati)) return; } catch (e) {}
+    try { fetch(MODULO, {method: 'POST', mode: 'no-cors', body: dati, keepalive: true}); } catch (e) {}
+  }
+  var coda = inserzione ? ' · ' + inserzione : '';
+  try { invia('landing_visita', '', schermo + (ritorno ? ' · ritorno' : '') + coda); } catch (e) {}
+  var iscrizioneInviata = false;
+  window.DCLanding = {
+    variante: variante, visitatore: visitatore, prova: prova,
+    // Chiamata da mostraConferma(), cioe' solo quando l'iscrizione e' andata a buon fine.
+    iscrizione: function () {
+      if (iscrizioneInviata) return;
+      iscrizioneInviata = true;
+      var email = (leggi('dc_iscrizione_email') || '').trim().toLowerCase();
+      if (!email) { var f = document.getElementById('fieldEmail'); email = f ? f.value.trim().toLowerCase() : ''; }
+      invia('landing_iscrizione', email, schermo + coda);
+    }
+  };
+}());
+</script>
 <title>Workshop live gratuito per commercialisti. F24 ai clienti, raccolta documenti e riconciliazioni: ci pensa l'AI</title>
 <meta name="description" content="Workshop live gratuito su Zoom per commercialisti, giovedì 15 ottobre alle 21:00. Il nostro team automatizza dal vivo invio F24 e conferme, raccolta documenti, autofatture estere, riconciliazione bancaria e scadenze con l'AI."/>
 <link rel="canonical" href="https://commercialisti.davidecaiazzo.it/"/>
@@ -738,6 +802,7 @@ function mostraErrore(testo){
   box.scrollIntoView({behavior:'smooth',block:'center'});
 }
 function mostraConferma(){
+  try{if(window.DCLanding)window.DCLanding.iscrizione();}catch(err){}
   document.getElementById('confirmModal').classList.add('open');
   var sec=3,ce=document.getElementById('countdownSec');
   var t=setInterval(function(){sec--;ce.textContent=sec;if(sec<=0){clearInterval(t);window.location.href='https://commercialisti.davidecaiazzo.it/grazie/';}},1000);

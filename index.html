@@ -1,6 +1,28 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
+<!-- [CLAUDE] 2026-10-08 prova A/B/C delle pagine (decisa da CMO + esperto Meta, nessuna campagna nuova):
+     chi arriva qui viene assegnato a caso, una volta per sempre (localStorage), a una delle tre pagine.
+     La pagina scelta si segna in utm_campaign (…-pagina-a/b/c) che arriva su Kajabi e sul foglio.
+     Per vedere la pagina principale senza smistamento: ?pagina=principale (oppure ?prova=1). -->
+<script>
+(function () {
+  try {
+    var q = new URLSearchParams(window.location.search);
+    if (q.get('pagina') === 'principale' || q.get('prova') === '1' || !/^https?:$/.test(window.location.protocol)) return;
+    var mappa = {A: '/workshop', B: '/dal-vivo', C: '/tempo'};
+    var v = null;
+    try { v = window.localStorage.getItem('dc_pagina_abc'); } catch (e) {}
+    if (!mappa[v]) {
+      v = ['A', 'B', 'C'][Math.floor(Math.random() * 3)];
+      try { window.localStorage.setItem('dc_pagina_abc', v); } catch (e) {}
+    }
+    var c = (q.get('utm_campaign') || 'webinar-commercialisti').replace(/-pagina-[abc]$/i, '');
+    q.set('utm_campaign', c + '-pagina-' + v.toLowerCase());
+    window.location.replace(mappa[v] + '?' + q.toString() + window.location.hash);
+  } catch (e) {}
+}());
+</script>
 <!-- Meta Pixel (aggiunto 07/09/2026 per la campagna workshop) -->
 <script>
 !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
