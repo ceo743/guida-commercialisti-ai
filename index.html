@@ -10,13 +10,10 @@
   try {
     var q = new URLSearchParams(window.location.search);
     if (q.get('pagina') === 'principale' || q.get('prova') === '1' || !/^https?:$/.test(window.location.protocol)) return;
-    var mappa = {A: '/workshop', B: '/dal-vivo', C: '/tempo'};
-    var v = null;
-    try { v = window.localStorage.getItem('dc_pagina_abc'); } catch (e) {}
-    if (!mappa[v]) {
-      v = ['A', 'B', 'C'][Math.floor(Math.random() * 3)];
-      try { window.localStorage.setItem('dc_pagina_abc', v); } catch (e) {}
-    }
+    // 08/10 (Davide): «lascia la pagina originale che funzionava». Finché le varianti della pagina di
+    // settembre non sono pronte, tutte le visite vanno sulla pagina di settembre (A).
+    var mappa = {A: '/workshop'};
+    var v = 'A';
     var c = (q.get('utm_campaign') || 'webinar-commercialisti').replace(/-pagina-[abc]$/i, '');
     q.set('utm_campaign', c + '-pagina-' + v.toLowerCase());
     window.location.replace(mappa[v] + '?' + q.toString() + window.location.hash);
