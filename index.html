@@ -10,12 +10,18 @@
   try {
     var q = new URLSearchParams(window.location.search);
     if (q.get('pagina') === 'principale' || q.get('prova') === '1' || !/^https?:$/.test(window.location.protocol)) return;
-    // 08/10 (Davide): «lascia la pagina originale che funzionava». Finché le varianti della pagina di
-    // settembre non sono pronte, tutte le visite vanno sulla pagina di settembre (A).
-    var mappa = {A: '/workshop'};
-    var v = 'A';
-    var c = (q.get('utm_campaign') || 'webinar-commercialisti').replace(/-pagina-[abc]$/i, '');
-    q.set('utm_campaign', c + '-pagina-' + v.toLowerCase());
+    // 08/10 (Davide): «lascia la pagina originale che funzionava e testa altre 2 per migliorarla».
+    // A = pagina di settembre 50 %, B = + riga di fiducia (CMO) 25 %, C = + registrazione sotto il pulsante (esperto pagina) 25 %.
+    var mappa = {A: '/workshop', B: '/workshop-b', C: '/workshop-c'};
+    var v = null;
+    try { v = window.localStorage.getItem('dc_pagina_sett'); } catch (e) {}
+    if (!mappa[v]) {
+      var x = Math.random();
+      v = x < 0.5 ? 'A' : (x < 0.75 ? 'B' : 'C');
+      try { window.localStorage.setItem('dc_pagina_sett', v); } catch (e) {}
+    }
+    var c = (q.get('utm_campaign') || 'webinar-commercialisti').replace(/-(pagina|sett)-[abc]$/i, '');
+    q.set('utm_campaign', c + '-sett-' + v.toLowerCase());
     window.location.replace(mappa[v] + '?' + q.toString() + window.location.hash);
   } catch (e) {}
 }());
