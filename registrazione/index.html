@@ -54,7 +54,7 @@
   <span class="chip">Webinar per commercialisti</span>
   <h1>Registrazione del webinar per <em>commercialisti</em></h1>
 
-  <!-- REGISTRAZIONE:INIZIO edizione=2026-10-15 link=si precedente=- prossima=2026-10-29 video=f8c0470098eabb01 dal=2026-10-16T06:04:58+02:00 scadenza=2026-10-21T00:00:00+02:00 durata=4-giorni-interi-v1 accesso=email-gestionale-v1 -->
+  <!-- REGISTRAZIONE:INIZIO edizione=2026-10-15 link=si precedente=- prossima=2026-10-29 video=c0888bf05cc69ff0 dal=2026-10-16T06:04:58+02:00 scadenza=2026-10-21T00:00:00+02:00 durata=4-giorni-interi-v1 accesso=email-gestionale-v1 -->
   <!-- Scritto da Scheduled/registrazione-webinar/registrazione.py il 16/10/2026 06:47: non modificare a mano, si riscrive a ogni edizione. -->
   <div class="box" data-stato="prima" data-dal="" data-al="2026-10-15T21:00:00+02:00" hidden>
     <p>La prossima dimostrazione dal vivo di Commercialista AI è giovedì 15 ottobre alle 21:00.</p>
@@ -71,8 +71,8 @@
     <p class="small">Resta online fino a mercoledì 21 ottobre alle 00:00.</p>
     <p class="after">Tempo rimasto: <strong data-countdown="2026-10-21T00:00:00+02:00" role="timer">Calcolo del tempo rimasto…</strong></p>
     <p class="small">Entra con l’email con cui ti sei iscritto. Se non eri iscritto, puoi registrarti nel portale.</p>
-    <a class="btn big" data-portale-registrazione href="https://registrazione-commercialisti.davidecaiazzo.chatgpt.site/registrazione/2026-10-15/" target="_top">Accedi alla registrazione &rarr;</a>
-<script>(()=>{const a=document.querySelector("[data-portale-registrazione]");if(!a)return;const box=a.closest("[data-stato]");const now=Date.now();if(!box||now<Date.parse(box.dataset.dal)||now>=Date.parse(box.dataset.al))return;const url=new URL(a.href);for(const k of ["utm_source","utm_medium","utm_campaign","utm_content","utm_term"]){const v=new URLSearchParams(location.search).get(k);if(v&&v.length<=100&&!v.includes("@"))url.searchParams.set(k,v)}a.href=url.href;location.replace(url.href)})();</script>
+    <a class="btn big" data-portale-registrazione href="https://commercialista-ai.davidecaiazzo.it/registrazione/2026-10-15/" target="_top">Accedi alla registrazione &rarr;</a>
+<script>(()=>{const a=document.querySelector("[data-portale-registrazione]");if(!a)return;const box=a.closest("[data-stato]");const now=Date.now();if(!box||now<Date.parse(box.dataset.dal)||now>=Date.parse(box.dataset.al))return;const url=new URL(a.href);for(const k of ["utm_source","utm_medium","utm_campaign","utm_content","utm_term"]){const v=new URLSearchParams(location.search).get(k);if(v&&v.length<=100&&!v.includes("@")&&!/[\x00-\x1f\x7f]/.test(v))url.searchParams.set(k,v)}a.href=url.href})();</script>
   </div>
 <script>(()=>{const items=document.querySelectorAll('[data-countdown]');function tick(){for(const item of items){let left=Math.max(0,Math.floor((Date.parse(item.dataset.countdown)-Date.now())/1000));const days=Math.floor(left/86400);left%=86400;const hours=Math.floor(left/3600);left%=3600;const minutes=Math.floor(left/60),seconds=left%60;const pad=x=>String(x).padStart(2,'0');item.textContent=days+' giorni · '+pad(hours)+' ore · '+pad(minutes)+' minuti · '+pad(seconds)+' secondi';if(!days&&!hours&&!minutes&&!seconds){const box=item.closest('[data-stato]');if(box)box.hidden=true;const closed=document.querySelector('[data-stato="chiusa"]');if(closed)closed.hidden=false}}}tick();setInterval(tick,1000)})();</script>
   <div class="box" data-stato="chiusa" data-dal="2026-10-21T00:00:00+02:00" data-al="" hidden>
