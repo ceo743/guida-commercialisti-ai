@@ -1,269 +1,174 @@
-# [CLAUDE] 17/10/2026 genera le varianti B, C, D della prova pagine workshop commercialisti (edizione 29/10).
-# Le parti di tracciamento e il modulo si COPIANO da workshop.html (pagina A) senza modificarle,
-# cosi' il modulo e' identico: stessi campi, stesso ponte Kajabi, stessi utm, stessa pagina grazie con il Lead.
-import sys, re, os
-REPO = sys.argv[1]
-A = open(os.path.join(REPO, 'workshop.html')).read()
+# [CLAUDE] 17/10/2026 sera: varianti B, C, D riscritte su ordine di Davide («noi facciamo TUTTO, qui dici F24 e basta»).
+# Ogni pagina presenta tutto il programma (sezione «Tutto quello che fa per lo studio», 13 funzioni attive con schermate vere);
+# cambiano solo il gancio del primo schermo e la grafica. Modulo e tracciamento copiati identici da workshop.html (base: build v1).
+import sys, os
+HERE = os.path.dirname(os.path.abspath(__file__))
+src = open(os.path.join(HERE, 'build_v1.py')).read()
+src = src[:src.index("for v, fn in (('b', B), ('c', C), ('d', D)):")]
+exec(src)
 
-def between(s, start, end, incl_end=True):
-    i = s.index(start); j = s.index(end, i)
-    return s[i:j + (len(end) if incl_end else 0)]
-
-PIXEL = between(A, '<!-- Meta Pixel', '</noscript>')
-DCL = between(A, "<script>\n/* [CLAUDE] 2026-10-02: prova A/B", '</script>')
-assert "var variante = 'ott-A';" in DCL or "var variante = 'settembre-A';" in DCL
-COOKIE = between(A, '<script type="text/javascript" charset="UTF-8" src="//cdn.cookie-script.com', '</script>')
-WIDGETCSS = '<link rel="stylesheet" href="https://dc-chatbot-vswb.onrender.com/static/widget.css"/>'
-assert WIDGETCSS in A
-FORM = between(A, '<form id="leadForm"', '</form>')
-MODAL = between(A, '<div class="wk-modal" id="confirmModal">', '</div></div>')
-SUBMIT = between(A, "<script>\n(function(){\n  var params = new URLSearchParams(window.location.search);", '</script>')
-WIDGETJS = '<script src="https://dc-chatbot-vswb.onrender.com/widget.js" data-bot="commercialisti" data-auto-open="false"></script>'
-EXPJS = '<script src="workshop-experiment.js?v=20260914a"></script>'
-assert WIDGETJS in A and EXPJS in A
-
-def dcl(v):
-    return re.sub(r"var variante = '[^']*';", "var variante = 'ott-%s';" % v, DCL)
-
-COUNTDOWN = '''<div class="cd" aria-label="Tempo alla diretta"><div><b id="cdG">--</b><span>giorni</span></div><div><b id="cdH">--</b><span>ore</span></div><div><b id="cdM">--</b><span>minuti</span></div><div><b id="cdS">--</b><span>secondi</span></div></div>'''
-
-FAQ = [
- ("È un corso?", "No. È una serata dal vivo: apro il programma e ti mostro un caso intero, dall'inizio alla fine, su uno studio di esempio. Tu guardi e fai domande."),
- ("Quanto costa partecipare?", "Niente, il workshop è gratuito. A fine serata ti racconto anche come lavorare con me e il mio team, se vorrai approfondire, senza nessun obbligo."),
- ("Funziona con il gestionale che uso in studio?", "Sì. Il gestionale resta il tuo: il programma legge i PDF che il gestionale ti fa scaricare e prepara il lavoro che poi ci entra. TeamSystem, Zucchetti, Profis o altro."),
- ("Devo saper usare la tecnologia?", "No. Guardi il mio schermo mentre lavoro: le dimostrazioni le faccio io, tu fai le domande. Ti basta il link Zoom che arriva via email, si apre anche dal browser."),
- ("Cosa NON fa il programma?", "Non tiene la contabilità e non sostituisce il gestionale. Prepara il lavoro che ci entra e quello che va ai clienti: F24, risposte, scadenze, documenti. Te lo dico subito, così giovedì sai cosa aspettarti."),
- ("E i dati dei miei clienti?", "Ne parlo in diretta. Il principio è uno: il programma prepara, il professionista controlla e approva. Niente parte senza il tuo clic."),
- ("Non posso esserci giovedì 29. Che faccio?", "Iscriviti comunque: dopo la diretta ti mando la registrazione per email, online per 48 ore. Le domande però le fai solo dal vivo."),
+FUNZ = [
+ ("email", "Email dei clienti", "Prepara le risposte ai clienti",
+  "Il cliente scrive una domanda o manda un documento: l'AI prepara la risposta nel tono dello studio. Tu la leggi, la correggi se serve e la mandi."),
+ ("scadenze", "Scadenze e avvisi bonari", "Mette in calendario le scadenze dei clienti",
+  "Un avviso bonario, una cartella, una scadenza in un PDF: l'AI le trova nelle email e nei documenti, calcola la data con la sospensione feriale, ti manda due promemoria e prepara l'F24. Tu confermi."),
+ ("invia-f24", "Invia F24", "Manda gli F24 ai clienti e sollecita chi non risponde",
+  "Carichi gli F24 fatti con il gestionale: l'AI capisce di quale cliente è ognuno, prepara l'email e sollecita chi non risponde. Promemoria due giorni prima, F24 scaduti fermati. Tu controlli e premi Invia."),
+ ("controllo-incrociato", "Confronto", "Trova le differenze tra estratto conto e movimenti",
+  "Carichi l'estratto della banca e la lista movimenti del gestionale: l'AI ti mostra cosa c'è solo da una parte e le date diverse. Confronta anche le fatture dell'Agenzia con il registro. Tu guardi solo le differenze."),
+ ("clienti", "Clienti e Archivio", "Tiene in ordine clienti e documenti",
+  "Una scheda per ogni cliente. L'AI trova le email dei clienti e mette i documenti che arrivano nella scheda giusta; quelli dubbi te li segna."),
+ ("fatture-estere", "Fatture estere", "Dal PDF del fornitore estero all'XML",
+  "Legge importi, date e partita IVA anche da una scansione e prepara l'XML da importare nel gestionale. Le autofatture in inversione contabile, pronte da scaricare."),
+ ("estratti-fatture", "Estratti e fatture", "Abbina pagamenti e fatture",
+  "Banca, carta o PayPal: l'AI abbina i movimenti alle fatture e ti segnala solo i pagamenti senza fattura e quelli da controllare."),
+ ("", "Genera F24", "Prepara l'F24 delle ritenute",
+  "Carichi la parcella o la fattura in PDF: l'AI trova la ritenuta e prepara l'F24 con la scadenza giusta. Tu confermi solo la data del pagamento."),
+ ("redditi", "730 e Redditi", "Chiede i documenti della dichiarazione",
+  "Scegli i clienti e il giorno: a ognuno parte l'elenco dei documenti da mandare, anche in foto, e un promemoria a chi non li manda."),
+ ("", "Circolari", "Le novità fiscali ai clienti giusti",
+  "Quando esce una novità importante l'AI prepara la circolare con la fonte ufficiale. Tu scegli a quali clienti mandarla."),
+ ("fatturazione", "Fatturazione dello studio", "Manda le parcelle ai clienti",
+  "Scritti gli onorari, la parcella parte a ogni cliente nel giorno che scegli, con i promemoria a chi non ha pagato e la fattura elettronica pronta."),
+ ("", "Email inviate", "Ogni invio con il suo esito",
+  "Per ogni email vedi se è stata accettata e se il cliente ha confermato di averla ricevuta. Senza telefonare a nessuno."),
+ ("", "Colleghi", "Uno spazio con altri commercialisti",
+  "Confronti dubbi e soluzioni con gli altri studi che usano il programma."),
 ]
-def faq_html():
-    return '\n'.join('<details class="faq-i"><summary>%s</summary><p>%s</p></details>' % q for q in FAQ)
-
-DAVIDE_BIO = ("Imprenditore. Ha costruito My Governance, un software per le aziende, e l'ha venduta al gruppo Zucchetti: "
-  "«valutazione oltre 10 milioni», ha titolato Il Sole 24 Ore. È TOP 20 al mondo in “LinkedIn® Growth” secondo Favikon 2025. "
-  "Usa l'intelligenza artificiale ogni giorno nelle sue aziende: Commercialista AI nasce da lì, costruito e provato insieme a due studi commercialisti.")
-STAMPA = ('<a href="https://ntplusdiritto.ilsole24ore.com/art/zucchetti-acquisisce-my-governance-valutazione-oltre-10-milioni-caiazzo-confermato-ad-AHraItpC" target="_blank" rel="noopener noreferrer">Il Sole 24 Ore</a>'
-  '<a href="https://www.iltempo.it/tv-news/2026/03/11/video/libri-arriva-il-potere-di-linkedin-di-davide-caiazzo-46755479/" target="_blank" rel="noopener noreferrer">Il Tempo</a>'
-  '<a href="https://www.leggo.it/video/libri_arriva_il_potere_di_linkedin_di_davide_caiazzo-9409483.html" target="_blank" rel="noopener noreferrer">Leggo</a>')
-
-FOOTER = '''<footer class="foot"><p>DC Academy S.r.l. | P.IVA 05125350750 | Via I. Adriano 9, Lecce | academy@davidecaiazzo.it<br/>
-<a href="https://docs.google.com/document/d/1qUNgRcZ0W9aZxutDu1Fv2k5aM6Nti4V0/edit" target="_blank" rel="noopener">Privacy</a> ·
-<a href="https://docs.google.com/document/d/1PTTs2QFMqBtZaefLHPrrfMxJRnlGewih/edit" target="_blank" rel="noopener">Cookie</a> ·
-<a href="https://docs.google.com/document/d/1K6WGjt9aFTRN-zWMvEOh5bw2A32nNag-/edit" target="_blank" rel="noopener">Condizioni di Vendita</a></p></footer>'''
-
-def page(v, title, desc, fonts, css, body, note):
-    return f'''<!DOCTYPE html>
-<html lang="it">
-<head>
-{PIXEL}
-
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-{dcl(v)}
-<title>{title}</title>
-<meta name="description" content="{desc}"/>
-<link rel="canonical" href="https://commercialisti.davidecaiazzo.it/"/>
-<meta name="robots" content="noindex,follow"/>
-<!-- {note} -->
-<meta property="og:type" content="website"/>
-<meta property="og:url" content="https://commercialisti.davidecaiazzo.it/"/>
-<meta property="og:title" content="Il lavoro ripetitivo dello studio lo fa il programma. Dimostrazione dal vivo, gratis."/>
-<meta property="og:description" content="F24, documenti, scadenze e risposte ai clienti: lo vedi fare su uno studio vero, su Zoom."/>
-<meta property="og:image" content="https://commercialisti.davidecaiazzo.it/og-commercialisti.png"/>
-<meta name="twitter:card" content="summary_large_image"/>
-<link rel="icon" type="image/png" href="https://automazioni.davidecaiazzo.it/favicon.png"/>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?{fonts}&display=swap" rel="stylesheet"/>
-{COOKIE}
-{WIDGETCSS}
-<style>
-*{{box-sizing:border-box;margin:0;padding:0}}
-html{{scroll-behavior:smooth;-webkit-text-size-adjust:100%}}
-img{{max-width:100%;height:auto;display:block}}
-a{{color:inherit}}
-.wrap{{max-width:1160px;margin:0 auto;padding:0 20px}}
-.wk-errore{{font-size:14px;line-height:1.5;padding:12px 14px;border-radius:8px}}
-.wk-field.error{{outline:2px solid #d93025!important}}
-.wk-priv{{display:flex;gap:10px;align-items:flex-start;font-size:13px;line-height:1.45;cursor:pointer;text-align:left}}
-.wk-priv input{{margin-top:3px;width:17px;height:17px;flex:0 0 auto}}
-.checkbox-error span{{color:#d93025}}
-.wk-modal{{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(10,15,25,.6)}}
-.wk-modal.open{{display:flex}}
-.wk-modal .box{{max-width:440px;width:100%;border-radius:16px;padding:34px 28px;text-align:center}}
-.wk-modal h4{{font-size:24px;margin-bottom:10px}}
-.wk-modal p{{font-size:15px;line-height:1.6;margin-bottom:8px}}
-.cd{{display:flex;gap:10px}}
-.cd>div{{min-width:64px;text-align:center}}
-.cd b{{display:block;font-size:26px;font-variant-numeric:tabular-nums;line-height:1.1}}
-.cd span{{font-size:11px;opacity:.7}}
-.faq-i summary{{cursor:pointer;list-style:none;font-weight:700;padding:18px 32px 18px 0;position:relative}}
-.faq-i summary::-webkit-details-marker{{display:none}}
-.faq-i summary::after{{content:"+";position:absolute;right:4px;top:14px;font-size:22px;font-weight:400}}
-.faq-i[open] summary::after{{content:"–"}}
-.faq-i p{{padding:0 0 18px;line-height:1.65}}
-:focus-visible{{outline:3px solid currentColor;outline-offset:3px}}
-.disc{{text-align:center;padding:8px 16px;font-size:10.5px;line-height:1.5;opacity:.6}}
-.disc a{{text-decoration:underline}}
-@media (prefers-reduced-motion:reduce){{*{{animation:none!important;transition:none!important;scroll-behavior:auto!important}}}}
-{css}
-</style>
-</head>
-<body>
-<div class="disc"><strong>I contenuti di questo sito hanno natura pubblicitaria</strong> a favore della DC Academy S.r.l. · Per qualsiasi approfondimento sui nostri servizi, clienti, testimonianze, testate e sui numeri citati su questo sito visita la pagina: <a href="https://www.davidecaiazzo.it/trasparenza" target="_blank" rel="noopener">www.davidecaiazzo.it/trasparenza</a></div>
-{body}
-{FOOTER}
-{MODAL}
-{SUBMIT}
-{WIDGETJS}
-{EXPJS}
-</body>
-</html>
+TUTTO_CSS = '''
+.tutto{display:grid;grid-template-columns:300px 1fr;gap:26px;align-items:start}
+.tt-list{display:flex;flex-direction:column;gap:6px}
+.tt-b{all:unset;box-sizing:border-box;cursor:pointer;display:block;width:100%;padding:11px 14px;border-radius:10px;font-weight:600;font-size:15.5px;line-height:1.3}
+.tt-b small{display:block;font-weight:400;font-size:13px;opacity:.75;margin-top:2px}
+.tt-b:focus-visible{outline:3px solid currentColor;outline-offset:2px}
+.tt-p figure{margin:0}
+.tt-p .ph{border-radius:12px;overflow:hidden}
+.tt-p .ph img{width:100%;height:auto}
+.tt-p .noimg{display:flex;align-items:center;justify-content:center;min-height:200px;border-radius:12px;font-size:15px;text-align:center;padding:24px}
+.tt-p h3{font-size:22px;margin:18px 0 6px}
+.tt-p p{font-size:16px;line-height:1.6}
+.tt-safe{margin-top:22px;font-size:15px;line-height:1.55}
+.tt-p [hidden]{display:none!important}
+@media (max-width:900px){.tutto{grid-template-columns:1fr}.tt-list{display:grid;grid-template-columns:1fr 1fr;gap:6px}.tt-b{padding:9px 10px;font-size:14px}.tt-b small{display:none}}
 '''
+def tutto(prefix):
+    btns = []
+    for i, (img, nome, cosa, testo) in enumerate(FUNZ):
+        btns.append(f'<button type="button" class="tt-b" role="tab" aria-selected="{"true" if i==0 else "false"}" data-i="{i}">{nome}<small>{cosa}</small></button>')
+    data = [{"img": ("img-ott/%s.webp" % f[0]) if f[0] else "", "imgt": ("img-ott/%s-telefono.webp" % f[0]) if f[0] else "", "nome": f[1], "cosa": f[2], "testo": f[3]} for f in FUNZ]
+    import json
+    first = FUNZ[0]
+    return f'''<div class="tutto" id="{prefix}tutto">
+<div class="tt-list" role="tablist" aria-label="Le funzioni del programma">{''.join(btns)}</div>
+<div class="tt-p" role="tabpanel" aria-live="polite">
+<figure class="ph"><picture><source media="(max-width:700px)" srcset="img-ott/{first[0]}-telefono.webp"/><img src="img-ott/{first[0]}.webp" width="1440" height="860" alt="{first[1]} in Commercialista AI, studio dimostrativo"/></picture></figure>
+<div class="noimg" hidden></div>
+<h3>{first[1]}: {first[2][0].lower()+first[2][1:]}</h3><p>{first[3]}</p>
+</div></div>
+<p class="tt-safe"><b>Il gestionale resta il tuo:</b> il programma legge i PDF che ti fa scaricare. Tu carichi, controlli e premi Invia. Niente parte senza il tuo sì: anche i solleciti automatici li accendi tu. Non tiene la contabilità e non sostituisce il gestionale: lavora accanto al tuo. Schermate dello studio di esempio, con clienti e dati finti.</p>
+<script>
+(function(){{
+ var D={json.dumps(data, ensure_ascii=False)};
+ var box=document.getElementById('{prefix}tutto'); if(!box) return;
+ var bs=box.querySelectorAll('.tt-b'), fig=box.querySelector('.ph'), no=box.querySelector('.noimg'), h=box.querySelector('.tt-p h3'), p=box.querySelector('.tt-p p');
+ function show(i){{
+  var d=D[i];
+  bs.forEach(function(b,k){{b.setAttribute('aria-selected',k===i?'true':'false');}});
+  if(d.img){{fig.hidden=false;no.hidden=true;fig.querySelector('source').srcset=d.imgt;var im=fig.querySelector('img');im.src=d.img;im.alt=d.nome+' in Commercialista AI, studio dimostrativo';}}
+  else{{fig.hidden=true;no.hidden=false;no.textContent=d.nome+': lo vedi dal vivo giovedì.';}}
+  h.textContent=d.nome+': '+d.cosa.charAt(0).toLowerCase()+d.cosa.slice(1);p.textContent=d.testo;
+ }}
+ var cur=0,auto=null;
+ try{{if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){{auto=setInterval(function(){{cur=(cur+1)%D.length;show(cur);}},4500);}}}}catch(e){{}}
+ function stop(){{if(auto){{clearInterval(auto);auto=null;}}}}
+ box.addEventListener('pointerenter',stop);box.addEventListener('focusin',stop);
+ bs.forEach(function(b,k){{b.addEventListener('click',function(){{stop();cur=k;show(k);}});}});
+}})();
+</script>'''
 
-def form_block(cls_title, title, sub):
-    return f'''<div class="formbox"><h3 class="{cls_title}">{title}</h3><p class="formsub">{sub}</p>
-{FORM}
-<p class="formnote">Il link Zoom arriva via email prima della diretta. Nessuno spam.</p></div>'''
+AGENDA = [
+ ("La giornata di uno studio, sul programma vero", "Apro Commercialista AI su uno studio di esempio e facciamo il giro intero: la posta già letta con le risposte ai clienti pronte, le scadenze e gli avvisi bonari trovati, gli F24 mandati e chi li ha ricevuti, i documenti del 730 chiesti ai clienti che scegli, le circolari, le parcelle, ogni invio con il suo esito."),
+ ("Fatture estere, estratti e confronti", "La fattura del fornitore estero che diventa XML, gli estratti conto abbinati alle fatture, le differenze tra estratto conto e movimenti del gestionale."),
+ ("Le tue 3 attività, guardate in diretta", "Porta le 3 cose che ripeti ogni settimana e che vorresti non fare più. Ti dico quali il programma fa già e cosa serve per partire."),
+ ("Le tue domande", "Rispondo io, sul tuo studio. Alla fine ti dico quanto costa e come si attiva. Nessun obbligo."),
+]
+def agenda(item_tpl):
+    return '\n'.join(item_tpl.format(n=i+1, t=t, d=d) for i, (t, d) in enumerate(AGENDA))
 
-# =============== B: stile Commercialista AI + Invia F24 ===============
-B_CSS = '''
-:root{--bg:#f7f9fc;--card:#fff;--ink:#17263c;--grey:#526176;--blue:#2254c5;--blue2:#183e96;--tint:#edf3ff;--line:#dce3ec;--green:#226343}
-body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
-.serif{font-family:'Source Serif 4',Georgia,serif}
-.top{border-bottom:1px solid var(--line);background:#fff}
-.top .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;gap:12px}
-.logo{font-family:'Source Serif 4',Georgia,serif;font-weight:700;font-size:19px}
-.logo span{color:var(--blue)}
-.top a.mini{background:var(--blue);color:#fff;text-decoration:none;font-weight:600;font-size:14px;padding:9px 14px;border-radius:10px;white-space:nowrap}
-.hero{padding:56px 0 40px}
-.hero .wrap{display:grid;grid-template-columns:1fr 1.1fr;gap:48px;align-items:center}
-.when{display:inline-flex;align-items:center;gap:8px;background:var(--tint);color:var(--blue2);font-weight:600;font-size:14px;padding:7px 14px;border-radius:99px;margin-bottom:22px}
-.when i{width:8px;height:8px;border-radius:50%;background:#d93025;display:inline-block}
-h1{font-family:'Source Serif 4',Georgia,serif;font-weight:600;font-size:clamp(34px,4.2vw,54px);line-height:1.08;letter-spacing:-.02em;margin-bottom:20px}
-h1 em{font-style:normal;color:var(--blue)}
-.lead{font-size:clamp(17px,1.4vw,19px);color:var(--grey);max-width:560px;margin-bottom:26px}
-.cta{display:inline-flex;align-items:center;justify-content:center;background:var(--blue);color:#fff;text-decoration:none;font-weight:700;font-size:17px;padding:16px 26px;border-radius:10px;box-shadow:0 6px 18px rgb(34 84 197/25%);transition:background .15s}
-.cta:hover{background:var(--blue2)}
-.host{display:flex;align-items:center;gap:12px;margin-top:26px}
-.host img{width:52px;height:52px;border-radius:50%;object-fit:cover;border:2px solid #fff;box-shadow:0 0 0 1px var(--line)}
-.host p{font-size:14.5px;color:var(--grey);line-height:1.4}
-.host b{color:var(--ink)}
-.proof{display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:22px;padding-top:18px;border-top:1px solid var(--line);font-size:14px;color:var(--grey)}
-.proof span::before{content:"✓";color:var(--green);font-weight:700;margin-right:6px}
-.shot{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 24px 60px rgb(23 38 60/14%);overflow:hidden}
-.shot .bar{display:flex;gap:6px;padding:10px 12px;border-bottom:1px solid var(--line);background:#fbfcfe}
-.shot .bar i{width:9px;height:9px;border-radius:50%;background:#dce3ec}
-.shot figcaption{font-size:13px;color:var(--grey);padding:10px 14px;border-top:1px solid var(--line)}
-section{padding:64px 0}
-.sec-h{font-family:'Source Serif 4',Georgia,serif;font-size:clamp(28px,3vw,38px);font-weight:600;line-height:1.15;margin-bottom:12px;letter-spacing:-.01em}
-.sec-p{color:var(--grey);max-width:640px;margin-bottom:34px}
-.cols{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-.col{background:#fff;border:1px solid var(--line);border-radius:12px;padding:26px 24px;box-shadow:0 3px 12px rgb(23 38 60/6%)}
-.col h3{font-size:19px;margin-bottom:10px}
-.col p{color:var(--grey);font-size:15.5px;margin-bottom:12px}
-.col ul{list-style:none;font-size:15px}
-.col li{padding:6px 0;border-top:1px solid var(--line)}
-.col li::before{content:"✓ ";color:var(--green);font-weight:700}
-.band{background:var(--ink);color:#fff;padding:34px 0}
-.band .wrap{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
-.band h2{font-family:'Source Serif 4',Georgia,serif;font-weight:600;font-size:clamp(22px,2.4vw,30px)}
-.band .cta{background:#fff;color:var(--ink);box-shadow:none}
-.band .cd b{color:#fff}.band .cd span{color:#c8d3e4}
-.agenda{display:grid;gap:14px;max-width:860px}
-.ag{display:grid;grid-template-columns:44px 1fr;gap:16px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:22px}
-.ag .n{width:36px;height:36px;border-radius:10px;background:var(--tint);color:var(--blue2);font-weight:700;display:flex;align-items:center;justify-content:center}
-.ag h3{font-size:18px;margin-bottom:4px}
-.ag p{color:var(--grey);font-size:15.5px}
-.who{display:grid;grid-template-columns:200px 1fr;gap:34px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:16px;padding:32px}
-.who img{border-radius:14px;aspect-ratio:1;object-fit:cover}
-.who h3{font-family:'Source Serif 4',Georgia,serif;font-size:28px;font-weight:600;margin-bottom:8px}
-.who p{color:var(--grey);margin-bottom:12px}
-.press{display:flex;gap:18px;flex-wrap:wrap;font-size:14px;font-weight:600}
-.press a{color:var(--blue2)}
-.team{margin-top:14px;font-size:15px;color:var(--grey);border-top:1px solid var(--line);padding-top:12px}
-.fit{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-.fit div{background:#fff;border:1px solid var(--line);border-radius:12px;padding:24px}
-.fit h3{font-size:18px;margin-bottom:10px}
-.fit li{list-style:none;padding:6px 0;font-size:15.5px;color:var(--grey)}
-.faq{max-width:760px}
-.faq-i{border-bottom:1px solid var(--line)}
-.faq-i p{color:var(--grey)}
-#iscrizione{background:linear-gradient(180deg,var(--bg),#e8eef9)}
-#iscrizione .wrap{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center}
-.formbox{background:#fff;border:1.5px solid var(--blue);border-radius:16px;padding:32px 28px;box-shadow:0 20px 50px rgb(34 84 197/12%)}
-.formbox h3{font-family:'Source Serif 4',Georgia,serif;font-size:26px;font-weight:600;margin-bottom:4px}
-.formsub{color:var(--grey);font-size:14.5px;margin-bottom:18px}
-.formnote{font-size:12.5px;color:var(--grey);text-align:center;margin-top:12px}
-.wk-field{width:100%;font:inherit;font-size:16px;padding:14px 14px;border:1px solid var(--line);border-radius:10px;background:#fbfcfe;color:var(--ink)}
-.wk-field:focus{outline:2px solid var(--blue);border-color:var(--blue)}
-.wk-priv{color:var(--grey)}.wk-priv a{color:var(--blue2)}
-.wk-errore{background:#fdeceb;color:#a81f15}
-.btn-gold{display:inline-flex;align-items:center;justify-content:center;background:var(--blue);color:#fff;border:0;border-radius:10px;font:inherit;font-weight:700;font-size:16px;padding:16px 18px;cursor:pointer;text-decoration:none}
-.btn-gold:hover{background:var(--blue2)}.btn-gold:disabled{opacity:.6}
-.cd b{color:var(--ink)}.cd span{color:var(--grey)}
-.wk-modal .box{background:#fff;color:var(--ink)}.wk-modal .box p{color:var(--grey)}
-.wk-modal .box>div:first-child{background:var(--tint)!important;color:var(--blue)!important}
-.foot{text-align:center;font-size:12.5px;color:var(--grey);padding:30px 20px 40px;border-top:1px solid var(--line)}
-.foot a{color:var(--grey)}
-@media (max-width:900px){
- .hero{padding:32px 0 28px}.hero .wrap,#iscrizione .wrap{grid-template-columns:1fr;gap:28px}
- .cols,.fit{grid-template-columns:1fr}.who{grid-template-columns:1fr;padding:22px}.who img{max-width:180px}
- section{padding:46px 0}.top a.mini{display:none}
-}
+BIO = ("Ho costruito My Governance, un software per le aziende, e l'ho venduta al gruppo Zucchetti: «valutazione oltre 10 milioni», ha titolato Il Sole 24 Ore. "
+       "Sono TOP 20 al mondo in “LinkedIn® Growth” secondo Favikon 2025. Commercialista AI l'ho costruito e provato insieme a due studi commercialisti.")
+SQUADRA = "In squadra con me Gianfranco Motta, il tecnico di DC Academy: tiene d'occhio la chat e mi porta le domande più tecniche."
+
+# ---------------- B ----------------
+B2_CSS = B_CSS + TUTTO_CSS + '''
+.stack{position:relative;min-height:440px}
+.stack figure{position:absolute;width:82%;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 24px 50px rgb(23 38 60/14%);overflow:hidden}
+.stack figure:nth-child(1){top:0;left:0;z-index:1}
+.stack figure:nth-child(2){top:90px;left:9%;z-index:2}
+.stack figure:nth-child(3){top:180px;left:18%;z-index:3}
+.stack figcaption{font-size:12.5px;color:var(--grey);padding:7px 12px;border-top:1px solid var(--line);font-weight:600}
+.tt-b{color:var(--ink);background:#fff;border:1px solid var(--line)}
+.tt-b[aria-selected="true"]{background:var(--blue);color:#fff;border-color:var(--blue)}
+.tt-p .ph{border:1px solid var(--line);box-shadow:0 20px 50px rgb(23 38 60/12%)}
+.tt-p .noimg{background:var(--tint);color:var(--blue2);border:1px dashed #b9c9ea}
+.tt-p h3{font-family:'Source Serif 4',Georgia,serif;font-weight:600}
+.tt-p p,.tt-safe{color:var(--grey)}
+.how{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.how div{background:#fff;border:1px solid var(--line);border-radius:12px;padding:22px}
+.how b{display:block;font-size:18px;margin-bottom:6px;color:var(--ink)}
+.how p{color:var(--grey);font-size:15.5px}
+@media (max-width:900px){.stack{min-height:0}.stack figure{position:static;width:100%}.stack figure:nth-child(n+2){display:none}.how{grid-template-columns:1fr}}
 '''
-
 def B():
     body = f'''<header class="top"><div class="wrap"><div class="logo">Commercialista<span>AI</span> · dal vivo</div><a class="mini" href="#iscrizione">Riserva il posto</a></div></header>
 <main>
 <section class="hero"><div class="wrap">
 <div>
 <p class="when"><i aria-hidden="true"></i>Workshop gratuito su Zoom · giovedì 29 ottobre, ore 21:00</p>
-<h1>Il 16 mandi gli F24 a tutti i clienti. <em>E sai chi li ha ricevuti.</em></h1>
-<p class="lead">Giovedì 29 ottobre apro il computer e te lo faccio vedere sul programma vero: riconosce il cliente da ogni F24, prepara le email e sollecita chi non risponde. Tu controlli e premi Invia. Il gestionale resta il tuo.</p>
+<h1>Il lavoro di una segreteria intera, preparato dall'intelligenza artificiale. <em>Tu controlli e fai il consulente.</em></h1>
+<p class="lead">Risposte ai clienti, scadenze e avvisi bonari letti dalle email, F24 mandati con i solleciti, documenti del 730, fatture estere in XML, estratti conto abbinati, circolari, parcelle, archivio. Giovedì 29 ottobre apro Commercialista AI e ti faccio vedere tutto, dal vivo.</p>
 <a class="cta" href="#iscrizione">Riserva il posto gratis</a>
 <div class="host"><img src="davide-linkedin.jpg" alt="Davide Caiazzo" width="52" height="52"/><p><b>Conduce Davide Caiazzo</b><br/>ha venduto la sua azienda al gruppo Zucchetti</p></div>
-<div class="proof"><span>Più di 180 commercialisti iscritti all'edizione del 15 ottobre</span><span>Si guarda e si fanno domande</span><span>Gratis</span></div>
+<div class="proof"><span>Il gestionale resta il tuo</span><span>Tu controlli e premi Invia</span><span>182 iscritti all'edizione del 15 ottobre</span></div>
 </div>
-<figure class="shot"><div class="bar" aria-hidden="true"><i></i><i></i><i></i></div>
-<picture><source media="(max-width:700px)" srcset="img-ott/invia-f24-telefono.webp"/><img src="img-ott/invia-f24.webp" width="1440" height="860" alt="La pagina Invia F24 di Commercialista AI: F24 da mandare, in attesa di risposta, confermati"/></picture>
-<figcaption>Invia F24 in Commercialista AI, studio dimostrativo: da mandare, aspettano risposta, confermati.</figcaption></figure>
+<div class="stack">
+<figure><img src="img-ott/invia-f24.webp" width="1440" height="860" alt="Invia F24 in Commercialista AI"/><figcaption>Invia F24</figcaption></figure>
+<figure><img src="img-ott/scadenze.webp" width="1440" height="860" alt="Scadenze in Commercialista AI"/><figcaption>Scadenze e avvisi bonari</figcaption></figure>
+<figure><picture><source media="(max-width:700px)" srcset="img-ott/email-telefono.webp"/><img src="img-ott/email.webp" width="1440" height="860" alt="Email dei clienti in Commercialista AI"/></picture><figcaption>Risposte ai clienti già scritte</figcaption></figure>
+</div>
 </div></section>
 
 <section><div class="wrap">
-<h2 class="sec-h">L'F24 al cliente lo manda il programma. Tu torni a fare consulenza.</h2>
-<p class="sec-p">Quante ore al mese passi a mandare gli F24 ai clienti uno a uno? Mi dicevano che nessun commercialista avrebbe lasciato fare questo lavoro a un programma. L'ho fatto lo stesso. Giovedì lo vedi fare queste tre cose al posto tuo.</p>
-<div class="cols">
-<div class="col"><h3>Ogni F24 al cliente giusto</h3><p>Carichi gli F24 del mese, fatti con il gestionale.</p><ul><li>riconosce di quale cliente è ogni F24</li><li>prepara l'email con l'allegato giusto</li><li>parte solo quando premi Invia</li></ul></div>
-<div class="col"><h3>Chi ha ricevuto e chi no</h3><p>Le conferme si segnano da sole.</p><ul><li>elenco di chi ha risposto e chi aspetta</li><li>sollecito a chi non risponde</li><li>promemoria due giorni prima, gli F24 scaduti fermati</li></ul></div>
-<div class="col"><h3>«Cos'è il 6099?»</h3><p>Il giorno dopo arrivano le domande.</p><ul><li>legge l'email del cliente</li><li>prepara la risposta nel tono dello studio</li><li>l'ultima parola è tua</li></ul></div>
+<h2 class="sec-h">Tutto quello che fa per lo studio</h2>
+<p class="sec-p">Tredici funzioni, un solo programma accanto al tuo gestionale. Scegli una voce e guarda la schermata vera: l'AI prepara, tu controlli.</p>
+{tutto('b')}
+</div></section>
+
+<section style="padding-top:0"><div class="wrap">
+<h2 class="sec-h">Meno segreteria, più consulenza.</h2>
+<div class="how">
+<div><b>L'AI prepara</b><p>Legge email, PDF ed estratti, riconosce il cliente giusto e prepara F24, risposte, scadenze, documenti e file.</p></div>
+<div><b>Tu controlli</b><p>Vedi tutto in una pagina per ogni lavoro. Correggi se serve. Niente parte senza il tuo sì.</p></div>
+<div><b>Lo studio respira</b><p>Le ore che oggi se ne vanno in segreteria tornano alla consulenza ai clienti.</p></div>
 </div></div></section>
 
 <div class="band"><div class="wrap"><h2>Giovedì 29 ottobre, ore 21:00. La diretta inizia tra</h2>{COUNTDOWN}<a class="cta" href="#iscrizione">Iscriviti gratis</a></div></div>
 
 <section><div class="wrap">
 <h2 class="sec-h">Cosa vedi dal vivo</h2>
-<p class="sec-p">Un caso intero su uno studio di esempio, dall'inizio alla fine. Clienti di prova, programma vero.</p>
-<div class="agenda">
-<div class="ag"><div class="n">1</div><div><h3>Il 16 del mese, dall'F24 caricato al «ricevuto»</h3><p>Carico tutti gli F24 del mese. Il programma capisce di quale cliente è ognuno e prepara le email. Controllo, premo Invia, e vedi chi conferma e chi riceve il sollecito.</p></div></div>
-<div class="ag"><div class="n">2</div><div><h3>Le domande dei clienti con la risposta già pronta</h3><p>Un'email vera di un cliente e la risposta scritta dal programma, con tutta la conversazione tenuta a mente. La mandi tu.</p></div></div>
-<div class="ag"><div class="n">3</div><div><h3>Scadenze e avvisi bonari che non scappano</h3><p>Il programma trova le scadenze in documenti e posta, legge l'avviso bonario e ti avvisa prima. Tu confermi.</p></div></div>
-<div class="ag"><div class="n">4</div><div><h3>Le tue domande, in diretta</h3><p>Rispondo io, sul tuo studio. Alla fine ti dico quanto costa e come si attiva. Nessun obbligo.</p></div></div>
-</div></div></section>
-
-<section><div class="wrap">
-<div class="who"><img src="davide-linkedin.jpg" alt="Davide Caiazzo" width="200" height="200" loading="lazy"/><div>
-<h3>Conduco io, Davide Caiazzo</h3>
-<p>Ho costruito My Governance, un software per le aziende, e l'ho venduta al gruppo Zucchetti: «valutazione oltre 10 milioni», ha titolato Il Sole 24 Ore. Sono TOP 20 al mondo in “LinkedIn® Growth” secondo Favikon 2025. Commercialista AI l'ho costruito e provato insieme a due studi commercialisti.</p>
-<div class="press">{STAMPA}</div>
-<p class="team">In squadra con me Gianfranco Motta, il tecnico di DC Academy: tiene d'occhio la chat e mi porta le domande più tecniche.</p>
-</div></div>
+<p class="sec-p">Clienti di prova, programma vero. Nessuna slide.</p>
+<div class="agenda">{agenda('<div class="ag"><div class="n">{n}</div><div><h3>{t}</h3><p>{d}</p></div></div>')}</div>
 </div></section>
 
 <section><div class="wrap">
+<div class="who"><img src="davide-linkedin.jpg" alt="Davide Caiazzo" width="200" height="200" loading="lazy"/><div>
+<h3>Conduco io, Davide Caiazzo</h3><p>{BIO}</p><div class="press">{STAMPA}</div><p class="team">{SQUADRA}</p>
+</div></div></div></section>
+
+<section><div class="wrap">
 <h2 class="sec-h">Per chi è</h2>
-<div class="fit"><div><h3>Fa per te se</h3><ul><li>✓ hai uno studio, da solo o associato, e il 16 ti mangia la giornata</li><li>✓ vuoi vedere l'intelligenza artificiale sul lavoro vero di uno studio, non la teoria</li><li>✓ non hai competenze tecniche: non servono</li></ul></div>
-<div><h3>Non fa per te se</h3><ul><li>✗ cerchi un corso di teoria sull'intelligenza artificiale</li><li>✗ vuoi solo la registrazione da guardare «prima o poi»</li></ul></div></div>
+<div class="fit"><div><h3>Fa per te se</h3><ul><li>✓ hai uno studio, da solo o associato, e le giornate se ne vanno in email, F24, documenti, scadenze e parcelle</li><li>✓ vorresti fare più consulenza ai clienti</li><li>✓ il gestionale ti va bene e non vuoi cambiarlo</li></ul></div>
+<div><h3>Non fa per te se</h3><ul><li>✗ vuoi che il programma risponda ai clienti senza che tu legga</li><li>✗ cerchi un gestionale nuovo: questo lavora accanto al tuo</li></ul></div></div>
 </div></section>
 
 <section><div class="wrap"><h2 class="sec-h">Domande frequenti</h2><div class="faq">{faq_html()}</div></div></section>
@@ -273,138 +178,80 @@ def B():
 {form_block('', 'Riserva il tuo posto gratis', 'Giovedì 29 ottobre, ore 21:00 · Live su Zoom')}
 </div></section>
 </main>'''
-    return page('B', "Workshop gratuito per commercialisti: gli F24 a tutti i clienti, e sai chi li ha ricevuti",
-      "Workshop live gratuito su Zoom per commercialisti, giovedì 29 ottobre alle 21:00. Davide Caiazzo mostra dal vivo Commercialista AI: F24 inviati a ogni cliente, conferme di ricezione e solleciti.",
-      'family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700', B_CSS, body,
-      "[CLAUDE] 2026-10-17 variante B (prova ott A/B/C/D): stile del sito Commercialista AI + gancio Invia F24 + struttura landing Sibill. Modulo e tracciamento copiati da workshop.html. Ipotesi: Projects/Tool-Commercialisti/consegne-a-sviluppi/workshop-pagine-ott-20261017/ipotesi.md")
+    return page('B', "Workshop gratuito per commercialisti: il lavoro di una segreteria intera, fatto dall'intelligenza artificiale",
+      "Workshop live gratuito su Zoom per commercialisti, giovedì 29 ottobre alle 21:00. Davide Caiazzo mostra dal vivo Commercialista AI: F24, scadenze e avvisi bonari, risposte ai clienti, 730, fatture estere, estratti e confronti, circolari, parcelle.",
+      'family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700', B2_CSS, body,
+      "[CLAUDE] 2026-10-17 sera variante B v2 (prova ott A/B/C/D): stile Commercialista AI, gancio «una segreteria intera fatta dal programma», tutto il programma. Modulo e tracciamento copiati da workshop.html. Ipotesi: Projects/Tool-Commercialisti/consegne-a-sviluppi/workshop-pagine-ott-20261017/ipotesi.md")
 
-# =============== C: notte petrolio + ottone, Fatture estere ===============
-C_CSS = '''
-:root{--bg:#0c262b;--bg2:#103239;--paper:#efe8d8;--mute:#a7b9b5;--brass:#c9a24d;--brass2:#e0bd6c;--line:#24474e}
-body{background:var(--bg);color:var(--paper);font-family:'Instrument Sans',system-ui,sans-serif;font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
-h1,h2,h3.d{font-family:'Fraunces',Georgia,serif;font-weight:500;letter-spacing:-.01em}
-.top{padding:22px 0;border-bottom:1px solid var(--line)}
-.top .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px}
-.mark{font-family:'Fraunces',Georgia,serif;font-size:18px}
-.mark small{color:var(--mute);font-family:'Instrument Sans',sans-serif;font-size:13px;margin-left:8px}
-.datechip{color:var(--brass2);font-size:14px;font-weight:600;white-space:nowrap}
-.hero{padding:70px 0 54px;text-align:center}
-.kick{color:var(--mute);font-size:15px;margin-bottom:22px}
-h1{font-size:clamp(36px,5.4vw,72px);line-height:1.04;max-width:980px;margin:0 auto 26px}
-h1 .b{color:var(--brass2);font-style:italic}
-.lead{max-width:660px;margin:0 auto 34px;color:var(--mute);font-size:clamp(17px,1.4vw,19px)}
-.lead b{color:var(--paper);font-weight:600}
-.flow{display:grid;grid-template-columns:1fr 70px 1fr;align-items:center;max-width:900px;margin:0 auto 40px;text-align:left}
-.doc{background:var(--paper);color:#2a2a26;border-radius:6px;padding:22px 22px 18px;box-shadow:0 30px 60px rgb(0 0 0/35%);font-size:13px;line-height:1.5;min-height:210px}
-.doc .h{display:flex;justify-content:space-between;font-weight:700;font-size:12px;letter-spacing:.04em;border-bottom:1px solid #d6cdb8;padding-bottom:8px;margin-bottom:10px}
-.doc .h span:last-child{background:#b3261e;color:#fff;border-radius:3px;padding:1px 6px;font-size:11px}
-.doc dl{display:grid;grid-template-columns:auto 1fr;gap:3px 12px}
-.doc dt{color:#7a7465}.doc dd{font-weight:600}
-.arrow{text-align:center;color:var(--brass2);font-size:30px}
-.xml{background:#071a1e;border:1px solid var(--brass);border-radius:6px;padding:20px;font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:12.5px;line-height:1.7;color:#cfe1dc;min-height:210px;overflow-wrap:anywhere}
-.xml .t{color:var(--brass2)}.xml .ok{color:#8fd19e}
-.xml .h{font-family:'Instrument Sans',sans-serif;font-weight:700;color:var(--paper);font-size:12px;margin-bottom:8px}
-.cta{display:inline-block;background:var(--brass);color:#14262a;font-weight:700;text-decoration:none;font-size:17px;padding:17px 30px;border-radius:4px;transition:background .15s}
-.cta:hover{background:var(--brass2)}
-.byline{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:30px;text-align:left}
-.byline img{width:56px;height:56px;border-radius:50%;object-fit:cover;border:2px solid var(--brass)}
-.byline p{font-size:14.5px;color:var(--mute);line-height:1.45}
-.byline b{color:var(--paper)}
-.strip{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:18px 0;color:var(--mute);font-size:14.5px}
-.strip .wrap{display:flex;justify-content:center;gap:12px 34px;flex-wrap:wrap;text-align:center}
-.strip b{color:var(--paper)}
-section{padding:80px 0}
-.story{display:grid;grid-template-columns:.8fr 1.2fr;gap:56px;align-items:center}
-.story img{border-radius:4px;filter:grayscale(.15);aspect-ratio:1;object-fit:cover}
-.story blockquote{font-family:'Fraunces',Georgia,serif;font-size:clamp(26px,3vw,40px);line-height:1.2;margin-bottom:22px}
-.story blockquote::before{content:"“";color:var(--brass2)}
-.story blockquote::after{content:"”";color:var(--brass2)}
-.story p{color:var(--mute);margin-bottom:14px}
-.story p b{color:var(--paper)}
-.press{display:flex;gap:20px;flex-wrap:wrap;font-size:14px;margin-top:6px}
-.press a{color:var(--brass2)}
-h2{font-size:clamp(30px,3.4vw,46px);line-height:1.1;margin-bottom:16px}
-.sub{color:var(--mute);max-width:640px;margin-bottom:40px}
-.steps{counter-reset:s;display:grid;gap:0;border-top:1px solid var(--line)}
-.st{display:grid;grid-template-columns:90px 1fr;gap:20px;padding:28px 0;border-bottom:1px solid var(--line)}
-.st::before{counter-increment:s;content:counter(s,decimal-leading-zero);font-family:'Fraunces',Georgia,serif;font-size:40px;color:var(--brass);line-height:1}
-.st h3{font-size:20px;margin-bottom:6px;font-family:'Instrument Sans',sans-serif}
-.st p{color:var(--mute)}
-.shot{border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:36px;box-shadow:0 30px 70px rgb(0 0 0/35%)}
-.shot figcaption{background:var(--bg2);font-size:13px;color:var(--mute);padding:10px 14px}
-.fit{display:grid;grid-template-columns:1fr 1fr;gap:40px}
-.fit h3{font-size:18px;margin-bottom:12px;color:var(--brass2)}
-.fit li{list-style:none;padding:8px 0;border-bottom:1px solid var(--line);color:var(--mute)}
-.faq{max-width:780px}
-.faq-i{border-bottom:1px solid var(--line)}
-.faq-i p{color:var(--mute)}
-#iscrizione{background:var(--bg2)}
-#iscrizione .wrap{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
-.formbox{background:var(--paper);color:#1d2b2e;border-radius:6px;padding:34px 30px;box-shadow:0 30px 70px rgb(0 0 0/35%)}
-.formbox h3{font-family:'Fraunces',Georgia,serif;font-size:28px;font-weight:500;margin-bottom:4px}
-.formsub{color:#5d625c;font-size:14.5px;margin-bottom:18px}
-.formnote{font-size:12.5px;color:#5d625c;text-align:center;margin-top:12px}
-.wk-field{width:100%;font:inherit;font-size:16px;padding:14px;border:1px solid #cfc6b1;border-radius:4px;background:#fffdf7;color:#1d2b2e}
-.wk-field:focus{outline:2px solid var(--brass);border-color:var(--brass)}
-.wk-priv{color:#4d524c}.wk-priv a{color:#1d2b2e}
-.wk-errore{background:#f7dedb;color:#8c1d14}
-.btn-gold{display:inline-flex;align-items:center;justify-content:center;background:#14262a;color:var(--paper);border:0;border-radius:4px;font:inherit;font-weight:700;font-size:16px;padding:16px 18px;cursor:pointer;text-decoration:none}
-.btn-gold:hover{background:#0c1a1d}.btn-gold:disabled{opacity:.6}
-.cd b{color:var(--paper);font-family:'Fraunces',Georgia,serif;font-weight:500;font-size:34px}.cd span{color:var(--mute)}
-.wk-modal .box{background:var(--paper);color:#1d2b2e}.wk-modal .box p{color:#4d524c}
-.wk-modal .box>div:first-child{background:#e6d9b8!important;color:#14262a!important}
-.wk-modal .btn-gold{background:#14262a}
-.foot{text-align:center;font-size:12.5px;color:var(--mute);padding:30px 20px 40px}
-.foot a{color:var(--mute)}
-@media (max-width:900px){
- .hero{padding:44px 0 36px}.flow{grid-template-columns:1fr;gap:10px}.arrow{transform:rotate(90deg)}
- .story,#iscrizione .wrap,.fit{grid-template-columns:1fr;gap:28px}.story img{max-width:220px}
- section{padding:54px 0}.st{grid-template-columns:56px 1fr}.st::before{font-size:30px}.datechip{display:none}
-}
+# ---------------- C ----------------
+GIORNATA = [
+ ("8:30", "La posta", "Email dei clienti da leggere una a una, documenti da salvare, scadenze da segnare a mano.", "L'AI le ha già lette: ha trovato scadenze e avvisi bonari, messo i documenti nella scheda del cliente e scritto le risposte. Tu rileggi e premi Invia."),
+ ("10:00", "Gli F24", "Mandati uno a uno, poi le telefonate per sapere chi li ha ricevuti.", "Pronti per tutti i clienti in una volta: controlli e premi Invia. Poi promemoria due giorni prima e sollecito a chi non risponde."),
+ ("12:00", "I documenti del 730", "La lista dei documenti mandata e rimandata, cliente per cliente.", "Scegli i clienti e il giorno: a ognuno parte l'elenco, anche da mandare in foto, con il promemoria a chi non ha finito."),
+ ("15:00", "Fatture e quadrature", "La fattura del fornitore estero da ribattere, l'estratto conto da confrontare riga per riga.", "XML pronto da importare, estratti e fatture abbinati, le differenze già trovate."),
+ ("18:00", "Lo studio", "Circolari da scrivere, parcelle da preparare, file sparsi.", "Circolare con la fonte ufficiale mandata ai clienti giusti, parcelle partite, archivio in ordine. Alle 18 fai l'unica cosa che nessuna AI fa: la consulenza."),
+]
+C2_CSS = C_CSS + TUTTO_CSS + '''
+.hero h1{font-size:clamp(34px,4.8vw,64px)}
+.hero h1 q{quotes:"“" "”"}
+.hero .lead{max-width:700px}
+.hero .portrait{width:120px;height:120px;border-radius:50%;object-fit:cover;border:3px solid var(--brass);margin:0 auto 26px}
+.day{border-top:1px solid var(--line)}
+.dr{display:grid;grid-template-columns:110px 1fr 1fr;gap:26px;padding:24px 0;border-bottom:1px solid var(--line)}
+.dr .t{font-family:'Fraunces',Georgia,serif;font-size:30px;color:var(--brass2);line-height:1}
+.dr .t small{display:block;font-family:'Instrument Sans',sans-serif;font-size:14px;color:var(--paper);margin-top:8px}
+.dr h4{font-size:12.5px;font-weight:700;color:var(--mute);margin-bottom:6px}
+.dr .after h4{color:var(--brass2)}
+.dr p{color:var(--mute);font-size:15.5px}
+.dr .after p{color:var(--paper)}
+.tt-b{color:var(--paper);border:1px solid var(--line)}
+.tt-b[aria-selected="true"]{background:var(--brass);color:#14262a;border-color:var(--brass)}
+.tt-p .ph{border:1px solid var(--line);box-shadow:0 30px 70px rgb(0 0 0/35%)}
+.tt-p .noimg{background:var(--bg2);color:var(--brass2);border:1px dashed var(--line)}
+.tt-p h3{font-family:'Fraunces',Georgia,serif;font-weight:500}
+.tt-p p,.tt-safe{color:var(--mute)}.tt-safe b{color:var(--paper)}
+.ag2{display:grid;grid-template-columns:repeat(2,1fr);gap:0 40px;border-top:1px solid var(--line)}
+.ag2 div{padding:22px 0;border-bottom:1px solid var(--line)}
+.ag2 h3{font-size:19px;margin-bottom:6px}.ag2 p{color:var(--mute);font-size:15.5px}
+@media (max-width:900px){.dr{grid-template-columns:1fr;gap:10px}.ag2{grid-template-columns:1fr}}
 '''
-
 def C():
+    giorn = '\n'.join(f'<div class="dr"><div class="t">{o}<small>{t}</small></div><div><h4>Prima</h4><p>{pr}</p></div><div class="after"><h4>Con Commercialista AI</h4><p>{do}</p></div></div>' for o, t, pr, do in GIORNATA)
     body = f'''<header class="top"><div class="wrap"><div class="mark">Davide Caiazzo <small>workshop per commercialisti</small></div><div class="datechip">Giovedì 29 ottobre, ore 21:00, su Zoom</div></div></header>
 <main>
 <section class="hero"><div class="wrap">
-<p class="kick">Workshop gratuito dal vivo, solo per commercialisti</p>
-<h1>La fattura del fornitore estero arriva in PDF. <span class="b">Il gestionale vuole l'XML.</span></h1>
-<p class="lead">Una scansione storta del fornitore tedesco, i dati copiati a mano, l'autofattura. Ogni mese. <b>Giovedì 29 ottobre alle 21 lo faccio davanti a te</b>, su Commercialista AI: carico il PDF, anche scansionato, ed esce il file da importare.</p>
-<div class="flow" aria-hidden="true">
-<div class="doc"><div class="h"><span>INVOICE · PDF</span><span>da registrare</span></div><dl><dt>Fornitore</dt><dd>Demo Cloud Services GmbH</dd><dt>Data</dt><dd>12/07/2026</dd><dt>Descrizione</dt><dd>Cloud hosting, monthly plan</dd><dt>Totale</dt><dd>49,00 €</dd><dt>Cliente</dt><dd>Bertoldi Costruzioni S.r.l.</dd></dl></div>
-<div class="arrow">→</div>
-<div class="xml"><div class="h">Pronto da importare nel gestionale</div><span class="t">&lt;TipoDocumento&gt;</span>TD17<span class="t">&lt;/TipoDocumento&gt;</span><br/><span class="t">&lt;Denominazione&gt;</span>Demo Cloud Services GmbH<span class="t">&lt;/Denominazione&gt;</span><br/><span class="t">&lt;Data&gt;</span>2026-07-12<span class="t">&lt;/Data&gt;</span><br/><span class="t">&lt;ImportoTotale&gt;</span>49.00<span class="t">&lt;/ImportoTotale&gt;</span><br/><span class="ok">✓ servizio da fornitore UE riconosciuto</span><br/><span class="ok">✓ dati controllati prima del file</span></div>
-</div>
+<img class="portrait" src="davide-linkedin.jpg" alt="Davide Caiazzo" width="120" height="120"/>
+<p class="kick">Workshop gratuito dal vivo, solo per commercialisti · conduce Davide Caiazzo</p>
+<p class="kick" style="font-family:'Fraunces',Georgia,serif;font-style:italic;font-size:20px;color:var(--paper)">«Ho bisogno di un consulente, non di una segretaria», dicevo al mio commercialista.</p>
+<h1>Non gli mancava la competenza. <span class="b">Gli mancava il tempo.</span></h1>
+<p class="lead">Pensavo che non fosse bravo. Costruendo Commercialista AI ho capito che mi sbagliavo: <b>il suo tempo se lo mangiava la segreteria</b>, tra email, scadenze, F24, documenti, fatture, circolari e parcelle. Giovedì 29 ottobre alle 21 ti mostro la giornata dello studio con tutto quel lavoro fatto dall'intelligenza artificiale.</p>
 <a class="cta" href="#iscrizione">Riserva il posto gratis</a>
-<div class="byline"><img src="davide-linkedin.jpg" alt="Davide Caiazzo" width="56" height="56"/><p><b>Conduce Davide Caiazzo</b><br/>ha venduto la sua azienda al gruppo Zucchetti</p></div>
 </div></section>
-<div class="strip"><div class="wrap"><span><b>Più di 180</b> commercialisti iscritti all'edizione del 15 ottobre</span><span>Il gestionale <b>resta il tuo</b></span><span><b>Gratis</b>, su Zoom</span></div></div>
+<div class="strip"><div class="wrap"><span><b>182</b> iscritti all'edizione del 15 ottobre</span><span>Il gestionale <b>resta il tuo</b></span><span><b>Gratis</b>, su Zoom</span></div></div>
 
-<section><div class="wrap story">
+<section><div class="wrap">
+<h2>La giornata dello studio, prima e dopo</h2>
+<p class="sub">Clienti di prova, programma vero. Giovedì la vedi scorrere dal vivo.</p>
+<div class="day">{giorn}</div>
+</div></section>
+
+<section style="padding-top:0"><div class="wrap">
+<h2>Tutto quello che fa per lo studio</h2>
+<p class="sub">Tredici funzioni, un solo programma accanto al tuo gestionale. Scegli una voce e guarda la schermata vera: l'AI prepara, tu controlli.</p>
+{tutto('c')}
+</div></section>
+
+<section style="padding-top:0"><div class="wrap story">
 <img src="davide-linkedin.jpg" alt="Davide Caiazzo" width="400" height="400" loading="lazy"/>
 <div>
-<blockquote>Ho bisogno di un consulente, non di una segretaria.</blockquote>
-<p>Per anni ho pensato che il mio commercialista non fosse bravo. O che non fosse un consulente. Glielo dicevo, con queste parole. Costruendo Commercialista AI ho capito che mi sbagliavo: <b>non gli mancava la competenza. Gli mancava il tempo.</b></p>
-<p>Sono Davide Caiazzo. Ho costruito My Governance e l'ho venduta al gruppo Zucchetti: «valutazione oltre 10 milioni», ha titolato Il Sole 24 Ore. Commercialista AI l'ho costruito e provato insieme a due studi commercialisti. Giovedì te lo mostro io, dal vivo.</p>
+<p>Sono Davide Caiazzo. {BIO} Giovedì te lo mostro io, dal vivo.</p>
 <div class="press">{STAMPA}</div>
+<p style="margin-top:16px">{SQUADRA}</p>
 </div></div></section>
 
 <section style="padding-top:0"><div class="wrap">
 <h2>Cosa vedi dal vivo</h2>
-<p class="sub">La verità è che non puoi fare tutto tu. In una sera ti mostro i lavori che il tuo studio può smettere di fare a mano, su uno studio di esempio: clienti di prova, programma vero.</p>
-<div class="steps">
-<div class="st"><div><h3>Dal PDF estero al file XML</h3><p>Carico la fattura del fornitore estero, anche una scansione. Il programma legge i dati, riconosce se sono beni o servizi e se l'acquisto è dall'Unione europea, e prepara l'XML da importare nel gestionale. Se manca un dato, te lo dice prima.</p></div></div>
-<div class="st"><div><h3>Le autofatture in inversione contabile</h3><p>Dalle fatture d'acquisto in inversione contabile escono le autofatture, pronte da scaricare.</p></div></div>
-<div class="st"><div><h3>Gli F24 a tutti i clienti, e sai chi ha ricevuto</h3><p>Il programma riconosce il cliente da ogni F24, prepara le email, sollecita chi non risponde. Tu controlli e premi Invia.</p></div></div>
-<div class="st"><div><h3>Le tue domande, in diretta</h3><p>Rispondo io. Alla fine ti dico quanto costa e come si attiva. Nessun obbligo.</p></div></div>
-</div>
-<figure class="shot"><picture><source media="(max-width:700px)" srcset="img-ott/fatture-estere-telefono.webp"/><img src="img-ott/fatture-estere.webp" width="1440" height="860" loading="lazy" alt="La pagina Fatture estere e autofatture in XML di Commercialista AI"/></picture><figcaption>Fatture estere e autofatture in XML, studio dimostrativo di Commercialista AI.</figcaption></figure>
-<p style="margin-top:22px;color:var(--mute);font-size:15px">In squadra con me Gianfranco Motta, il tecnico di DC Academy: tiene d'occhio la chat e mi porta le domande più tecniche.</p>
-</div></section>
-
-<section style="padding-top:0"><div class="wrap fit">
-<div><h3>Fa per te se</h3><ul><li>hai clienti che comprano servizi o merce dall'estero</li><li>le giornate se ne vanno tra F24, documenti e scadenze</li><li>non hai competenze tecniche: non servono</li></ul></div>
-<div><h3>Non fa per te se</h3><ul><li>cerchi un corso di teoria sull'intelligenza artificiale</li><li>vuoi solo la registrazione da guardare «prima o poi»</li></ul></div>
+<div class="ag2">{agenda('<div><h3>{t}</h3><p>{d}</p></div>')}</div>
 </div></section>
 
 <section style="padding-top:0"><div class="wrap"><h2>Domande frequenti</h2><div class="faq">{faq_html()}</div></div></section>
@@ -414,147 +261,82 @@ def C():
 {form_block('', 'Riserva il tuo posto gratis', 'Live su Zoom · solo per commercialisti')}
 </div></section>
 </main>'''
-    return page('C', "Workshop gratuito per commercialisti: dalla fattura estera in PDF all'XML, dal vivo",
-      "Workshop live gratuito su Zoom per commercialisti, giovedì 29 ottobre alle 21:00. Davide Caiazzo mostra dal vivo Commercialista AI: fatture estere dal PDF all'XML, autofatture in inversione contabile, F24 ai clienti.",
-      'family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,500&family=Instrument+Sans:wght@400;600;700&family=IBM+Plex+Mono:wght@400', C_CSS, body,
-      "[CLAUDE] 2026-10-17 variante C (prova ott A/B/C/D): notte petrolio e ottone + gancio Fatture estere in XML + storia vera di Davide. Modulo e tracciamento copiati da workshop.html. Ipotesi: Projects/Tool-Commercialisti/consegne-a-sviluppi/workshop-pagine-ott-20261017/ipotesi.md")
+    return page('C', "Workshop gratuito per commercialisti: consulente, non segretaria. La giornata dello studio con l'intelligenza artificiale",
+      "Workshop live gratuito su Zoom per commercialisti, giovedì 29 ottobre alle 21:00. Davide Caiazzo mostra la giornata di uno studio con Commercialista AI: F24, scadenze, email, 730, fatture estere, quadrature, circolari, parcelle.",
+      'family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,500&family=Instrument+Sans:wght@400;600;700&family=IBM+Plex+Mono:wght@400', C2_CSS, body,
+      "[CLAUDE] 2026-10-17 sera variante C v2 (prova ott A/B/C/D): notte petrolio e ottone, gancio storia di Davide «consulente, non segretaria» + giornata prima/dopo, tutto il programma. Modulo e tracciamento copiati da workshop.html. Ipotesi: Projects/Tool-Commercialisti/consegne-a-sviluppi/workshop-pagine-ott-20261017/ipotesi.md")
 
-# =============== D: salvia + evidenziatore, Scadenze e avvisi bonari ===============
-D_CSS = '''
-:root{--bg:#edf1e7;--paper:#fbfcf8;--ink:#1e2a21;--mute:#58655b;--green:#2f5d3a;--green2:#244a2e;--hi:#ffe066;--red:#b3261e;--line:#d3dccd}
-body{background:var(--bg);color:var(--ink);font-family:'Public Sans',system-ui,sans-serif;font-size:17px;line-height:1.6}
-h1,h2,.d{font-family:'Bricolage Grotesque',system-ui,sans-serif;letter-spacing:-.02em}
-.top .wrap{display:flex;justify-content:space-between;align-items:center;padding-top:20px;padding-bottom:20px;gap:12px}
-.brand{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:18px}
-.brand span{background:var(--hi);padding:0 4px}
-.top a{font-weight:700;color:var(--green);text-decoration:none;font-size:15px}
-.hero{padding:30px 0 60px}
-.hero .wrap{display:grid;grid-template-columns:1.05fr 1fr;gap:50px;align-items:center}
-.date{display:inline-block;border:2px solid var(--ink);border-radius:8px;padding:6px 12px;font-weight:700;font-size:15px;margin-bottom:22px;background:var(--paper)}
-h1{font-size:clamp(36px,4.6vw,62px);font-weight:700;line-height:1.02;margin-bottom:22px}
-h1 mark{background:linear-gradient(transparent 55%,var(--hi) 55%);color:inherit;padding:0 2px}
-.lead{color:var(--mute);max-width:560px;margin-bottom:26px}
-.lead b{color:var(--ink)}
-.cta{display:inline-block;background:var(--green);color:#fff;text-decoration:none;font-weight:700;font-size:17px;padding:16px 28px;border-radius:12px;box-shadow:0 4px 0 var(--green2);transition:transform .1s}
-.cta:active{transform:translateY(2px);box-shadow:0 2px 0 var(--green2)}
-.host{display:flex;align-items:center;gap:12px;margin-top:24px}
-.host img{width:50px;height:50px;border-radius:50%;object-fit:cover}
-.host p{font-size:14.5px;color:var(--mute);line-height:1.4}.host b{color:var(--ink)}
-.agenda-card{background:var(--paper);border:2px solid var(--ink);border-radius:14px;box-shadow:8px 8px 0 var(--ink);overflow:hidden}
-.agenda-card .hd{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-bottom:2px solid var(--ink);font-weight:700}
-.agenda-card .hd span{font-size:13px;font-weight:400;color:var(--mute)}
-.row{display:grid;grid-template-columns:92px 1fr;gap:12px;padding:14px 18px;border-bottom:1px solid var(--line);font-size:15px;align-items:start}
-.row:last-child{border-bottom:0}
-.row .q{font-weight:700;font-size:13px;color:var(--green)}
-.row .q.r{color:var(--red)}
-.row b{display:block}
-.row small{color:var(--mute);font-size:13.5px}
-.row.hi{background:#fff8d1}
-.note{font-size:13px;color:var(--mute);margin-top:12px}
-.facts{background:var(--ink);color:#f3f6ef;padding:22px 0}
-.facts .wrap{display:flex;justify-content:space-between;gap:14px 30px;flex-wrap:wrap;font-size:15px}
-.facts b{color:var(--hi)}
-section{padding:70px 0}
-h2{font-size:clamp(30px,3.4vw,44px);font-weight:700;line-height:1.08;margin-bottom:14px}
-.sub{color:var(--mute);max-width:640px;margin-bottom:36px}
-.flow3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-.f{background:var(--paper);border:2px solid var(--ink);border-radius:14px;padding:24px}
-.f .k{display:inline-block;background:var(--hi);font-weight:700;font-size:13px;padding:2px 8px;border-radius:6px;margin-bottom:12px}
-.f h3{font-family:'Bricolage Grotesque',sans-serif;font-size:21px;line-height:1.15;margin-bottom:8px}
-.f p{color:var(--mute);font-size:15.5px}
-.shot{margin-top:30px;border:2px solid var(--ink);border-radius:14px;overflow:hidden;background:var(--paper)}
-.shot figcaption{padding:10px 14px;font-size:13px;color:var(--mute);border-top:1px solid var(--line)}
-.list{max-width:860px;display:grid;gap:12px}
-.li{display:grid;grid-template-columns:34px 1fr;gap:14px;padding:18px 0;border-bottom:2px dashed var(--line)}
-.li .c{width:28px;height:28px;border:2px solid var(--ink);border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--green)}
-.li h3{font-size:19px;margin-bottom:4px}
-.li p{color:var(--mute);font-size:15.5px}
-.who{display:grid;grid-template-columns:220px 1fr;gap:34px;align-items:center;background:var(--paper);border:2px solid var(--ink);border-radius:14px;padding:30px}
-.who img{border-radius:10px;aspect-ratio:1;object-fit:cover}
-.who h3{font-family:'Bricolage Grotesque',sans-serif;font-size:28px;margin-bottom:8px}
-.who p{color:var(--mute);margin-bottom:12px}
-.press{display:flex;gap:18px;flex-wrap:wrap;font-size:14px;font-weight:700}
-.press a{color:var(--green)}
-.faq{max-width:760px}
-.faq-i{border-bottom:2px solid var(--line)}
-.faq-i p{color:var(--mute)}
-#iscrizione .wrap{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center}
-.formbox{background:var(--paper);border:2px solid var(--ink);border-radius:14px;box-shadow:8px 8px 0 var(--green);padding:32px 28px}
-.formbox h3{font-family:'Bricolage Grotesque',sans-serif;font-size:27px;margin-bottom:4px}
-.formsub{color:var(--mute);font-size:14.5px;margin-bottom:18px}
-.formnote{font-size:12.5px;color:var(--mute);text-align:center;margin-top:12px}
-.wk-field{width:100%;font:inherit;font-size:16px;padding:14px;border:2px solid var(--line);border-radius:10px;background:#fff;color:var(--ink)}
-.wk-field:focus{outline:none;border-color:var(--green)}
-.wk-priv{color:var(--mute)}.wk-priv a{color:var(--green)}
-.wk-errore{background:#fbe3e1;color:var(--red)}
-.btn-gold{display:inline-flex;align-items:center;justify-content:center;background:var(--green);color:#fff;border:0;border-radius:12px;font:inherit;font-weight:700;font-size:16px;padding:16px 18px;cursor:pointer;box-shadow:0 4px 0 var(--green2);text-decoration:none}
-.btn-gold:disabled{opacity:.6}
-.cd>div{background:var(--paper);border:2px solid var(--ink);border-radius:10px;padding:8px 4px}
-.cd b{font-family:'Bricolage Grotesque',sans-serif;color:var(--ink)}.cd span{color:var(--mute)}
-.wk-modal .box{background:var(--paper);color:var(--ink);border:2px solid var(--ink)}.wk-modal .box p{color:var(--mute)}
-.wk-modal .box>div:first-child{background:var(--hi)!important;color:var(--ink)!important}
-.foot{text-align:center;font-size:12.5px;color:var(--mute);padding:30px 20px 40px}
-.foot a{color:var(--mute)}
-@media (max-width:900px){
- .hero .wrap,#iscrizione .wrap{grid-template-columns:1fr;gap:30px}.flow3{grid-template-columns:1fr}
- .who{grid-template-columns:1fr;padding:22px}.who img{max-width:180px}section{padding:50px 0}
- .agenda-card{box-shadow:5px 5px 0 var(--ink)}.row{grid-template-columns:78px 1fr}
-}
+# ---------------- D ----------------
+D2_CSS = D_CSS + TUTTO_CSS + '''
+.big{display:grid;grid-template-columns:auto 1fr;gap:26px;align-items:center;margin-bottom:22px}
+.big .n{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:clamp(110px,14vw,190px);line-height:.8;letter-spacing:-.05em;color:var(--green)}
+
+.chk{list-style:none;columns:2;column-gap:22px;background:var(--paper);border:2px solid var(--ink);border-radius:14px;box-shadow:8px 8px 0 var(--ink);padding:20px 22px}
+.chk li{break-inside:avoid;padding:6px 0 6px 28px;position:relative;font-size:15px;border-bottom:1px dashed var(--line)}
+.chk li::before{content:"✓";position:absolute;left:4px;top:5px;color:var(--green);font-weight:700}
+.nums{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.num{background:var(--paper);border:2px solid var(--ink);border-radius:14px;padding:22px}
+.num b{display:block;font-family:'Bricolage Grotesque',sans-serif;font-size:44px;line-height:1;margin-bottom:8px}
+.num p{color:var(--mute);font-size:15px}
+.never{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.never div{border-top:4px solid var(--ink);padding-top:14px}
+.never h3{font-family:'Bricolage Grotesque',sans-serif;font-size:21px;margin-bottom:6px}
+.never p{color:var(--mute);font-size:15.5px}
+.tt-b{color:var(--ink);background:var(--paper);border:2px solid var(--ink)}
+.tt-b[aria-selected="true"]{background:var(--hi)}
+.tt-p .ph{border:2px solid var(--ink)}
+.tt-p .noimg{background:var(--paper);border:2px dashed var(--ink)}
+.tt-p h3{font-family:'Bricolage Grotesque',sans-serif}
+.tt-p p,.tt-safe{color:var(--mute)}.tt-safe b{color:var(--ink)}
+@media (max-width:900px){.big{grid-template-columns:1fr;gap:6px}.chk{columns:1;box-shadow:5px 5px 0 var(--ink)}.nums,.never{grid-template-columns:1fr}}
 '''
-
 def D():
+    chk = ''.join(f'<li>{f[1]}</li>' for f in FUNZ)
     body = f'''<header class="top"><div class="wrap"><div class="brand">Workshop <span>commercialisti</span></div><a href="#iscrizione">Iscriviti gratis</a></div></header>
 <main>
 <section class="hero"><div class="wrap">
 <div>
 <p class="date">Giovedì 29 ottobre, ore 21:00 · gratis su Zoom</p>
-<h1>Un avviso bonario nella PEC. Un F24 da mandare. <mark>Niente ti scappa più.</mark></h1>
-<p class="lead">Giovedì 29 ottobre ti faccio vedere dal vivo come Commercialista AI <b>trova le scadenze in documenti e posta</b>, legge l'avviso bonario, calcola la scadenza e ti avvisa prima. Tu confermi. Il gestionale resta il tuo.</p>
+<div class="big"><div class="n"><span>13</span></div><h1>funzioni per il lavoro ripetitivo dello studio. <mark>L'AI prepara, tu controlli.</mark></h1></div>
+<p class="lead">Dalle risposte ai clienti agli F24 mandati con i solleciti, dai documenti del 730 alle fatture estere, dagli estratti conto alle circolari, fino a parcelle e archivio. <b>Scadenze, documenti e risposte sotto controllo.</b> Giovedì 29 ottobre te lo faccio vedere dal vivo.</p>
 <a class="cta" href="#iscrizione">Riserva il posto gratis</a>
 <div class="host"><img src="davide-linkedin.jpg" alt="Davide Caiazzo" width="50" height="50"/><p><b>Conduce Davide Caiazzo</b><br/>ha venduto la sua azienda al gruppo Zucchetti</p></div>
 </div>
-<div>
-<div class="agenda-card" role="img" aria-label="Esempio di elenco scadenze dello studio in Commercialista AI">
-<div class="hd">Scadenze dello studio <span>studio dimostrativo</span></div>
-<div class="row hi"><span class="q r">Scaduta 13/10</span><div><b>Bertoldi Costruzioni S.r.l.</b><small>F24 settembre 2026 · 415,00 € · sollecito pronto</small></div></div>
-<div class="row"><span class="q">Avviso bonario</span><div><b>Farmacia Sant'Anna S.n.c.</b><small>scadenza calcolata dal programma · due promemoria · F24 pronto</small></div></div>
-<div class="row"><span class="q">Da mandare</span><div><b>Autofficina Gallo</b><small>F24 agosto 2026 · 615,00 € · scade il 25 ottobre</small></div></div>
-<div class="row"><span class="q">Da mandare</span><div><b>Rossi Impianti S.r.l.</b><small>F24 agosto 2026 · 7.415,20 € · scade il 25 ottobre</small></div></div>
-</div>
-<p class="note">Clienti di prova, programma vero: lo vedi all'opera giovedì.</p>
-</div>
+<div><ul class="chk" aria-label="Le 13 funzioni">{chk}</ul><p class="note">Tutte già attive nel programma: le vedi dal vivo il 29. Il gestionale resta il tuo.</p></div>
 </div></section>
-<div class="facts"><div class="wrap"><span><b>Più di 180</b> commercialisti iscritti all'edizione del 15 ottobre</span><span>Si guarda e si fanno domande: <b>zero tecnica</b></span><span>Niente parte senza <b>il tuo sì</b></span></div></div>
 
-<section><div class="wrap">
-<h2>Il cliente ti inoltra l'avviso bonario tre settimane dopo.</h2>
-<p class="sub">Il programma lo legge, cerca la data di notifica nella conversazione, calcola la scadenza vera con la sospensione feriale e la mette in agenda. Il rischio vero non è sbagliare un calcolo: è dimenticare una scadenza tra le centinaia che lo studio tiene d'occhio.</p>
-<div class="flow3">
-<div class="f"><span class="k">arriva</span><h3>L'avviso bonario nella posta</h3><p>Il programma lo legge dalla casella dello studio o dal documento caricato.</p></div>
-<div class="f"><span class="k">si calcola</span><h3>La scadenza giusta</h3><p>Calcola la scadenza, anche con la sospensione feriale, e la mette in calendario sul cliente giusto.</p></div>
-<div class="f"><span class="k">ti avvisa</span><h3>Due promemoria e l'F24 pronto</h3><p>Prima che scada ricevi i promemoria. Tu controlli e confermi.</p></div>
+<section style="padding-top:10px"><div class="wrap">
+<div class="nums">
+<div class="num"><b>23 su 31</b><p>commercialisti al sondaggio del webinar del 30 settembre hanno messo F24 e solleciti fra le cose che tolgono più tempo.</p></div>
+<div class="num"><b>182</b><p>iscritti all'edizione del 15 ottobre.</p></div>
+<div class="num"><b>0</b><p>gestionali da cambiare. Non tiene la contabilità: lavora accanto al tuo e legge i PDF che ti fa scaricare.</p></div>
+</div></div></section>
+
+<section style="padding-top:0"><div class="wrap">
+<h2>Le cose che oggi rischiano di scappare</h2>
+<div class="never">
+<div><h3>Gli invii del 16</h3><p>F24 pronti per tutti i clienti in una volta, promemoria due giorni prima, sollecito a chi non risponde, F24 scaduti fermati.</p></div>
+<div><h3>L'avviso bonario inoltrato tardi</h3><p>L'AI lo legge, cerca la data di notifica nella conversazione e calcola la scadenza con la sospensione feriale.</p></div>
+<div><h3>Il cliente che non manda i documenti</h3><p>Scegli i clienti e il giorno: l'elenco del 730 parte a ognuno, con il promemoria a chi non ha finito.</p></div>
 </div>
-<figure class="shot"><picture><source media="(max-width:700px)" srcset="img-ott/scadenze-telefono.webp"/><img src="img-ott/scadenze.webp" width="1440" height="860" loading="lazy" alt="La pagina Scadenze di Commercialista AI con le scadenze da fare"/></picture><figcaption>Scadenze in Commercialista AI, studio dimostrativo.</figcaption></figure>
+<p class="sub" style="margin-top:26px">Quante ore a settimana se ne vanno così, nel tuo studio? Le contiamo insieme in diretta, sulle tue 3 attività più ripetitive.</p>
+</div></section>
+
+<section style="padding-top:0"><div class="wrap">
+<h2>Tutto quello che fa per lo studio</h2>
+<p class="sub">Tredici funzioni, un solo programma. Scegli una voce e guarda la schermata vera.</p>
+{tutto('d')}
 </div></section>
 
 <section style="padding-top:0"><div class="wrap">
 <h2>Cosa vedi dal vivo</h2>
-<p class="sub">Un caso intero su uno studio di esempio, dall'inizio alla fine.</p>
-<div class="list">
-<div class="li"><div class="c">✓</div><div><h3>Scadenze trovate in documenti e posta</h3><p>Un elenco di scadenze in Excel o PDF, un avviso bonario, una email: finiscono in calendario cliente per cliente.</p></div></div>
-<div class="li"><div class="c">✓</div><div><h3>Gli F24 a tutti i clienti, e sai chi ha ricevuto</h3><p>Il programma riconosce il cliente da ogni F24, prepara le email e sollecita chi non risponde. Tu premi Invia.</p></div></div>
-<div class="li"><div class="c">✓</div><div><h3>I documenti del 730 chiesti da soli</h3><p>A ogni persona fisica parte l'elenco dei documenti, con un link per mandarli in foto, e i promemoria a chi non ha finito.</p></div></div>
-<div class="li"><div class="c">✓</div><div><h3>Le tue domande, in diretta</h3><p>Rispondo io. Alla fine ti dico quanto costa e come si attiva. Nessun obbligo.</p></div></div>
-</div></div></section>
+<div class="list">{agenda('<div class="li"><div class="c">{n}</div><div><h3>{t}</h3><p>{d}</p></div></div>')}</div>
+</div></section>
 
 <section style="padding-top:0"><div class="wrap">
 <div class="who"><img src="davide-linkedin.jpg" alt="Davide Caiazzo" width="220" height="220" loading="lazy"/><div>
-<h3>Conduco io, Davide Caiazzo</h3>
-<p>Ho costruito My Governance, un software per le aziende, e l'ho venduta al gruppo Zucchetti: «valutazione oltre 10 milioni», ha titolato Il Sole 24 Ore. Sono TOP 20 al mondo in “LinkedIn® Growth” secondo Favikon 2025. Commercialista AI l'ho costruito e provato insieme a due studi commercialisti.</p>
-<div class="press">{STAMPA}</div>
-<p style="margin-top:14px;font-size:15px">In squadra con me Gianfranco Motta, il tecnico di DC Academy: tiene d'occhio la chat e mi porta le domande più tecniche.</p>
-</div></div>
-</div></section>
+<h3>Conduco io, Davide Caiazzo</h3><p>{BIO}</p><div class="press">{STAMPA}</div><p style="margin-top:14px;font-size:15px">{SQUADRA}</p>
+</div></div></div></section>
 
 <section style="padding-top:0"><div class="wrap"><h2>Domande frequenti</h2><div class="faq">{faq_html()}</div></div></section>
 
@@ -563,10 +345,10 @@ def D():
 {form_block('', 'Riserva il tuo posto gratis', 'Live su Zoom · solo per commercialisti')}
 </div></section>
 </main>'''
-    return page('D', "Workshop gratuito per commercialisti: scadenze e avvisi bonari che non scappano più",
-      "Workshop live gratuito su Zoom per commercialisti, giovedì 29 ottobre alle 21:00. Davide Caiazzo mostra dal vivo Commercialista AI: scadenze trovate in documenti e posta, avvisi bonari letti, promemoria e F24 pronti.",
-      'family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Public+Sans:wght@400;600;700', D_CSS, body,
-      "[CLAUDE] 2026-10-17 variante D (prova ott A/B/C/D): carta salvia ed evidenziatore + gancio Scadenze e avvisi bonari. Modulo e tracciamento copiati da workshop.html. Ipotesi: Projects/Tool-Commercialisti/consegne-a-sviluppi/workshop-pagine-ott-20261017/ipotesi.md")
+    return page('D', "Workshop gratuito per commercialisti: 13 funzioni per il lavoro ripetitivo dello studio, le prepara l'intelligenza artificiale",
+      "Workshop live gratuito su Zoom per commercialisti, giovedì 29 ottobre alle 21:00. Davide Caiazzo mostra dal vivo i 13 lavori che Commercialista AI prepara per lo studio: F24, scadenze, email, 730, fatture estere, estratti, circolari, parcelle.",
+      'family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Public+Sans:wght@400;600;700', D2_CSS, body,
+      "[CLAUDE] 2026-10-17 sera variante D v2 (prova ott A/B/C/D): salvia ed evidenziatore, gancio numeri e risultato (13 lavori, cose che non scappano), tutto il programma. Modulo e tracciamento copiati da workshop.html. Ipotesi: Projects/Tool-Commercialisti/consegne-a-sviluppi/workshop-pagine-ott-20261017/ipotesi.md")
 
 for v, fn in (('b', B), ('c', C), ('d', D)):
     out = os.path.join(REPO, 'workshop-ott-%s.html' % v)

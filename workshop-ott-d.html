@@ -75,11 +75,11 @@ fbq('track','PageView');
   };
 }());
 </script>
-<title>Workshop gratuito per commercialisti: scadenze e avvisi bonari che non scappano più</title>
-<meta name="description" content="Workshop live gratuito su Zoom per commercialisti, giovedì 29 ottobre alle 21:00. Davide Caiazzo mostra dal vivo Commercialista AI: scadenze trovate in documenti e posta, avvisi bonari letti, promemoria e F24 pronti."/>
+<title>Workshop gratuito per commercialisti: 13 funzioni per il lavoro ripetitivo dello studio, le prepara l'intelligenza artificiale</title>
+<meta name="description" content="Workshop live gratuito su Zoom per commercialisti, giovedì 29 ottobre alle 21:00. Davide Caiazzo mostra dal vivo i 13 lavori che Commercialista AI prepara per lo studio: F24, scadenze, email, 730, fatture estere, estratti, circolari, parcelle."/>
 <link rel="canonical" href="https://commercialisti.davidecaiazzo.it/"/>
 <meta name="robots" content="noindex,follow"/>
-<!-- [CLAUDE] 2026-10-17 variante D (prova ott A/B/C/D): carta salvia ed evidenziatore + gancio Scadenze e avvisi bonari. Modulo e tracciamento copiati da workshop.html. Ipotesi: Projects/Tool-Commercialisti/consegne-a-sviluppi/workshop-pagine-ott-20261017/ipotesi.md -->
+<!-- [CLAUDE] 2026-10-17 sera variante D v2 (prova ott A/B/C/D): salvia ed evidenziatore, gancio numeri e risultato (13 lavori, cose che non scappano), tutto il programma. Modulo e tracciamento copiati da workshop.html. Ipotesi: Projects/Tool-Commercialisti/consegne-a-sviluppi/workshop-pagine-ott-20261017/ipotesi.md -->
 <meta property="og:type" content="website"/>
 <meta property="og:url" content="https://commercialisti.davidecaiazzo.it/"/>
 <meta property="og:title" content="Il lavoro ripetitivo dello studio lo fa il programma. Dimostrazione dal vivo, gratis."/>
@@ -202,6 +202,43 @@ h2{font-size:clamp(30px,3.4vw,44px);font-weight:700;line-height:1.08;margin-bott
  .agenda-card{box-shadow:5px 5px 0 var(--ink)}.row{grid-template-columns:78px 1fr}
 }
 
+.tutto{display:grid;grid-template-columns:300px 1fr;gap:26px;align-items:start}
+.tt-list{display:flex;flex-direction:column;gap:6px}
+.tt-b{all:unset;box-sizing:border-box;cursor:pointer;display:block;width:100%;padding:11px 14px;border-radius:10px;font-weight:600;font-size:15.5px;line-height:1.3}
+.tt-b small{display:block;font-weight:400;font-size:13px;opacity:.75;margin-top:2px}
+.tt-b:focus-visible{outline:3px solid currentColor;outline-offset:2px}
+.tt-p figure{margin:0}
+.tt-p .ph{border-radius:12px;overflow:hidden}
+.tt-p .ph img{width:100%;height:auto}
+.tt-p .noimg{display:flex;align-items:center;justify-content:center;min-height:200px;border-radius:12px;font-size:15px;text-align:center;padding:24px}
+.tt-p h3{font-size:22px;margin:18px 0 6px}
+.tt-p p{font-size:16px;line-height:1.6}
+.tt-safe{margin-top:22px;font-size:15px;line-height:1.55}
+.tt-p [hidden]{display:none!important}
+@media (max-width:900px){.tutto{grid-template-columns:1fr}.tt-list{display:grid;grid-template-columns:1fr 1fr;gap:6px}.tt-b{padding:9px 10px;font-size:14px}.tt-b small{display:none}}
+
+.big{display:grid;grid-template-columns:auto 1fr;gap:26px;align-items:center;margin-bottom:22px}
+.big .n{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:clamp(110px,14vw,190px);line-height:.8;letter-spacing:-.05em;color:var(--green)}
+
+.chk{list-style:none;columns:2;column-gap:22px;background:var(--paper);border:2px solid var(--ink);border-radius:14px;box-shadow:8px 8px 0 var(--ink);padding:20px 22px}
+.chk li{break-inside:avoid;padding:6px 0 6px 28px;position:relative;font-size:15px;border-bottom:1px dashed var(--line)}
+.chk li::before{content:"✓";position:absolute;left:4px;top:5px;color:var(--green);font-weight:700}
+.nums{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.num{background:var(--paper);border:2px solid var(--ink);border-radius:14px;padding:22px}
+.num b{display:block;font-family:'Bricolage Grotesque',sans-serif;font-size:44px;line-height:1;margin-bottom:8px}
+.num p{color:var(--mute);font-size:15px}
+.never{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.never div{border-top:4px solid var(--ink);padding-top:14px}
+.never h3{font-family:'Bricolage Grotesque',sans-serif;font-size:21px;margin-bottom:6px}
+.never p{color:var(--mute);font-size:15.5px}
+.tt-b{color:var(--ink);background:var(--paper);border:2px solid var(--ink)}
+.tt-b[aria-selected="true"]{background:var(--hi)}
+.tt-p .ph{border:2px solid var(--ink)}
+.tt-p .noimg{background:var(--paper);border:2px dashed var(--ink)}
+.tt-p h3{font-family:'Bricolage Grotesque',sans-serif}
+.tt-p p,.tt-safe{color:var(--mute)}.tt-safe b{color:var(--ink)}
+@media (max-width:900px){.big{grid-template-columns:1fr;gap:6px}.chk{columns:1;box-shadow:5px 5px 0 var(--ink)}.nums,.never{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
@@ -211,60 +248,82 @@ h2{font-size:clamp(30px,3.4vw,44px);font-weight:700;line-height:1.08;margin-bott
 <section class="hero"><div class="wrap">
 <div>
 <p class="date">Giovedì 29 ottobre, ore 21:00 · gratis su Zoom</p>
-<h1>Un avviso bonario nella PEC. Un F24 da mandare. <mark>Niente ti scappa più.</mark></h1>
-<p class="lead">Giovedì 29 ottobre ti faccio vedere dal vivo come Commercialista AI <b>trova le scadenze in documenti e posta</b>, legge l'avviso bonario, calcola la scadenza e ti avvisa prima. Tu confermi. Il gestionale resta il tuo.</p>
+<div class="big"><div class="n"><span>13</span></div><h1>funzioni per il lavoro ripetitivo dello studio. <mark>L'AI prepara, tu controlli.</mark></h1></div>
+<p class="lead">Dalle risposte ai clienti agli F24 mandati con i solleciti, dai documenti del 730 alle fatture estere, dagli estratti conto alle circolari, fino a parcelle e archivio. <b>Scadenze, documenti e risposte sotto controllo.</b> Giovedì 29 ottobre te lo faccio vedere dal vivo.</p>
 <a class="cta" href="#iscrizione">Riserva il posto gratis</a>
 <div class="host"><img src="davide-linkedin.jpg" alt="Davide Caiazzo" width="50" height="50"/><p><b>Conduce Davide Caiazzo</b><br/>ha venduto la sua azienda al gruppo Zucchetti</p></div>
 </div>
-<div>
-<div class="agenda-card" role="img" aria-label="Esempio di elenco scadenze dello studio in Commercialista AI">
-<div class="hd">Scadenze dello studio <span>studio dimostrativo</span></div>
-<div class="row hi"><span class="q r">Scaduta 13/10</span><div><b>Bertoldi Costruzioni S.r.l.</b><small>F24 settembre 2026 · 415,00 € · sollecito pronto</small></div></div>
-<div class="row"><span class="q">Avviso bonario</span><div><b>Farmacia Sant'Anna S.n.c.</b><small>scadenza calcolata dal programma · due promemoria · F24 pronto</small></div></div>
-<div class="row"><span class="q">Da mandare</span><div><b>Autofficina Gallo</b><small>F24 agosto 2026 · 615,00 € · scade il 25 ottobre</small></div></div>
-<div class="row"><span class="q">Da mandare</span><div><b>Rossi Impianti S.r.l.</b><small>F24 agosto 2026 · 7.415,20 € · scade il 25 ottobre</small></div></div>
-</div>
-<p class="note">Clienti di prova, programma vero: lo vedi all'opera giovedì.</p>
-</div>
+<div><ul class="chk" aria-label="Le 13 funzioni"><li>Email dei clienti</li><li>Scadenze e avvisi bonari</li><li>Invia F24</li><li>Confronto</li><li>Clienti e Archivio</li><li>Fatture estere</li><li>Estratti e fatture</li><li>Genera F24</li><li>730 e Redditi</li><li>Circolari</li><li>Fatturazione dello studio</li><li>Email inviate</li><li>Colleghi</li></ul><p class="note">Tutte già attive nel programma: le vedi dal vivo il 29. Il gestionale resta il tuo.</p></div>
 </div></section>
-<div class="facts"><div class="wrap"><span><b>Più di 180</b> commercialisti iscritti all'edizione del 15 ottobre</span><span>Si guarda e si fanno domande: <b>zero tecnica</b></span><span>Niente parte senza <b>il tuo sì</b></span></div></div>
 
-<section><div class="wrap">
-<h2>Il cliente ti inoltra l'avviso bonario tre settimane dopo.</h2>
-<p class="sub">Il programma lo legge, cerca la data di notifica nella conversazione, calcola la scadenza vera con la sospensione feriale e la mette in agenda. Il rischio vero non è sbagliare un calcolo: è dimenticare una scadenza tra le centinaia che lo studio tiene d'occhio.</p>
-<div class="flow3">
-<div class="f"><span class="k">arriva</span><h3>L'avviso bonario nella posta</h3><p>Il programma lo legge dalla casella dello studio o dal documento caricato.</p></div>
-<div class="f"><span class="k">si calcola</span><h3>La scadenza giusta</h3><p>Calcola la scadenza, anche con la sospensione feriale, e la mette in calendario sul cliente giusto.</p></div>
-<div class="f"><span class="k">ti avvisa</span><h3>Due promemoria e l'F24 pronto</h3><p>Prima che scada ricevi i promemoria. Tu controlli e confermi.</p></div>
+<section style="padding-top:10px"><div class="wrap">
+<div class="nums">
+<div class="num"><b>23 su 31</b><p>commercialisti al sondaggio del webinar del 30 settembre hanno messo F24 e solleciti fra le cose che tolgono più tempo.</p></div>
+<div class="num"><b>182</b><p>iscritti all'edizione del 15 ottobre.</p></div>
+<div class="num"><b>0</b><p>gestionali da cambiare. Non tiene la contabilità: lavora accanto al tuo e legge i PDF che ti fa scaricare.</p></div>
+</div></div></section>
+
+<section style="padding-top:0"><div class="wrap">
+<h2>Le cose che oggi rischiano di scappare</h2>
+<div class="never">
+<div><h3>Gli invii del 16</h3><p>F24 pronti per tutti i clienti in una volta, promemoria due giorni prima, sollecito a chi non risponde, F24 scaduti fermati.</p></div>
+<div><h3>L'avviso bonario inoltrato tardi</h3><p>L'AI lo legge, cerca la data di notifica nella conversazione e calcola la scadenza con la sospensione feriale.</p></div>
+<div><h3>Il cliente che non manda i documenti</h3><p>Scegli i clienti e il giorno: l'elenco del 730 parte a ognuno, con il promemoria a chi non ha finito.</p></div>
 </div>
-<figure class="shot"><picture><source media="(max-width:700px)" srcset="img-ott/scadenze-telefono.webp"/><img src="img-ott/scadenze.webp" width="1440" height="860" loading="lazy" alt="La pagina Scadenze di Commercialista AI con le scadenze da fare"/></picture><figcaption>Scadenze in Commercialista AI, studio dimostrativo.</figcaption></figure>
+<p class="sub" style="margin-top:26px">Quante ore a settimana se ne vanno così, nel tuo studio? Le contiamo insieme in diretta, sulle tue 3 attività più ripetitive.</p>
+</div></section>
+
+<section style="padding-top:0"><div class="wrap">
+<h2>Tutto quello che fa per lo studio</h2>
+<p class="sub">Tredici funzioni, un solo programma. Scegli una voce e guarda la schermata vera.</p>
+<div class="tutto" id="dtutto">
+<div class="tt-list" role="tablist" aria-label="Le funzioni del programma"><button type="button" class="tt-b" role="tab" aria-selected="true" data-i="0">Email dei clienti<small>Prepara le risposte ai clienti</small></button><button type="button" class="tt-b" role="tab" aria-selected="false" data-i="1">Scadenze e avvisi bonari<small>Mette in calendario le scadenze dei clienti</small></button><button type="button" class="tt-b" role="tab" aria-selected="false" data-i="2">Invia F24<small>Manda gli F24 ai clienti e sollecita chi non risponde</small></button><button type="button" class="tt-b" role="tab" aria-selected="false" data-i="3">Confronto<small>Trova le differenze tra estratto conto e movimenti</small></button><button type="button" class="tt-b" role="tab" aria-selected="false" data-i="4">Clienti e Archivio<small>Tiene in ordine clienti e documenti</small></button><button type="button" class="tt-b" role="tab" aria-selected="false" data-i="5">Fatture estere<small>Dal PDF del fornitore estero all'XML</small></button><button type="button" class="tt-b" role="tab" aria-selected="false" data-i="6">Estratti e fatture<small>Abbina pagamenti e fatture</small></button><button type="button" class="tt-b" role="tab" aria-selected="false" data-i="7">Genera F24<small>Prepara l'F24 delle ritenute</small></button><button type="button" class="tt-b" role="tab" aria-selected="false" data-i="8">730 e Redditi<small>Chiede i documenti della dichiarazione</small></button><button type="button" class="tt-b" role="tab" aria-selected="false" data-i="9">Circolari<small>Le novità fiscali ai clienti giusti</small></button><button type="button" class="tt-b" role="tab" aria-selected="false" data-i="10">Fatturazione dello studio<small>Manda le parcelle ai clienti</small></button><button type="button" class="tt-b" role="tab" aria-selected="false" data-i="11">Email inviate<small>Ogni invio con il suo esito</small></button><button type="button" class="tt-b" role="tab" aria-selected="false" data-i="12">Colleghi<small>Uno spazio con altri commercialisti</small></button></div>
+<div class="tt-p" role="tabpanel" aria-live="polite">
+<figure class="ph"><picture><source media="(max-width:700px)" srcset="img-ott/email-telefono.webp"/><img src="img-ott/email.webp" width="1440" height="860" alt="Email dei clienti in Commercialista AI, studio dimostrativo"/></picture></figure>
+<div class="noimg" hidden></div>
+<h3>Email dei clienti: prepara le risposte ai clienti</h3><p>Il cliente scrive una domanda o manda un documento: l'AI prepara la risposta nel tono dello studio. Tu la leggi, la correggi se serve e la mandi.</p>
+</div></div>
+<p class="tt-safe"><b>Il gestionale resta il tuo:</b> il programma legge i PDF che ti fa scaricare. Tu carichi, controlli e premi Invia. Niente parte senza il tuo sì: anche i solleciti automatici li accendi tu. Non tiene la contabilità e non sostituisce il gestionale: lavora accanto al tuo. Schermate dello studio di esempio, con clienti e dati finti.</p>
+<script>
+(function(){
+ var D=[{"img": "img-ott/email.webp", "imgt": "img-ott/email-telefono.webp", "nome": "Email dei clienti", "cosa": "Prepara le risposte ai clienti", "testo": "Il cliente scrive una domanda o manda un documento: l'AI prepara la risposta nel tono dello studio. Tu la leggi, la correggi se serve e la mandi."}, {"img": "img-ott/scadenze.webp", "imgt": "img-ott/scadenze-telefono.webp", "nome": "Scadenze e avvisi bonari", "cosa": "Mette in calendario le scadenze dei clienti", "testo": "Un avviso bonario, una cartella, una scadenza in un PDF: l'AI le trova nelle email e nei documenti, calcola la data con la sospensione feriale, ti manda due promemoria e prepara l'F24. Tu confermi."}, {"img": "img-ott/invia-f24.webp", "imgt": "img-ott/invia-f24-telefono.webp", "nome": "Invia F24", "cosa": "Manda gli F24 ai clienti e sollecita chi non risponde", "testo": "Carichi gli F24 fatti con il gestionale: l'AI capisce di quale cliente è ognuno, prepara l'email e sollecita chi non risponde. Promemoria due giorni prima, F24 scaduti fermati. Tu controlli e premi Invia."}, {"img": "img-ott/controllo-incrociato.webp", "imgt": "img-ott/controllo-incrociato-telefono.webp", "nome": "Confronto", "cosa": "Trova le differenze tra estratto conto e movimenti", "testo": "Carichi l'estratto della banca e la lista movimenti del gestionale: l'AI ti mostra cosa c'è solo da una parte e le date diverse. Confronta anche le fatture dell'Agenzia con il registro. Tu guardi solo le differenze."}, {"img": "img-ott/clienti.webp", "imgt": "img-ott/clienti-telefono.webp", "nome": "Clienti e Archivio", "cosa": "Tiene in ordine clienti e documenti", "testo": "Una scheda per ogni cliente. L'AI trova le email dei clienti e mette i documenti che arrivano nella scheda giusta; quelli dubbi te li segna."}, {"img": "img-ott/fatture-estere.webp", "imgt": "img-ott/fatture-estere-telefono.webp", "nome": "Fatture estere", "cosa": "Dal PDF del fornitore estero all'XML", "testo": "Legge importi, date e partita IVA anche da una scansione e prepara l'XML da importare nel gestionale. Le autofatture in inversione contabile, pronte da scaricare."}, {"img": "img-ott/estratti-fatture.webp", "imgt": "img-ott/estratti-fatture-telefono.webp", "nome": "Estratti e fatture", "cosa": "Abbina pagamenti e fatture", "testo": "Banca, carta o PayPal: l'AI abbina i movimenti alle fatture e ti segnala solo i pagamenti senza fattura e quelli da controllare."}, {"img": "", "imgt": "", "nome": "Genera F24", "cosa": "Prepara l'F24 delle ritenute", "testo": "Carichi la parcella o la fattura in PDF: l'AI trova la ritenuta e prepara l'F24 con la scadenza giusta. Tu confermi solo la data del pagamento."}, {"img": "img-ott/redditi.webp", "imgt": "img-ott/redditi-telefono.webp", "nome": "730 e Redditi", "cosa": "Chiede i documenti della dichiarazione", "testo": "Scegli i clienti e il giorno: a ognuno parte l'elenco dei documenti da mandare, anche in foto, e un promemoria a chi non li manda."}, {"img": "", "imgt": "", "nome": "Circolari", "cosa": "Le novità fiscali ai clienti giusti", "testo": "Quando esce una novità importante l'AI prepara la circolare con la fonte ufficiale. Tu scegli a quali clienti mandarla."}, {"img": "img-ott/fatturazione.webp", "imgt": "img-ott/fatturazione-telefono.webp", "nome": "Fatturazione dello studio", "cosa": "Manda le parcelle ai clienti", "testo": "Scritti gli onorari, la parcella parte a ogni cliente nel giorno che scegli, con i promemoria a chi non ha pagato e la fattura elettronica pronta."}, {"img": "", "imgt": "", "nome": "Email inviate", "cosa": "Ogni invio con il suo esito", "testo": "Per ogni email vedi se è stata accettata e se il cliente ha confermato di averla ricevuta. Senza telefonare a nessuno."}, {"img": "", "imgt": "", "nome": "Colleghi", "cosa": "Uno spazio con altri commercialisti", "testo": "Confronti dubbi e soluzioni con gli altri studi che usano il programma."}];
+ var box=document.getElementById('dtutto'); if(!box) return;
+ var bs=box.querySelectorAll('.tt-b'), fig=box.querySelector('.ph'), no=box.querySelector('.noimg'), h=box.querySelector('.tt-p h3'), p=box.querySelector('.tt-p p');
+ function show(i){
+  var d=D[i];
+  bs.forEach(function(b,k){b.setAttribute('aria-selected',k===i?'true':'false');});
+  if(d.img){fig.hidden=false;no.hidden=true;fig.querySelector('source').srcset=d.imgt;var im=fig.querySelector('img');im.src=d.img;im.alt=d.nome+' in Commercialista AI, studio dimostrativo';}
+  else{fig.hidden=true;no.hidden=false;no.textContent=d.nome+': lo vedi dal vivo giovedì.';}
+  h.textContent=d.nome+': '+d.cosa.charAt(0).toLowerCase()+d.cosa.slice(1);p.textContent=d.testo;
+ }
+ var cur=0,auto=null;
+ try{if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){auto=setInterval(function(){cur=(cur+1)%D.length;show(cur);},4500);}}catch(e){}
+ function stop(){if(auto){clearInterval(auto);auto=null;}}
+ box.addEventListener('pointerenter',stop);box.addEventListener('focusin',stop);
+ bs.forEach(function(b,k){b.addEventListener('click',function(){stop();cur=k;show(k);});});
+})();
+</script>
 </div></section>
 
 <section style="padding-top:0"><div class="wrap">
 <h2>Cosa vedi dal vivo</h2>
-<p class="sub">Un caso intero su uno studio di esempio, dall'inizio alla fine.</p>
-<div class="list">
-<div class="li"><div class="c">✓</div><div><h3>Scadenze trovate in documenti e posta</h3><p>Un elenco di scadenze in Excel o PDF, un avviso bonario, una email: finiscono in calendario cliente per cliente.</p></div></div>
-<div class="li"><div class="c">✓</div><div><h3>Gli F24 a tutti i clienti, e sai chi ha ricevuto</h3><p>Il programma riconosce il cliente da ogni F24, prepara le email e sollecita chi non risponde. Tu premi Invia.</p></div></div>
-<div class="li"><div class="c">✓</div><div><h3>I documenti del 730 chiesti da soli</h3><p>A ogni persona fisica parte l'elenco dei documenti, con un link per mandarli in foto, e i promemoria a chi non ha finito.</p></div></div>
-<div class="li"><div class="c">✓</div><div><h3>Le tue domande, in diretta</h3><p>Rispondo io. Alla fine ti dico quanto costa e come si attiva. Nessun obbligo.</p></div></div>
-</div></div></section>
+<div class="list"><div class="li"><div class="c">1</div><div><h3>La giornata di uno studio, sul programma vero</h3><p>Apro Commercialista AI su uno studio di esempio e facciamo il giro intero: la posta già letta con le risposte ai clienti pronte, le scadenze e gli avvisi bonari trovati, gli F24 mandati e chi li ha ricevuti, i documenti del 730 chiesti ai clienti che scegli, le circolari, le parcelle, ogni invio con il suo esito.</p></div></div>
+<div class="li"><div class="c">2</div><div><h3>Fatture estere, estratti e confronti</h3><p>La fattura del fornitore estero che diventa XML, gli estratti conto abbinati alle fatture, le differenze tra estratto conto e movimenti del gestionale.</p></div></div>
+<div class="li"><div class="c">3</div><div><h3>Le tue 3 attività, guardate in diretta</h3><p>Porta le 3 cose che ripeti ogni settimana e che vorresti non fare più. Ti dico quali il programma fa già e cosa serve per partire.</p></div></div>
+<div class="li"><div class="c">4</div><div><h3>Le tue domande</h3><p>Rispondo io, sul tuo studio. Alla fine ti dico quanto costa e come si attiva. Nessun obbligo.</p></div></div></div>
+</div></section>
 
 <section style="padding-top:0"><div class="wrap">
 <div class="who"><img src="davide-linkedin.jpg" alt="Davide Caiazzo" width="220" height="220" loading="lazy"/><div>
-<h3>Conduco io, Davide Caiazzo</h3>
-<p>Ho costruito My Governance, un software per le aziende, e l'ho venduta al gruppo Zucchetti: «valutazione oltre 10 milioni», ha titolato Il Sole 24 Ore. Sono TOP 20 al mondo in “LinkedIn® Growth” secondo Favikon 2025. Commercialista AI l'ho costruito e provato insieme a due studi commercialisti.</p>
-<div class="press"><a href="https://ntplusdiritto.ilsole24ore.com/art/zucchetti-acquisisce-my-governance-valutazione-oltre-10-milioni-caiazzo-confermato-ad-AHraItpC" target="_blank" rel="noopener noreferrer">Il Sole 24 Ore</a><a href="https://www.iltempo.it/tv-news/2026/03/11/video/libri-arriva-il-potere-di-linkedin-di-davide-caiazzo-46755479/" target="_blank" rel="noopener noreferrer">Il Tempo</a><a href="https://www.leggo.it/video/libri_arriva_il_potere_di_linkedin_di_davide_caiazzo-9409483.html" target="_blank" rel="noopener noreferrer">Leggo</a></div>
-<p style="margin-top:14px;font-size:15px">In squadra con me Gianfranco Motta, il tecnico di DC Academy: tiene d'occhio la chat e mi porta le domande più tecniche.</p>
-</div></div>
-</div></section>
+<h3>Conduco io, Davide Caiazzo</h3><p>Ho costruito My Governance, un software per le aziende, e l'ho venduta al gruppo Zucchetti: «valutazione oltre 10 milioni», ha titolato Il Sole 24 Ore. Sono TOP 20 al mondo in “LinkedIn® Growth” secondo Favikon 2025. Commercialista AI l'ho costruito e provato insieme a due studi commercialisti.</p><div class="press"><a href="https://ntplusdiritto.ilsole24ore.com/art/zucchetti-acquisisce-my-governance-valutazione-oltre-10-milioni-caiazzo-confermato-ad-AHraItpC" target="_blank" rel="noopener noreferrer">Il Sole 24 Ore</a><a href="https://www.iltempo.it/tv-news/2026/03/11/video/libri-arriva-il-potere-di-linkedin-di-davide-caiazzo-46755479/" target="_blank" rel="noopener noreferrer">Il Tempo</a><a href="https://www.leggo.it/video/libri_arriva_il_potere_di_linkedin_di_davide_caiazzo-9409483.html" target="_blank" rel="noopener noreferrer">Leggo</a></div><p style="margin-top:14px;font-size:15px">In squadra con me Gianfranco Motta, il tecnico di DC Academy: tiene d'occhio la chat e mi porta le domande più tecniche.</p>
+</div></div></div></section>
 
 <section style="padding-top:0"><div class="wrap"><h2>Domande frequenti</h2><div class="faq"><details class="faq-i"><summary>È un corso?</summary><p>No. È una serata dal vivo: apro il programma e ti mostro un caso intero, dall'inizio alla fine, su uno studio di esempio. Tu guardi e fai domande.</p></details>
 <details class="faq-i"><summary>Quanto costa partecipare?</summary><p>Niente, il workshop è gratuito. A fine serata ti racconto anche come lavorare con me e il mio team, se vorrai approfondire, senza nessun obbligo.</p></details>
 <details class="faq-i"><summary>Funziona con il gestionale che uso in studio?</summary><p>Sì. Il gestionale resta il tuo: il programma legge i PDF che il gestionale ti fa scaricare e prepara il lavoro che poi ci entra. TeamSystem, Zucchetti, Profis o altro.</p></details>
 <details class="faq-i"><summary>Devo saper usare la tecnologia?</summary><p>No. Guardi il mio schermo mentre lavoro: le dimostrazioni le faccio io, tu fai le domande. Ti basta il link Zoom che arriva via email, si apre anche dal browser.</p></details>
 <details class="faq-i"><summary>Cosa NON fa il programma?</summary><p>Non tiene la contabilità e non sostituisce il gestionale. Prepara il lavoro che ci entra e quello che va ai clienti: F24, risposte, scadenze, documenti. Te lo dico subito, così giovedì sai cosa aspettarti.</p></details>
-<details class="faq-i"><summary>E i dati dei miei clienti?</summary><p>Ne parlo in diretta. Il principio è uno: il programma prepara, il professionista controlla e approva. Niente parte senza il tuo clic.</p></details>
+<details class="faq-i"><summary>E i dati dei miei clienti?</summary><p>Ne parlo in diretta. Il principio è uno: il programma prepara, il professionista controlla e approva. Niente parte senza il tuo sì.</p></details>
 <details class="faq-i"><summary>Non posso esserci giovedì 29. Che faccio?</summary><p>Iscriviti comunque: dopo la diretta ti mando la registrazione per email, online per 48 ore. Le domande però le fai solo dal vivo.</p></details></div></div></section>
 
 <section id="iscrizione"><div class="wrap">
