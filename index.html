@@ -7,6 +7,9 @@
      B = /workshop-ott-b (stile Commercialista AI, gancio Invia F24) 20 %.
      C = /workshop-ott-c (notte petrolio e ottone, gancio Fatture estere in XML + storia di Davide) 20 %.
      D = /workshop-ott-d (salvia ed evidenziatore, gancio Scadenze e avvisi bonari) 20 %.
+     17/10 sera: B, C, D riscritte su tutto il programma (cambiano gancio e grafica) ed entra E = /workshop-ott-e
+     (chi lavora nello studio è una professionista, non la segreteria). Nuova ripartizione A 40 %, B/C/D/E 15 % ciascuna.
+     Chi era già stato assegnato resta sulla sua pagina; i nuovi visitatori entrano nella ripartizione nuova.
      Le pagine /workshop-b, /workshop-c e /workshop-d (prove precedenti) restano raggiungibili ma fuori rotazione.
      Chiave nuova (dc_pagina_ott): tutti vengono riassegnati una volta, poi restano sulla stessa pagina.
      La pagina si segna in utm_campaign (…-ott-a/b/c/d), che arriva su Kajabi e sul foglio Lead.
@@ -17,15 +20,15 @@
   try {
     var q = new URLSearchParams(window.location.search);
     if (q.get('pagina') === 'principale' || q.get('prova') === '1' || !/^https?:$/.test(window.location.protocol)) return;
-    var mappa = {A: '/workshop', B: '/workshop-ott-b', C: '/workshop-ott-c', D: '/workshop-ott-d'};
+    var mappa = {A: '/workshop', B: '/workshop-ott-b', C: '/workshop-ott-c', D: '/workshop-ott-d', E: '/workshop-ott-e'};
     var v = null;
     try { v = window.localStorage.getItem('dc_pagina_ott'); } catch (e) {}
     if (!mappa[v]) {
       var x = Math.random();
-      v = x < 0.4 ? 'A' : (x < 0.6 ? 'B' : (x < 0.8 ? 'C' : 'D'));
+      v = x < 0.4 ? 'A' : (x < 0.55 ? 'B' : (x < 0.7 ? 'C' : (x < 0.85 ? 'D' : 'E')));
       try { window.localStorage.setItem('dc_pagina_ott', v); } catch (e) {}
     }
-    var c = (q.get('utm_campaign') || 'webinar-commercialisti').replace(/-(pagina|sett|ott)-[abcd]$/i, '');
+    var c = (q.get('utm_campaign') || 'webinar-commercialisti').replace(/-(pagina|sett|ott)-[abcde]$/i, '');
     q.set('utm_campaign', c + '-ott-' + v.toLowerCase());
     window.location.replace(mappa[v] + '?' + q.toString() + window.location.hash);
   } catch (e) {}
