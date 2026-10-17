@@ -1,26 +1,32 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<!-- [CLAUDE] 2026-10-08 prova A/B/C delle pagine (decisa da CMO + esperto Meta, nessuna campagna nuova):
-     chi arriva qui viene assegnato a caso, una volta per sempre (localStorage), a una delle tre pagine.
-     La pagina scelta si segna in utm_campaign (…-pagina-a/b/c) che arriva su Kajabi e sul foglio.
+<!-- [CLAUDE] 2026-10-17 prova A/B/D delle pagine (C ESCE dalla rotazione, D entra): il verdetto del 14/10 su A/B/C
+     non aveva trovato differenze perché TUTTE le varianti condividevano lo stesso elemento (Gianfranco Motta
+     conduttore sconosciuto al posto di Davide). CFO ha misurato il crollo di conversione pagina->iscrizione
+     (16% meta settembre -> 7,5-9,4% 6-16/10) nella stessa finestra in cui questo cambio e' stato fatto (01/10).
+     CMO+CSO confermano l'ipotesi (forte, non certa) e propongono la correzione isolata nella variante D:
+     Davide torna in prima persona ad aprire il workshop, Gianfranco resta al computer "con Davide in sala".
+     C (registrazione sotto il pulsante, inconclusiva, stesso difetto di A/B) viene sostituita per isolare
+     questa unica variabile. Verdetto: iscritti/visualizzazioni di D contro A/B a 7 giorni o 300 visite per
+     variante. Chi arriva qui viene assegnato a caso, una volta per sempre (localStorage), a una delle pagine.
+     La pagina scelta si segna in utm_campaign (…-sett-a/b/d) che arriva su Kajabi e sul foglio.
      Per vedere la pagina principale senza smistamento: ?pagina=principale (oppure ?prova=1). -->
 <script>
 (function () {
   try {
     var q = new URLSearchParams(window.location.search);
     if (q.get('pagina') === 'principale' || q.get('prova') === '1' || !/^https?:$/.test(window.location.protocol)) return;
-    // 08/10 (Davide): «lascia la pagina originale che funzionava e testa altre 2 per migliorarla».
-    // A = pagina di settembre 50 %, B = + riga di fiducia (CMO) 25 %, C = + registrazione sotto il pulsante (esperto pagina) 25 %.
-    var mappa = {A: '/workshop', B: '/workshop-b', C: '/workshop-c'};
+    // A = pagina di settembre 50 %, B = + riga di fiducia (CMO) 25 %, D = Davide apre in prima persona (CMO+CSO, 17/10) 25 %.
+    var mappa = {A: '/workshop', B: '/workshop-b', D: '/workshop-d'};
     var v = null;
     try { v = window.localStorage.getItem('dc_pagina_sett'); } catch (e) {}
     if (!mappa[v]) {
       var x = Math.random();
-      v = x < 0.5 ? 'A' : (x < 0.75 ? 'B' : 'C');
+      v = x < 0.5 ? 'A' : (x < 0.75 ? 'B' : 'D');
       try { window.localStorage.setItem('dc_pagina_sett', v); } catch (e) {}
     }
-    var c = (q.get('utm_campaign') || 'webinar-commercialisti').replace(/-(pagina|sett)-[abc]$/i, '');
+    var c = (q.get('utm_campaign') || 'webinar-commercialisti').replace(/-(pagina|sett)-[abcd]$/i, '');
     q.set('utm_campaign', c + '-sett-' + v.toLowerCase());
     window.location.replace(mappa[v] + '?' + q.toString() + window.location.hash);
   } catch (e) {}
