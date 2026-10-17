@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<!-- Meta Pixel (aggiunto 07/09/2026 per la campagna workshop) -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','568941777677393');
+fbq('track','PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=568941777677393&ev=PageView&noscript=1"/></noscript>
+
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<script>
+/* [CLAUDE] 2026-10-02: prova A/B della pagina di iscrizione (A = pagina di sempre, B = titolo e blocco con le parole
+   di un commercialista). La variante si sceglie a caso alla prima visita (meta' e meta') e resta la stessa (localStorage, con
+   try/catch: se il browser lo blocca la pagina funziona lo stesso). Qui, prima che la pagina si disegni, si mette la
+   classe abl-a o abl-b su <html>: i blocchi abl-solo-b sono nascosti se la classe non c'e', quindi senza script resta A.
+   Misura: eventi landing_visita e landing_iscrizione al modulo Google della prova video della pagina grazie (scheda
+   GRAZIE del foglio Lead), variante landing-A / landing-B. Il modulo Kajabi e gli utm NON passano da qui.
+   Prove: ?variante=A o ?variante=B forza la variante senza salvarla; ?prova=1 marca le righe come prova.
+   Resoconto: Drive "2. Claude", Projects/Tool-Commercialisti/Webinar/15-10/[CLAUDE] 2026-10-02 prova AB pagina iscrizione.md */
+(function () {
+  'use strict';
+  var MODULO = 'https://docs.google.com/forms/d/e/1FAIpQLScIE7ZE1P1eKVEilQk_lTO4Nx5CY_VgljBQIn9LNftH2DkRKw/formResponse';
+  var CAMPI = {visitatore: 'entry.491521358', email: 'entry.1233226114', variante: 'entry.1781041701',
+               evento: 'entry.2099289393', dettaglio: 'entry.1395317553'};
+  function leggi(k) { try { return window.localStorage.getItem(k); } catch (e) { return null; } }
+  function scrivi(k, v) { try { window.localStorage.setItem(k, v); } catch (e) {} }
+  var qs = null;
+  try { qs = new URLSearchParams(window.location.search); } catch (e) {}
+  function param(k) { try { return qs ? (qs.get(k) || '') : ''; } catch (e) { return ''; } }
+  // Anteprime della pagina aperta da file (non dal sito) contano sempre come prova.
+  var prova = param('prova') === '1' || !/^https?:$/.test(window.location.protocol);
+  var variante = 'ott-C'; // [CLAUDE] 2026-10-08 prova A/B/C delle pagine
+  var radice = document.documentElement;
+
+
+  var visitatore = leggi('dc_landing_visitatore'), ritorno = !!visitatore;
+  if (!visitatore) {
+    var b = new Uint8Array(8);
+    try { crypto.getRandomValues(b); } catch (e) { for (var i = 0; i < 8; i++) b[i] = Math.floor(Math.random() * 256); }
+    visitatore = Array.prototype.map.call(b, function (x) { return ('0' + x.toString(16)).slice(-2); }).join('');
+    scrivi('dc_landing_visitatore', visitatore);
+  }
+  if (prova) visitatore = 'prova-' + visitatore;
+  var schermo = 'computer';
+  try { if (window.matchMedia && window.matchMedia('(max-width: 760px)').matches) schermo = 'telefono'; } catch (e) {}
+  var inserzione = param('utm_content').slice(0, 80);
+  // I browser pilotati da programmi (robot) non contano, salvo le prove con ?prova=1.
+  var conta = prova || !navigator.webdriver;
+
+  function invia(evento, email, dettaglio) {
+    if (!conta) return;
+    var dati = new URLSearchParams();
+    dati.append(CAMPI.visitatore, visitatore); dati.append(CAMPI.email, email || '');
+    dati.append(CAMPI.variante, 'landing-' + variante); dati.append(CAMPI.evento, evento);
+    dati.append(CAMPI.dettaglio, (dettaglio || '') + (prova ? ' · prova' : ''));
+    try { if (navigator.sendBeacon && navigator.sendBeacon(MODULO, dati)) return; } catch (e) {}
+    try { fetch(MODULO, {method: 'POST', mode: 'no-cors', body: dati, keepalive: true}); } catch (e) {}
+  }
+  var coda = inserzione ? ' · ' + inserzione : '';
+  try { invia('landing_visita', '', schermo + (ritorno ? ' · ritorno' : '') + coda); } catch (e) {}
+  var iscrizioneInviata = false;
+  window.DCLanding = {
+    variante: variante, visitatore: visitatore, prova: prova,
+    // Chiamata da mostraConferma(), cioe' solo quando l'iscrizione e' andata a buon fine.
+    iscrizione: function () {
+      if (iscrizioneInviata) return;
+      iscrizioneInviata = true;
+      var email = (leggi('dc_iscrizione_email') || '').trim().toLowerCase();
+      if (!email) { var f = document.getElementById('fieldEmail'); email = f ? f.value.trim().toLowerCase() : ''; }
+      invia('landing_iscrizione', email, schermo + coda);
+    }
+  };
+}());
+</script>
+<title>Workshop gratuito per commercialisti: dalla fattura estera in PDF all'XML, dal vivo</title>
+<meta name="description" content="Workshop live gratuito su Zoom per commercialisti, giovedì 29 ottobre alle 21:00. Davide Caiazzo mostra dal vivo Commercialista AI: fatture estere dal PDF all'XML, autofatture in inversione contabile, F24 ai clienti."/>
+<link rel="canonical" href="https://commercialisti.davidecaiazzo.it/"/>
+<meta name="robots" content="noindex,follow"/>
+<!-- [CLAUDE] 2026-10-17 variante C (prova ott A/B/C/D): notte petrolio e ottone + gancio Fatture estere in XML + storia vera di Davide. Modulo e tracciamento copiati da workshop.html. Ipotesi: Projects/Tool-Commercialisti/consegne-a-sviluppi/workshop-pagine-ott-20261017/ipotesi.md -->
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://commercialisti.davidecaiazzo.it/"/>
+<meta property="og:title" content="Il lavoro ripetitivo dello studio lo fa il programma. Dimostrazione dal vivo, gratis."/>
+<meta property="og:description" content="F24, documenti, scadenze e risposte ai clienti: lo vedi fare su uno studio vero, su Zoom."/>
+<meta property="og:image" content="https://commercialisti.davidecaiazzo.it/og-commercialisti.png"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<link rel="icon" type="image/png" href="https://automazioni.davidecaiazzo.it/favicon.png"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,500&family=Instrument+Sans:wght@400;600;700&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet"/>
+<script type="text/javascript" charset="UTF-8" src="//cdn.cookie-script.com/s/5b24cef87a160ab3ee3c8e35c1c61ff9.js"></script>
+<link rel="stylesheet" href="https://dc-chatbot-vswb.onrender.com/static/widget.css"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+img{max-width:100%;height:auto;display:block}
+a{color:inherit}
+.wrap{max-width:1160px;margin:0 auto;padding:0 20px}
+.wk-errore{font-size:14px;line-height:1.5;padding:12px 14px;border-radius:8px}
+.wk-field.error{outline:2px solid #d93025!important}
+.wk-priv{display:flex;gap:10px;align-items:flex-start;font-size:13px;line-height:1.45;cursor:pointer;text-align:left}
+.wk-priv input{margin-top:3px;width:17px;height:17px;flex:0 0 auto}
+.checkbox-error span{color:#d93025}
+.wk-modal{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(10,15,25,.6)}
+.wk-modal.open{display:flex}
+.wk-modal .box{max-width:440px;width:100%;border-radius:16px;padding:34px 28px;text-align:center}
+.wk-modal h4{font-size:24px;margin-bottom:10px}
+.wk-modal p{font-size:15px;line-height:1.6;margin-bottom:8px}
+.cd{display:flex;gap:10px}
+.cd>div{min-width:64px;text-align:center}
+.cd b{display:block;font-size:26px;font-variant-numeric:tabular-nums;line-height:1.1}
+.cd span{font-size:11px;opacity:.7}
+.faq-i summary{cursor:pointer;list-style:none;font-weight:700;padding:18px 32px 18px 0;position:relative}
+.faq-i summary::-webkit-details-marker{display:none}
+.faq-i summary::after{content:"+";position:absolute;right:4px;top:14px;font-size:22px;font-weight:400}
+.faq-i[open] summary::after{content:"–"}
+.faq-i p{padding:0 0 18px;line-height:1.65}
+:focus-visible{outline:3px solid currentColor;outline-offset:3px}
+.disc{text-align:center;padding:8px 16px;font-size:10.5px;line-height:1.5;opacity:.6}
+.disc a{text-decoration:underline}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+:root{--bg:#0c262b;--bg2:#103239;--paper:#efe8d8;--mute:#a7b9b5;--brass:#c9a24d;--brass2:#e0bd6c;--line:#24474e}
+body{background:var(--bg);color:var(--paper);font-family:'Instrument Sans',system-ui,sans-serif;font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
+h1,h2,h3.d{font-family:'Fraunces',Georgia,serif;font-weight:500;letter-spacing:-.01em}
+.top{padding:22px 0;border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.mark{font-family:'Fraunces',Georgia,serif;font-size:18px}
+.mark small{color:var(--mute);font-family:'Instrument Sans',sans-serif;font-size:13px;margin-left:8px}
+.datechip{color:var(--brass2);font-size:14px;font-weight:600;white-space:nowrap}
+.hero{padding:70px 0 54px;text-align:center}
+.kick{color:var(--mute);font-size:15px;margin-bottom:22px}
+h1{font-size:clamp(36px,5.4vw,72px);line-height:1.04;max-width:980px;margin:0 auto 26px}
+h1 .b{color:var(--brass2);font-style:italic}
+.lead{max-width:660px;margin:0 auto 34px;color:var(--mute);font-size:clamp(17px,1.4vw,19px)}
+.lead b{color:var(--paper);font-weight:600}
+.flow{display:grid;grid-template-columns:1fr 70px 1fr;align-items:center;max-width:900px;margin:0 auto 40px;text-align:left}
+.doc{background:var(--paper);color:#2a2a26;border-radius:6px;padding:22px 22px 18px;box-shadow:0 30px 60px rgb(0 0 0/35%);font-size:13px;line-height:1.5;min-height:210px}
+.doc .h{display:flex;justify-content:space-between;font-weight:700;font-size:12px;letter-spacing:.04em;border-bottom:1px solid #d6cdb8;padding-bottom:8px;margin-bottom:10px}
+.doc .h span:last-child{background:#b3261e;color:#fff;border-radius:3px;padding:1px 6px;font-size:11px}
+.doc dl{display:grid;grid-template-columns:auto 1fr;gap:3px 12px}
+.doc dt{color:#7a7465}.doc dd{font-weight:600}
+.arrow{text-align:center;color:var(--brass2);font-size:30px}
+.xml{background:#071a1e;border:1px solid var(--brass);border-radius:6px;padding:20px;font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:12.5px;line-height:1.7;color:#cfe1dc;min-height:210px;overflow-wrap:anywhere}
+.xml .t{color:var(--brass2)}.xml .ok{color:#8fd19e}
+.xml .h{font-family:'Instrument Sans',sans-serif;font-weight:700;color:var(--paper);font-size:12px;margin-bottom:8px}
+.cta{display:inline-block;background:var(--brass);color:#14262a;font-weight:700;text-decoration:none;font-size:17px;padding:17px 30px;border-radius:4px;transition:background .15s}
+.cta:hover{background:var(--brass2)}
+.byline{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:30px;text-align:left}
+.byline img{width:56px;height:56px;border-radius:50%;object-fit:cover;border:2px solid var(--brass)}
+.byline p{font-size:14.5px;color:var(--mute);line-height:1.45}
+.byline b{color:var(--paper)}
+.strip{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:18px 0;color:var(--mute);font-size:14.5px}
+.strip .wrap{display:flex;justify-content:center;gap:12px 34px;flex-wrap:wrap;text-align:center}
+.strip b{color:var(--paper)}
+section{padding:80px 0}
+.story{display:grid;grid-template-columns:.8fr 1.2fr;gap:56px;align-items:center}
+.story img{border-radius:4px;filter:grayscale(.15);aspect-ratio:1;object-fit:cover}
+.story blockquote{font-family:'Fraunces',Georgia,serif;font-size:clamp(26px,3vw,40px);line-height:1.2;margin-bottom:22px}
+.story blockquote::before{content:"“";color:var(--brass2)}
+.story blockquote::after{content:"”";color:var(--brass2)}
+.story p{color:var(--mute);margin-bottom:14px}
+.story p b{color:var(--paper)}
+.press{display:flex;gap:20px;flex-wrap:wrap;font-size:14px;margin-top:6px}
+.press a{color:var(--brass2)}
+h2{font-size:clamp(30px,3.4vw,46px);line-height:1.1;margin-bottom:16px}
+.sub{color:var(--mute);max-width:640px;margin-bottom:40px}
+.steps{counter-reset:s;display:grid;gap:0;border-top:1px solid var(--line)}
+.st{display:grid;grid-template-columns:90px 1fr;gap:20px;padding:28px 0;border-bottom:1px solid var(--line)}
+.st::before{counter-increment:s;content:counter(s,decimal-leading-zero);font-family:'Fraunces',Georgia,serif;font-size:40px;color:var(--brass);line-height:1}
+.st h3{font-size:20px;margin-bottom:6px;font-family:'Instrument Sans',sans-serif}
+.st p{color:var(--mute)}
+.shot{border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:36px;box-shadow:0 30px 70px rgb(0 0 0/35%)}
+.shot figcaption{background:var(--bg2);font-size:13px;color:var(--mute);padding:10px 14px}
+.fit{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+.fit h3{font-size:18px;margin-bottom:12px;color:var(--brass2)}
+.fit li{list-style:none;padding:8px 0;border-bottom:1px solid var(--line);color:var(--mute)}
+.faq{max-width:780px}
+.faq-i{border-bottom:1px solid var(--line)}
+.faq-i p{color:var(--mute)}
+#iscrizione{background:var(--bg2)}
+#iscrizione .wrap{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.formbox{background:var(--paper);color:#1d2b2e;border-radius:6px;padding:34px 30px;box-shadow:0 30px 70px rgb(0 0 0/35%)}
+.formbox h3{font-family:'Fraunces',Georgia,serif;font-size:28px;font-weight:500;margin-bottom:4px}
+.formsub{color:#5d625c;font-size:14.5px;margin-bottom:18px}
+.formnote{font-size:12.5px;color:#5d625c;text-align:center;margin-top:12px}
+.wk-field{width:100%;font:inherit;font-size:16px;padding:14px;border:1px solid #cfc6b1;border-radius:4px;background:#fffdf7;color:#1d2b2e}
+.wk-field:focus{outline:2px solid var(--brass);border-color:var(--brass)}
+.wk-priv{color:#4d524c}.wk-priv a{color:#1d2b2e}
+.wk-errore{background:#f7dedb;color:#8c1d14}
+.btn-gold{display:inline-flex;align-items:center;justify-content:center;background:#14262a;color:var(--paper);border:0;border-radius:4px;font:inherit;font-weight:700;font-size:16px;padding:16px 18px;cursor:pointer;text-decoration:none}
+.btn-gold:hover{background:#0c1a1d}.btn-gold:disabled{opacity:.6}
+.cd b{color:var(--paper);font-family:'Fraunces',Georgia,serif;font-weight:500;font-size:34px}.cd span{color:var(--mute)}
+.wk-modal .box{background:var(--paper);color:#1d2b2e}.wk-modal .box p{color:#4d524c}
+.wk-modal .box>div:first-child{background:#e6d9b8!important;color:#14262a!important}
+.wk-modal .btn-gold{background:#14262a}
+.foot{text-align:center;font-size:12.5px;color:var(--mute);padding:30px 20px 40px}
+.foot a{color:var(--mute)}
+@media (max-width:900px){
+ .hero{padding:44px 0 36px}.flow{grid-template-columns:1fr;gap:10px}.arrow{transform:rotate(90deg)}
+ .story,#iscrizione .wrap,.fit{grid-template-columns:1fr;gap:28px}.story img{max-width:220px}
+ section{padding:54px 0}.st{grid-template-columns:56px 1fr}.st::before{font-size:30px}.datechip{display:none}
+}
+
+</style>
+</head>
+<body>
+<div class="disc"><strong>I contenuti di questo sito hanno natura pubblicitaria</strong> a favore della DC Academy S.r.l. · Per qualsiasi approfondimento sui nostri servizi, clienti, testimonianze, testate e sui numeri citati su questo sito visita la pagina: <a href="https://www.davidecaiazzo.it/trasparenza" target="_blank" rel="noopener">www.davidecaiazzo.it/trasparenza</a></div>
+<header class="top"><div class="wrap"><div class="mark">Davide Caiazzo <small>workshop per commercialisti</small></div><div class="datechip">Giovedì 29 ottobre, ore 21:00, su Zoom</div></div></header>
+<main>
+<section class="hero"><div class="wrap">
+<p class="kick">Workshop gratuito dal vivo, solo per commercialisti</p>
+<h1>La fattura del fornitore estero arriva in PDF. <span class="b">Il gestionale vuole l'XML.</span></h1>
+<p class="lead">Una scansione storta del fornitore tedesco, i dati copiati a mano, l'autofattura. Ogni mese. <b>Giovedì 29 ottobre alle 21 lo faccio davanti a te</b>, su Commercialista AI: carico il PDF, anche scansionato, ed esce il file da importare.</p>
+<div class="flow" aria-hidden="true">
+<div class="doc"><div class="h"><span>INVOICE · PDF</span><span>da registrare</span></div><dl><dt>Fornitore</dt><dd>Demo Cloud Services GmbH</dd><dt>Data</dt><dd>12/07/2026</dd><dt>Descrizione</dt><dd>Cloud hosting, monthly plan</dd><dt>Totale</dt><dd>49,00 €</dd><dt>Cliente</dt><dd>Bertoldi Costruzioni S.r.l.</dd></dl></div>
+<div class="arrow">→</div>
+<div class="xml"><div class="h">Pronto da importare nel gestionale</div><span class="t">&lt;TipoDocumento&gt;</span>TD17<span class="t">&lt;/TipoDocumento&gt;</span><br/><span class="t">&lt;Denominazione&gt;</span>Demo Cloud Services GmbH<span class="t">&lt;/Denominazione&gt;</span><br/><span class="t">&lt;Data&gt;</span>2026-07-12<span class="t">&lt;/Data&gt;</span><br/><span class="t">&lt;ImportoTotale&gt;</span>49.00<span class="t">&lt;/ImportoTotale&gt;</span><br/><span class="ok">✓ servizio da fornitore UE riconosciuto</span><br/><span class="ok">✓ dati controllati prima del file</span></div>
+</div>
+<a class="cta" href="#iscrizione">Riserva il posto gratis</a>
+<div class="byline"><img src="davide-linkedin.jpg" alt="Davide Caiazzo" width="56" height="56"/><p><b>Conduce Davide Caiazzo</b><br/>ha venduto la sua azienda al gruppo Zucchetti</p></div>
+</div></section>
+<div class="strip"><div class="wrap"><span><b>Più di 180</b> commercialisti iscritti all'edizione del 15 ottobre</span><span>Il gestionale <b>resta il tuo</b></span><span><b>Gratis</b>, su Zoom</span></div></div>
+
+<section><div class="wrap story">
+<img src="davide-linkedin.jpg" alt="Davide Caiazzo" width="400" height="400" loading="lazy"/>
+<div>
+<blockquote>Ho bisogno di un consulente, non di una segretaria.</blockquote>
+<p>Per anni ho pensato che il mio commercialista non fosse bravo. O che non fosse un consulente. Glielo dicevo, con queste parole. Costruendo Commercialista AI ho capito che mi sbagliavo: <b>non gli mancava la competenza. Gli mancava il tempo.</b></p>
+<p>Sono Davide Caiazzo. Ho costruito My Governance e l'ho venduta al gruppo Zucchetti: «valutazione oltre 10 milioni», ha titolato Il Sole 24 Ore. Commercialista AI l'ho costruito e provato insieme a due studi commercialisti. Giovedì te lo mostro io, dal vivo.</p>
+<div class="press"><a href="https://ntplusdiritto.ilsole24ore.com/art/zucchetti-acquisisce-my-governance-valutazione-oltre-10-milioni-caiazzo-confermato-ad-AHraItpC" target="_blank" rel="noopener noreferrer">Il Sole 24 Ore</a><a href="https://www.iltempo.it/tv-news/2026/03/11/video/libri-arriva-il-potere-di-linkedin-di-davide-caiazzo-46755479/" target="_blank" rel="noopener noreferrer">Il Tempo</a><a href="https://www.leggo.it/video/libri_arriva_il_potere_di_linkedin_di_davide_caiazzo-9409483.html" target="_blank" rel="noopener noreferrer">Leggo</a></div>
+</div></div></section>
+
+<section style="padding-top:0"><div class="wrap">
+<h2>Cosa vedi dal vivo</h2>
+<p class="sub">La verità è che non puoi fare tutto tu. In una sera ti mostro i lavori che il tuo studio può smettere di fare a mano, su uno studio di esempio: clienti di prova, programma vero.</p>
+<div class="steps">
+<div class="st"><div><h3>Dal PDF estero al file XML</h3><p>Carico la fattura del fornitore estero, anche una scansione. Il programma legge i dati, riconosce se sono beni o servizi e se l'acquisto è dall'Unione europea, e prepara l'XML da importare nel gestionale. Se manca un dato, te lo dice prima.</p></div></div>
+<div class="st"><div><h3>Le autofatture in inversione contabile</h3><p>Dalle fatture d'acquisto in inversione contabile escono le autofatture, pronte da scaricare.</p></div></div>
+<div class="st"><div><h3>Gli F24 a tutti i clienti, e sai chi ha ricevuto</h3><p>Il programma riconosce il cliente da ogni F24, prepara le email, sollecita chi non risponde. Tu controlli e premi Invia.</p></div></div>
+<div class="st"><div><h3>Le tue domande, in diretta</h3><p>Rispondo io. Alla fine ti dico quanto costa e come si attiva. Nessun obbligo.</p></div></div>
+</div>
+<figure class="shot"><picture><source media="(max-width:700px)" srcset="img-ott/fatture-estere-telefono.webp"/><img src="img-ott/fatture-estere.webp" width="1440" height="860" loading="lazy" alt="La pagina Fatture estere e autofatture in XML di Commercialista AI"/></picture><figcaption>Fatture estere e autofatture in XML, studio dimostrativo di Commercialista AI.</figcaption></figure>
+<p style="margin-top:22px;color:var(--mute);font-size:15px">In squadra con me Gianfranco Motta, il tecnico di DC Academy: tiene d'occhio la chat e mi porta le domande più tecniche.</p>
+</div></section>
+
+<section style="padding-top:0"><div class="wrap fit">
+<div><h3>Fa per te se</h3><ul><li>hai clienti che comprano servizi o merce dall'estero</li><li>le giornate se ne vanno tra F24, documenti e scadenze</li><li>non hai competenze tecniche: non servono</li></ul></div>
+<div><h3>Non fa per te se</h3><ul><li>cerchi un corso di teoria sull'intelligenza artificiale</li><li>vuoi solo la registrazione da guardare «prima o poi»</li></ul></div>
+</div></section>
+
+<section style="padding-top:0"><div class="wrap"><h2>Domande frequenti</h2><div class="faq"><details class="faq-i"><summary>È un corso?</summary><p>No. È una serata dal vivo: apro il programma e ti mostro un caso intero, dall'inizio alla fine, su uno studio di esempio. Tu guardi e fai domande.</p></details>
+<details class="faq-i"><summary>Quanto costa partecipare?</summary><p>Niente, il workshop è gratuito. A fine serata ti racconto anche come lavorare con me e il mio team, se vorrai approfondire, senza nessun obbligo.</p></details>
+<details class="faq-i"><summary>Funziona con il gestionale che uso in studio?</summary><p>Sì. Il gestionale resta il tuo: il programma legge i PDF che il gestionale ti fa scaricare e prepara il lavoro che poi ci entra. TeamSystem, Zucchetti, Profis o altro.</p></details>
+<details class="faq-i"><summary>Devo saper usare la tecnologia?</summary><p>No. Guardi il mio schermo mentre lavoro: le dimostrazioni le faccio io, tu fai le domande. Ti basta il link Zoom che arriva via email, si apre anche dal browser.</p></details>
+<details class="faq-i"><summary>Cosa NON fa il programma?</summary><p>Non tiene la contabilità e non sostituisce il gestionale. Prepara il lavoro che ci entra e quello che va ai clienti: F24, risposte, scadenze, documenti. Te lo dico subito, così giovedì sai cosa aspettarti.</p></details>
+<details class="faq-i"><summary>E i dati dei miei clienti?</summary><p>Ne parlo in diretta. Il principio è uno: il programma prepara, il professionista controlla e approva. Niente parte senza il tuo clic.</p></details>
+<details class="faq-i"><summary>Non posso esserci giovedì 29. Che faccio?</summary><p>Iscriviti comunque: dopo la diretta ti mando la registrazione per email, online per 48 ore. Le domande però le fai solo dal vivo.</p></details></div></div></section>
+
+<section id="iscrizione"><div class="wrap">
+<div><h2>Giovedì 29 ottobre, ore 21:00</h2><p class="sub" style="margin-bottom:26px">Ti iscrivi in trenta secondi. Ricevi subito l'email di conferma e, prima della diretta, il link Zoom.</p><div class="cd" aria-label="Tempo alla diretta"><div><b id="cdG">--</b><span>giorni</span></div><div><b id="cdH">--</b><span>ore</span></div><div><b id="cdM">--</b><span>minuti</span></div><div><b id="cdS">--</b><span>secondi</span></div></div></div>
+<div class="formbox"><h3 class="">Riserva il tuo posto gratis</h3><p class="formsub">Live su Zoom · solo per commercialisti</p>
+<form id="leadForm" onsubmit="submitForm(event)" novalidate style="display:flex;flex-direction:column;gap:13px">
+<input type="text" id="fieldName" name="name" class="wk-field" placeholder="Nome e Cognome" required/>
+<input type="email" id="fieldEmail" name="email" class="wk-field" placeholder="Email" required/>
+<input type="tel" inputmode="tel" id="fieldPhone" name="phone" class="wk-field" placeholder="Telefono" required/>
+<input type="hidden" name="utm_source" id="utm_source"/><input type="hidden" name="utm_medium" id="utm_medium"/><input type="hidden" name="utm_campaign" id="utm_campaign"/><input type="hidden" name="utm_content" id="utm_content"/>
+<label class="wk-priv"><input type="checkbox" id="fieldPrivacy" required/><span>Accetto la <a href="https://docs.google.com/document/d/1qUNgRcZ0W9aZxutDu1Fv2k5aM6Nti4V0/edit" target="_blank" rel="noopener">Privacy Policy</a> e il trattamento dei dati per iscrivermi al workshop.</span></label>
+<label class="wk-priv"><input type="checkbox" id="fieldMarketing"/><span>Voglio ricevere anche consigli su automazioni e intelligenza artificiale.</span></label>
+<div class="wk-errore" id="formErrore" role="alert" style="display:none"></div>
+<button type="submit" class="btn-gold" id="submitBtn" style="width:100%;justify-content:center"><span id="btnText">ISCRIVIMI AL WORKSHOP GRATUITO</span></button>
+</form>
+<p class="formnote">Il link Zoom arriva via email prima della diretta. Nessuno spam.</p></div>
+</div></section>
+</main>
+<footer class="foot"><p>DC Academy S.r.l. | P.IVA 05125350750 | Via I. Adriano 9, Lecce | academy@davidecaiazzo.it<br/>
+<a href="https://docs.google.com/document/d/1qUNgRcZ0W9aZxutDu1Fv2k5aM6Nti4V0/edit" target="_blank" rel="noopener">Privacy</a> ·
+<a href="https://docs.google.com/document/d/1PTTs2QFMqBtZaefLHPrrfMxJRnlGewih/edit" target="_blank" rel="noopener">Cookie</a> ·
+<a href="https://docs.google.com/document/d/1K6WGjt9aFTRN-zWMvEOh5bw2A32nNag-/edit" target="_blank" rel="noopener">Condizioni di Vendita</a></p></footer>
+<div class="wk-modal" id="confirmModal"><div class="box">
+<div style="width:64px;height:64px;border-radius:50%;background:rgba(255,61,46,0.15);display:flex;align-items:center;justify-content:center;margin:0 auto 18px;color:#ff3d2e;font-size:30px;font-weight:900">✓</div>
+<h4>Posto riservato!</h4>
+<p>Il tuo posto per giovedì 29 ottobre alle 21:00 è confermato. C'è un video di Davide che devi vedere prima.</p>
+<p style="font-size:12px;color:rgba(255,255,255,0.4)">L'email di conferma sta arrivando. Non la trovi? Controlla Spam o Promozioni.</p>
+<a class="btn-gold" style="margin-top:14px;width:100%;justify-content:center" href="https://commercialisti.davidecaiazzo.it/grazie/">GUARDA IL VIDEO DI DAVIDE &rarr;</a>
+<p style="margin-top:16px;font-size:12.5px;color:rgba(255,255,255,0.45)">Verrai reindirizzato tra <span id="countdownSec">3</span> secondi...</p>
+</div></div>
+<script>
+(function(){
+  var params = new URLSearchParams(window.location.search);
+  ['utm_source','utm_medium','utm_campaign','utm_content'].forEach(function(key){
+    var val = params.get(key);
+    if(val){ var el = document.getElementById(key); if(el) el.value = val; }
+  });
+})();
+(function(){
+  var target = new Date('2026-10-29T21:00:00+01:00').getTime();
+  function pad(n){return n<10?'0'+n:''+n;}
+  function tick(){
+    var d = target - Date.now();
+    if(d <= 0){['cdG','cdH','cdM','cdS'].forEach(function(i){document.getElementById(i).textContent='0'});return;}
+    document.getElementById('cdG').textContent = Math.floor(d/86400000);
+    document.getElementById('cdH').textContent = pad(Math.floor(d/3600000)%24);
+    document.getElementById('cdM').textContent = pad(Math.floor(d/60000)%60);
+    document.getElementById('cdS').textContent = pad(Math.floor(d/1000)%60);
+    setTimeout(tick,1000);
+  }
+  tick();
+})();
+function dcPhoneOk(raw){var p=String(raw||'').replace(/[\s\-\+\.\(\)]/g,'');if(p.slice(0,2)==='00')p=p.slice(2);if(!/^\d+$/.test(p))return false;if(p.length<9||p.length>13)return false;if(/^(\d)\1+$/.test(p))return false;var u={},n=0,i;for(i=0;i<p.length;i++){if(!u[p[i]]){u[p[i]]=1;n++;}}if(n<3)return false;return true;}
+var KAJABI_FORM_WORKSHOP='2149685500';
+var PONTE_ISCRIZIONI='https://dc-chatbot-vswb.onrender.com/lead-kajabi';
+function mostraErrore(testo){
+  var btn=document.getElementById('submitBtn');
+  btn.disabled=false;
+  document.getElementById('btnText').textContent='ISCRIVIMI AL WORKSHOP GRATUITO';
+  var box=document.getElementById('formErrore');
+  box.innerHTML=testo;
+  box.style.display='block';
+  box.scrollIntoView({behavior:'smooth',block:'center'});
+}
+function mostraConferma(){
+  try{if(window.DCLanding)window.DCLanding.iscrizione();}catch(err){}
+  document.getElementById('confirmModal').classList.add('open');
+  var sec=3,ce=document.getElementById('countdownSec');
+  var t=setInterval(function(){sec--;ce.textContent=sec;if(sec<=0){clearInterval(t);window.location.href='https://commercialisti.davidecaiazzo.it/grazie/';}},1000);
+}
+function submitForm(e){
+  e.preventDefault();
+  var fN=document.getElementById('fieldName'),fE=document.getElementById('fieldEmail'),fP=document.getElementById('fieldPhone'),pv=document.getElementById('fieldPrivacy');
+  var bad=false;
+  [fN,fE,fP].forEach(function(f){f.classList.remove('error');if(!f.value.trim()){f.classList.add('error');bad=true}});
+  pv.classList.remove('checkbox-error');
+  if(fE.value.trim()&&!/^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/.test(fE.value.trim())){fE.classList.add('error');bad=true;}
+  if(!dcPhoneOk(fP.value)){fP.classList.add('error');bad=true;}
+  if(!pv.checked){pv.classList.add('checkbox-error');bad=true}
+  if(bad) return;
+  var btn=document.getElementById('submitBtn');btn.disabled=true;document.getElementById('btnText').textContent='INVIO IN CORSO...';
+  document.getElementById('formErrore').style.display='none';
+
+  var campi={
+    name:fN.value.trim(),
+    email:fE.value.trim(),
+    phone_number:fP.value.trim(),
+    custom_70:document.getElementById('utm_source').value,
+    custom_71:document.getElementById('utm_medium').value,
+    custom_74:document.getElementById('utm_campaign').value,
+    custom_75:document.getElementById('utm_content').value
+  };
+  var data=new URLSearchParams();
+  Object.keys(campi).forEach(function(k){data.append('form_submission['+k+']',campi[k]);});
+
+  // Enrolled browsers use the measured confirmation endpoint, never a blind no-cors success.
+  var misurata=window.DCWorkshopExperiment && window.DCWorkshopExperiment.submit(campi);
+  if(misurata){
+    misurata.then(function(esito){
+      if(esito.ok){mostraConferma();}
+      else{mostraErrore('Iscrizione non confermata. Controlla i dati e riprova.');}
+    }).catch(function(){mostraErrore('Non abbiamo potuto verificare l’iscrizione. Riprova: i tuoi dati sono ancora compilati.');});
+    return;
+  }
+
+  var SCRIVICI='<a href="mailto:academy@davidecaiazzo.it?subject=Iscrizione%20workshop%2029%20ottobre">academy@davidecaiazzo.it</a>';
+  var ERR_RIFIUTO='Non siamo riusciti a registrare la tua iscrizione. Controlla i dati e riprova, oppure scrivi a '+SCRIVICI+' e ti iscriviamo noi.';
+  var ERR_RETE='Iscrizione non riuscita: la connessione si &egrave; interrotta. Riprova tra un istante, oppure scrivi a '+SCRIVICI+' e ti iscriviamo noi.';
+
+  // Kajabi non manda intestazioni CORS: un invio diretto dal browser e' cieco
+  // (mode:'no-cors'), quindi la pagina non puo' sapere se l'iscrizione e'
+  // passata. Si passa dal nostro ponte, che la inoltra e legge l'esito vero.
+  // Il ponte sta su un piano gratuito che puo' dormire: se non risponde
+  // entro 8 secondi si passa all'invio diretto, senza lasciare il
+  // visitatore fermo su "INVIO IN CORSO...".
+  var taglia = (typeof AbortController!=='undefined') ? new AbortController() : null;
+  var scaduto = setTimeout(function(){ if(taglia) taglia.abort(); }, 8000);
+  fetch(PONTE_ISCRIZIONI,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({form_id:KAJABI_FORM_WORKSHOP,campi:campi}),signal:taglia?taglia.signal:undefined})
+    .then(function(r){clearTimeout(scaduto);return r.json();},function(err){clearTimeout(scaduto);throw err;})
+    .then(function(esito){
+      if(!esito||typeof esito.ok!=='boolean') throw new Error('risposta non leggibile');
+      return esito.ok;
+    })
+    .then(function(accettata){
+      if(accettata){ mostraConferma(); } else { mostraErrore(ERR_RIFIUTO); }
+    },function(){
+      // Ponte irraggiungibile: invio diretto, cosi' l'iscrizione non si perde.
+      // L'esito resta illeggibile, ma se la richiesta non parte proprio la
+      // promessa viene respinta e la conferma NON compare.
+      fetch('https://www.davidecaiazzo.it/forms/'+KAJABI_FORM_WORKSHOP+'/form_submissions',{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:data})
+        .then(function(){mostraConferma();},function(){mostraErrore(ERR_RETE);});
+    });
+}
+</script>
+<script src="https://dc-chatbot-vswb.onrender.com/widget.js" data-bot="commercialisti" data-auto-open="false"></script>
+<script src="workshop-experiment.js?v=20260914a"></script>
+</body>
+</html>
