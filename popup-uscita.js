@@ -65,8 +65,8 @@
   wrap.setAttribute('aria-modal', 'true');
   wrap.setAttribute('aria-labelledby', 'dcpuTitolo');
   wrap.innerHTML = '<div class="dcpu-box"><button type="button" class="dcpu-x" aria-label="Chiudi">&times;</button>' +
-    '<h2 id="dcpuTitolo">Prima di andare: il tuo posto è gratis</h2>' +
-    '<p class="dcpu-sub">Giovedì 29 ottobre alle 21:00, su Zoom: ti mostro dal vivo tutto Commercialista AI al lavoro. Ti servono 30 secondi. <b>Davide Caiazzo</b></p>' +
+    '<h2 id="dcpuTitolo">Guarda Commercialista AI dal vivo</h2>' +
+    '<p class="dcpu-sub">Giovedì 29 ottobre alle 21:00, su Zoom: ti mostro Commercialista AI al lavoro. Compila il modulo per riservare il posto gratuito. <b>Davide Caiazzo</b></p>' +
     '<div class="dcpu-slot"></div></div>';
   document.body.appendChild(wrap);
   var slot = wrap.querySelector('.dcpu-slot');
