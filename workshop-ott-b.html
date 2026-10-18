@@ -248,17 +248,24 @@ section{padding:64px 0}
 <section class="hero"><div class="wrap">
 <div>
 <p class="when"><i aria-hidden="true"></i>Workshop gratuito su Zoom · giovedì 29 ottobre, ore 21:00</p>
-<h1>Sei un commercialista? <em>Email, F24 e documenti ti riempiono la giornata?</em></h1>
-<p class="lead">Ogni giorno rispondi ai clienti, mandi F24 e cerchi documenti. L'AI prepara queste attività. Tu controlli il risultato. Giovedì 29 ottobre apro Commercialista AI e ti mostro come prepara questi lavori. Vediamo anche scadenze e avvisi bonari, documenti del 730, fatture estere in XML, estratti conto, circolari e parcelle.</p>
+<h1>Sei un commercialista? <em>Non puoi fare tutto da solo.</em></h1>
+<p class="lead">I documenti da chiedere ai clienti. Gli F24 da mandare. Le email a cui rispondere. E i collaboratori bravi non si trovano.<br/><br/>Giovedì 29 ottobre alle 21:00 ti mostro Commercialista AI dal vivo, gratis su Zoom. Vediamo come prepara le richieste di documenti, le email degli F24 e le risposte ai clienti. <b>Tu controlli e premi Invia. Il gestionale resta il tuo.</b></p>
 <a class="cta" href="#iscrizione">Riserva il posto gratis</a>
 <div class="host"><img src="davide-linkedin.jpg" alt="Davide Caiazzo" width="52" height="52"/><p><b>Davide Caiazzo</b><br/>ha venduto MYGO SRL a Zucchetti</p></div>
 <div class="proof"><span>Il gestionale resta il tuo</span><span>Tu controlli e premi Invia</span><span>182 iscritti all'edizione del 15 ottobre</span></div>
 </div>
-<div class="stack">
-<figure><img src="img-ott/invia-f24.webp" width="1440" height="860" alt="Invia F24 in Commercialista AI"/><figcaption>Invia F24</figcaption></figure>
-<figure><img src="img-ott/scadenze.webp" width="1440" height="860" alt="Scadenze in Commercialista AI"/><figcaption>Scadenze e avvisi bonari</figcaption></figure>
-<figure><picture><source media="(max-width:700px)" srcset="img-ott/email-telefono.webp"/><img src="img-ott/email.webp" width="1440" height="860" alt="Email dei clienti in Commercialista AI"/></picture><figcaption>Risposte ai clienti già scritte</figcaption></figure>
-</div>
+<div id="iscrizione"><div class="formbox"><h3 class="">Riserva il tuo posto gratis</h3><p class="formsub">Giovedì 29 ottobre, ore 21:00 · Live su Zoom</p>
+<form id="leadForm" onsubmit="submitForm(event)" novalidate style="display:flex;flex-direction:column;gap:13px">
+<input autocomplete="name" aria-label="Nome e cognome" type="text" id="fieldName" name="name" class="wk-field" placeholder="Nome e Cognome" required/>
+<input autocomplete="email" aria-label="Email" type="email" id="fieldEmail" name="email" class="wk-field" placeholder="Email" required/>
+<input autocomplete="tel" aria-label="Telefono" type="tel" inputmode="tel" id="fieldPhone" name="phone" class="wk-field" placeholder="Telefono" required/>
+<input type="hidden" name="utm_source" id="utm_source"/><input type="hidden" name="utm_medium" id="utm_medium"/><input type="hidden" name="utm_campaign" id="utm_campaign"/><input type="hidden" name="utm_content" id="utm_content"/>
+<label class="wk-priv"><input type="checkbox" id="fieldPrivacy" required/><span>Accetto la <a href="https://docs.google.com/document/d/1qUNgRcZ0W9aZxutDu1Fv2k5aM6Nti4V0/edit" target="_blank" rel="noopener">Privacy Policy</a> e il trattamento dei dati per iscrivermi al workshop.</span></label>
+<label class="wk-priv"><input type="checkbox" id="fieldMarketing"/><span>Voglio ricevere anche consigli su automazioni e intelligenza artificiale.</span></label>
+<div class="wk-errore" id="formErrore" role="alert" style="display:none"></div>
+<button type="submit" class="btn-gold" id="submitBtn" style="width:100%;justify-content:center"><span id="btnText">ISCRIVIMI AL WORKSHOP GRATUITO</span></button>
+</form>
+<p class="formnote">Ricevi la conferma via email. Il team potrà chiamarti per conoscere il tuo studio prima della diretta.</p></div></div>
 </div></section>
 
 <section><div class="wrap">
@@ -331,20 +338,9 @@ section{padding:64px 0}
 <details class="faq-i"><summary>E i dati dei miei clienti?</summary><p>Ne parlo in diretta. Ti mostro come controllare le risposte preparate e come scegliere quali solleciti automatici attivare.</p></details>
 <details class="faq-i"><summary>Non posso esserci giovedì 29. Che faccio?</summary><p>Iscriviti comunque: dopo la diretta ti mando la registrazione per email, online per 48 ore. Le domande però le fai solo dal vivo.</p></details></div></div></section>
 
-<section id="iscrizione"><div class="wrap">
+<section><div class="wrap">
 <div><h2 class="sec-h">Giovedì 29 ottobre, ore 21:00. Su Zoom.</h2><p class="sec-p">Compila il modulo per riservare il posto. Ricevi subito l'email di conferma. Il link Zoom arriva via email il giorno del webinar.</p></div>
-<div class="formbox"><h3 class="">Riserva il tuo posto gratis</h3><p class="formsub">Giovedì 29 ottobre, ore 21:00 · Live su Zoom</p>
-<form id="leadForm" onsubmit="submitForm(event)" novalidate style="display:flex;flex-direction:column;gap:13px">
-<input type="text" id="fieldName" name="name" class="wk-field" placeholder="Nome e Cognome" required/>
-<input type="email" id="fieldEmail" name="email" class="wk-field" placeholder="Email" required/>
-<input type="tel" inputmode="tel" id="fieldPhone" name="phone" class="wk-field" placeholder="Telefono" required/>
-<input type="hidden" name="utm_source" id="utm_source"/><input type="hidden" name="utm_medium" id="utm_medium"/><input type="hidden" name="utm_campaign" id="utm_campaign"/><input type="hidden" name="utm_content" id="utm_content"/>
-<label class="wk-priv"><input type="checkbox" id="fieldPrivacy" required/><span>Accetto la <a href="https://docs.google.com/document/d/1qUNgRcZ0W9aZxutDu1Fv2k5aM6Nti4V0/edit" target="_blank" rel="noopener">Privacy Policy</a> e il trattamento dei dati per iscrivermi al workshop.</span></label>
-<label class="wk-priv"><input type="checkbox" id="fieldMarketing"/><span>Voglio ricevere anche consigli su automazioni e intelligenza artificiale.</span></label>
-<div class="wk-errore" id="formErrore" role="alert" style="display:none"></div>
-<button type="submit" class="btn-gold" id="submitBtn" style="width:100%;justify-content:center"><span id="btnText">ISCRIVIMI AL WORKSHOP GRATUITO</span></button>
-</form>
-<p class="formnote">Il link Zoom arriva via email il giorno del webinar. Nessuno spam.</p></div>
+<a class="cta" href="#iscrizione">Iscriviti al workshop gratuito</a>
 </div></section>
 </main>
 <footer class="foot"><p>DC Academy S.r.l. | P.IVA 05125350750 | Via I. Adriano 9, Lecce | academy@davidecaiazzo.it<br/>

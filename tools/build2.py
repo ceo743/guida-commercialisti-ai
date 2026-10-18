@@ -124,17 +124,13 @@ def B():
 <section class="hero"><div class="wrap">
 <div>
 <p class="when"><i aria-hidden="true"></i>Workshop gratuito su Zoom · giovedì 29 ottobre, ore 21:00</p>
-<h1>Sei un commercialista? <em>Email, F24 e documenti ti riempiono la giornata?</em></h1>
-<p class="lead">Ogni giorno rispondi ai clienti, mandi F24 e cerchi documenti. L'AI prepara queste attività. Tu controlli il risultato. Giovedì 29 ottobre apro Commercialista AI e ti mostro come prepara questi lavori. Vediamo anche scadenze e avvisi bonari, documenti del 730, fatture estere in XML, estratti conto, circolari e parcelle.</p>
+<h1>Sei un commercialista? <em>Non puoi fare tutto da solo.</em></h1>
+<p class="lead">I documenti da chiedere ai clienti. Gli F24 da mandare. Le email a cui rispondere. E i collaboratori bravi non si trovano.<br/><br/>Giovedì 29 ottobre alle 21:00 ti mostro Commercialista AI dal vivo, gratis su Zoom. Vediamo come prepara le richieste di documenti, le email degli F24 e le risposte ai clienti. <b>Tu controlli e premi Invia. Il gestionale resta il tuo.</b></p>
 <a class="cta" href="#iscrizione">Riserva il posto gratis</a>
 <div class="host"><img src="davide-linkedin.jpg" alt="Davide Caiazzo" width="52" height="52"/><p><b>Davide Caiazzo</b><br/>ha venduto MYGO SRL a Zucchetti</p></div>
 <div class="proof"><span>Il gestionale resta il tuo</span><span>Tu controlli e premi Invia</span><span>182 iscritti all'edizione del 15 ottobre</span></div>
 </div>
-<div class="stack">
-<figure><img src="img-ott/invia-f24.webp" width="1440" height="860" alt="Invia F24 in Commercialista AI"/><figcaption>Invia F24</figcaption></figure>
-<figure><img src="img-ott/scadenze.webp" width="1440" height="860" alt="Scadenze in Commercialista AI"/><figcaption>Scadenze e avvisi bonari</figcaption></figure>
-<figure><picture><source media="(max-width:700px)" srcset="img-ott/email-telefono.webp"/><img src="img-ott/email.webp" width="1440" height="860" alt="Email dei clienti in Commercialista AI"/></picture><figcaption>Risposte ai clienti già scritte</figcaption></figure>
-</div>
+<div id="iscrizione">{form_block('', 'Riserva il tuo posto gratis', 'Giovedì 29 ottobre, ore 21:00 · Live su Zoom').replace('<input type="text"', '<input autocomplete="name" aria-label="Nome e cognome" type="text"').replace('<input type="email"', '<input autocomplete="email" aria-label="Email" type="email"').replace('<input type="tel"', '<input autocomplete="tel" aria-label="Telefono" type="tel"').replace('Il link Zoom arriva via email il giorno del webinar. Nessuno spam.', 'Ricevi la conferma via email. Il team potrà chiamarti per conoscere il tuo studio prima della diretta.')}</div>
 </div></section>
 
 <section><div class="wrap">
@@ -161,7 +157,7 @@ def B():
 
 <section><div class="wrap">
 <div class="who"><img src="davide-linkedin.jpg" alt="Davide Caiazzo" width="200" height="200" loading="lazy"/><div>
-<h3>Te lo mostro io, Davide Caiazzo</h3><p>{BIO}</p><div class="press">{STAMPA}</div><p class="team">{SQUADRA}</p>
+<h3>Te lo mostro io, Davide Caiazzo</h3><p>{BIO}</p><div class="press">{STAMPA}</div><p style="margin-top:16px">{SQUADRA}</p>
 </div></div></div></section>
 
 <section><div class="wrap">
@@ -172,9 +168,9 @@ def B():
 
 <section><div class="wrap"><h2 class="sec-h">Domande frequenti</h2><div class="faq">{faq_html()}</div></div></section>
 
-<section id="iscrizione"><div class="wrap">
+<section><div class="wrap">
 <div><h2 class="sec-h">Giovedì 29 ottobre, ore 21:00. Su Zoom.</h2><p class="sec-p">Compila il modulo per riservare il posto. Ricevi subito l'email di conferma. Il link Zoom arriva via email il giorno del webinar.</p></div>
-{form_block('', 'Riserva il tuo posto gratis', 'Giovedì 29 ottobre, ore 21:00 · Live su Zoom')}
+<a class="cta" href="#iscrizione">Iscriviti al workshop gratuito</a>
 </div></section>
 </main>'''
     return page('B', "Workshop gratuito per commercialisti: email, F24 e documenti preparati dall'AI",
