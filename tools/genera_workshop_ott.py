@@ -111,7 +111,7 @@ def F():
 <p class="lead">{SUBF}</p>
 <a class="cta" href="#iscrizione">Riserva il posto gratis</a>
 <div class="proofF"><span><b>182</b> iscritti all'edizione del 15 ottobre</span><span>Il gestionale <b>resta il tuo</b></span><span>Gli invii <b>restano sotto il tuo controllo</b></span></div>
-<div class="host"><img src="davide-linkedin.jpg" alt="Davide Caiazzo" width="50" height="50"/><p><b>Conduce Davide Caiazzo</b><br/>ha venduto MYGO SRL a Zucchetti</p></div>
+<div class="host"><img src="davide-linkedin.jpg" alt="Davide Caiazzo" width="50" height="50"/><p><b>Davide Caiazzo</b><br/>ha venduto MYGO SRL a Zucchetti</p></div>
 </div>
 <figure class="win"><div class="bar" aria-hidden="true"><i></i><i></i><i></i></div>
 <picture><source media="(max-width:700px)" srcset="img-ott/email-telefono.webp"/><img src="img-ott/email.webp" width="1440" height="860" alt="Email dei clienti in Commercialista AI: le risposte preparate dal programma"/></picture>
@@ -146,13 +146,13 @@ def F():
 
 <section style="padding-top:0"><div class="wrap">
 <div class="whoF"><img src="davide-linkedin.jpg" alt="Davide Caiazzo" width="200" height="200" loading="lazy"/><div>
-<h3>Conduco io, Davide Caiazzo</h3><p>{BIO}</p><div class="press">{STAMPA}</div><p style="margin-top:12px;font-size:15px">{SQUADRA}</p>
+<h3>Te lo mostro io, Davide Caiazzo</h3><p>{BIO}</p><div class="press">{STAMPA}</div><p style="margin-top:12px;font-size:15px">{SQUADRA}</p>
 </div></div></div></section>
 
 <section style="padding-top:0"><div class="wrap"><h2>Domande frequenti</h2><div class="faq">{faq_html()}</div></div></section>
 
 <section id="iscrizione"><div class="wrap">
-<div><h2>Giovedì 29 ottobre, ore 21:00</h2><p class="sub" style="margin-bottom:24px">Compila il modulo per riservare il posto. Ricevi subito l'email di conferma e, prima della diretta, il link Zoom.</p>{COUNTDOWN}</div>
+<div><h2>Giovedì 29 ottobre, ore 21:00</h2><p class="sub" style="margin-bottom:24px">Compila il modulo per riservare il posto. Ricevi subito l'email di conferma. Il link Zoom arriva via email il giorno del webinar.</p>{COUNTDOWN}</div>
 {form_block('', 'Riserva il tuo posto gratis', 'Live su Zoom · solo per commercialisti')}
 </div></section>
 </main>'''
