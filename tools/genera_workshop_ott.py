@@ -1,4 +1,4 @@
-# [CLAUDE] 17/10/2026 notte: variante F (struttura della landing sibill.com/commercialista adattata: «Meno burocrazia. Più consulenza.»,
+# [CLAUDE] 17/10/2026 notte: variante F (struttura della landing sibill.com/commercialista adattata: «Meno burocrazia. L’AI prepara. Tu controlli.»,
 # il programma fa le cose per te; mai «segreteria/segretaria» riferito alle persone). Base: build3 (A-E, popup).
 import sys, os
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -6,9 +6,9 @@ src = open(os.path.join(HERE, 'build3.py')).read()
 src = src[:src.rindex("for v, fn in")]
 exec(src)
 
-TIT1 = os.environ.get('F_T1', 'Meno lavoro amministrativo.')
-TIT2 = os.environ.get('F_T2', 'Più consulenza.')
-SUBF = os.environ.get('F_SUB', "Commercialista AI fa le cose per te: risposte pronte alle email dei clienti, F24 mandati con i solleciti, scadenze e avvisi bonari, fatture estere, estratti conto, 730, circolari e parcelle. Giovedì 29 ottobre alle 21 te lo mostro dal vivo: così tu e chi lavora con te tornate a consulenza e clienti.")
+TIT1 = os.environ.get('F_T1', 'Email, F24 e documenti.')
+TIT2 = os.environ.get('F_T2', 'L’AI prepara. Tu controlli.')
+SUBF = os.environ.get('F_SUB', "Sei un commercialista? Rispondi ai clienti, mandi F24 e cerchi documenti. A fine giornata ci sono ancora conferme e solleciti da controllare. Giovedì 29 ottobre alle 21 ti mostro Commercialista AI al lavoro: email, F24, scadenze, fatture estere, estratti conto, documenti del 730, circolari e parcelle. L'AI prepara. Tu e chi lavora con te controllate il risultato.")
 POPUP['f'] = ('#ffffff', '#1b1f4b', '#5b5f80', '#ff6b4a')
 
 F_CSS = '''
@@ -110,8 +110,8 @@ def F():
 <h1>{TIT1}<span>{TIT2}</span></h1>
 <p class="lead">{SUBF}</p>
 <a class="cta" href="#iscrizione">Riserva il posto gratis</a>
-<div class="proofF"><span><b>182</b> iscritti all'edizione del 15 ottobre</span><span>Il gestionale <b>resta il tuo</b></span><span>Niente parte <b>senza il tuo sì</b></span></div>
-<div class="host"><img src="davide-linkedin.jpg" alt="Davide Caiazzo" width="50" height="50"/><p><b>Conduce Davide Caiazzo</b><br/>ha venduto la sua azienda al gruppo Zucchetti</p></div>
+<div class="proofF"><span><b>182</b> iscritti all'edizione del 15 ottobre</span><span>Il gestionale <b>resta il tuo</b></span><span>Gli invii <b>restano sotto il tuo controllo</b></span></div>
+<div class="host"><img src="davide-linkedin.jpg" alt="Davide Caiazzo" width="50" height="50"/><p><b>Conduce Davide Caiazzo</b><br/>ha venduto MYGO SRL a Zucchetti</p></div>
 </div>
 <figure class="win"><div class="bar" aria-hidden="true"><i></i><i></i><i></i></div>
 <picture><source media="(max-width:700px)" srcset="img-ott/email-telefono.webp"/><img src="img-ott/email.webp" width="1440" height="860" alt="Email dei clienti in Commercialista AI: le risposte preparate dal programma"/></picture>
@@ -120,11 +120,11 @@ def F():
 <main>
 <section><div class="wrap">
 <h2>Cosa fa Commercialista AI per lo studio. <span>Il lavoro ripetitivo lo prepara il programma.</span></h2>
-<p class="sub">F24, posta, scadenze, documenti: il lavoro che oggi si fa a mano. La contabilità resta nel tuo gestionale. Chi lavora nello studio, spesso commercialista come te, torna alle pratiche e ai clienti.</p>
+<p class="sub">F24, posta, scadenze e documenti richiedono attenzione ogni giorno. L'AI prepara le attività ripetitive. La contabilità resta nel tuo gestionale. Tu e chi lavora con te controllate il lavoro preparato.</p>
 <div class="pil">
 <div><small>In un posto solo</small><h3>Clienti, documenti e posta in ordine</h3><ul><li>una scheda per ogni cliente</li><li>i documenti arrivati nella scheda giusta</li><li>ogni invio con il suo esito</li></ul></div>
 <div><small>Preparato dall'AI</small><h3>Il lavoro ripetitivo, pronto da controllare</h3><ul><li>F24 mandati, con i solleciti</li><li>scadenze e avvisi bonari dalle email</li><li>risposte ai clienti, XML delle fatture estere</li></ul></div>
-<div><small>Più tempo</small><h3>Consulenza e clienti</h3><ul><li>circolari ai clienti giusti</li><li>parcelle dello studio con i promemoria</li><li>le ore tornano alle pratiche</li></ul></div>
+<div><small>Più tempo</small><h3>Consulenza e clienti</h3><ul><li>circolari ai clienti giusti</li><li>parcelle dello studio con i promemoria</li><li>più attenzione alle pratiche</li></ul></div>
 </div></div></section>
 
 <section style="padding-top:0"><div class="wrap">
@@ -152,14 +152,14 @@ def F():
 <section style="padding-top:0"><div class="wrap"><h2>Domande frequenti</h2><div class="faq">{faq_html()}</div></div></section>
 
 <section id="iscrizione"><div class="wrap">
-<div><h2>Giovedì 29 ottobre, ore 21:00</h2><p class="sub" style="margin-bottom:24px">Ti iscrivi in trenta secondi. Ricevi subito l'email di conferma e, prima della diretta, il link Zoom.</p>{COUNTDOWN}</div>
+<div><h2>Giovedì 29 ottobre, ore 21:00</h2><p class="sub" style="margin-bottom:24px">Compila il modulo per riservare il posto. Ricevi subito l'email di conferma e, prima della diretta, il link Zoom.</p>{COUNTDOWN}</div>
 {form_block('', 'Riserva il tuo posto gratis', 'Live su Zoom · solo per commercialisti')}
 </div></section>
 </main>'''
-    return page('F', "Workshop gratuito per commercialisti: meno lavoro amministrativo, più consulenza. Commercialista AI fa le cose per te",
+    return page('F', "Workshop gratuito per commercialisti: meno lavoro amministrativo, più consulenza. L'AI prepara, tu controlli",
       "Workshop live gratuito su Zoom per commercialisti, giovedì 29 ottobre alle 21:00. Davide Caiazzo mostra dal vivo tutto Commercialista AI: il lavoro amministrativo dello studio lo prepara il programma, tu e chi lavora con te tornate a consulenza e clienti.",
       'family=Manrope:wght@400;600;700;800', F_CSS, body,
-      "[CLAUDE] 2026-10-17 notte variante F (prova ott A-F): struttura della landing sibill.com/commercialista adattata («Meno lavoro amministrativo. Più consulenza.», il programma fa le cose per te; titolo scelto da CMO fra 3 con lente Hormozi), indaco e corallo, tutto il programma, mai «segreteria». Modulo e tracciamento copiati da workshop.html. Ipotesi: Projects/Tool-Commercialisti/consegne-a-sviluppi/workshop-pagine-ott-20261017/ipotesi.md")
+      "[CLAUDE] 2026-10-17 notte variante F (prova ott A-F): struttura della landing sibill.com/commercialista adattata («Email, F24 e documenti. L’AI prepara. Tu controlli.», il programma fa le cose per te; titolo scelto da CMO fra 3 con lente Hormozi), indaco e corallo, tutto il programma, mai «segreteria». Modulo e tracciamento copiati da workshop.html. Ipotesi: Projects/Tool-Commercialisti/consegne-a-sviluppi/workshop-pagine-ott-20261017/ipotesi.md")
 
 for v, fn in (('b', B), ('c', C), ('d', D), ('e', E), ('f', F)):
     out = os.path.join(REPO, 'workshop-ott-%s.html' % v)

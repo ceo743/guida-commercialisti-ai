@@ -9,21 +9,21 @@ exec(src)
 
 FUNZ = [
  ("email", "Email dei clienti", "Prepara le risposte ai clienti",
-  "Il cliente scrive una domanda o manda un documento: l'AI prepara la risposta nel tono dello studio. Tu la leggi, la correggi se serve e la mandi."),
+  "Un cliente fa una domanda o manda un documento. L'AI prepara la risposta nel tono dello studio. Tu la rileggi, la correggi se serve e la invii."),
  ("scadenze", "Scadenze e avvisi bonari", "Mette in calendario le scadenze dei clienti",
   "Un avviso bonario, una cartella, una scadenza in un PDF: l'AI le trova nelle email e nei documenti, calcola la data con la sospensione feriale, ti manda due promemoria e prepara l'F24. Tu confermi."),
  ("invia-f24", "Invia F24", "Manda gli F24 ai clienti e sollecita chi non risponde",
-  "Carichi gli F24 fatti con il gestionale: l'AI capisce di quale cliente è ognuno, prepara l'email e sollecita chi non risponde. Promemoria due giorni prima, F24 scaduti fermati. Tu controlli e premi Invia."),
+  "Carichi gli F24 preparati con il gestionale. L'AI riconosce il cliente e prepara l'email. Tu controlli e premi Invia. Puoi attivare i solleciti a chi non risponde. Il programma ricorda la scadenza due giorni prima e blocca gli F24 scaduti."),
  ("controllo-incrociato", "Confronto", "Trova le differenze tra estratto conto e movimenti",
-  "Carichi l'estratto della banca e la lista movimenti del gestionale: l'AI ti mostra cosa c'è solo da una parte e le date diverse. Confronta anche le fatture dell'Agenzia con il registro. Tu guardi solo le differenze."),
+  "Carichi l'estratto conto e la lista dei movimenti del gestionale. L'AI mostra le voci presenti solo da una parte e le date diverse. Puoi confrontare anche le fatture dell'Agenzia con il registro. Parti dalle differenze segnalate e le verifichi."),
  ("clienti", "Clienti e Archivio", "Tiene in ordine clienti e documenti",
-  "Una scheda per ogni cliente. L'AI trova le email dei clienti e mette i documenti che arrivano nella scheda giusta; quelli dubbi te li segna."),
+  "Ogni cliente ha la sua scheda. L'AI riconosce le sue email e raccoglie i documenti nella scheda. Ti segnala quelli da verificare."),
  ("fatture-estere", "Fatture estere", "Dal PDF del fornitore estero all'XML",
   "Legge importi, date e partita IVA anche da una scansione e prepara l'XML da importare nel gestionale. Le autofatture in inversione contabile, pronte da scaricare."),
  ("estratti-fatture", "Estratti e fatture", "Abbina pagamenti e fatture",
-  "Banca, carta o PayPal: l'AI abbina i movimenti alle fatture e ti segnala solo i pagamenti senza fattura e quelli da controllare."),
+  "Carichi i movimenti di banca, carta o PayPal. L'AI li abbina alle fatture e segnala i pagamenti senza fattura e gli abbinamenti da controllare."),
  ("", "Genera F24", "Prepara l'F24 delle ritenute",
-  "Carichi la parcella o la fattura in PDF: l'AI trova la ritenuta e prepara l'F24 con la scadenza giusta. Tu confermi solo la data del pagamento."),
+  "Carichi la parcella o la fattura in PDF. L'AI riconosce la ritenuta e prepara l'F24 con la scadenza. Tu confermi la data del pagamento."),
  ("redditi", "730 e Redditi", "Chiede i documenti della dichiarazione",
   "Scegli i clienti e il giorno: a ognuno parte l'elenco dei documenti da mandare, anche in foto, e un promemoria a chi non li manda."),
  ("", "Circolari", "Le novità fiscali ai clienti giusti",
@@ -31,7 +31,7 @@ FUNZ = [
  ("fatturazione", "Fatturazione dello studio", "Manda le parcelle ai clienti",
   "Scritti gli onorari, la parcella parte a ogni cliente nel giorno che scegli, con i promemoria a chi non ha pagato e la fattura elettronica pronta."),
  ("", "Email inviate", "Ogni invio con il suo esito",
-  "Per ogni email vedi se è stata accettata e se il cliente ha confermato di averla ricevuta. Senza telefonare a nessuno."),
+  "Per ogni email vedi l'esito dell'invio e l'eventuale conferma di ricezione del cliente. Trovi queste informazioni in un elenco."),
  ("", "Colleghi", "Uno spazio con altri commercialisti",
   "Confronti dubbi e soluzioni con gli altri studi che usano il programma."),
 ]
@@ -65,7 +65,7 @@ def tutto(prefix):
 <div class="noimg" hidden></div>
 <h3>{first[1]}: {first[2][0].lower()+first[2][1:]}</h3><p>{first[3]}</p>
 </div></div>
-<p class="tt-safe"><b>Il gestionale resta il tuo:</b> il programma legge i PDF che ti fa scaricare. Tu carichi, controlli e premi Invia. Niente parte senza il tuo sì: anche i solleciti automatici li accendi tu. Non tiene la contabilità e non sostituisce il gestionale: lavora accanto al tuo. Schermate dello studio di esempio, con clienti e dati finti.</p>
+<p class="tt-safe"><b>Il gestionale resta il tuo:</b> carichi i PDF che esporti e controlli il lavoro preparato. Per inviare gli F24 premi Invia. I solleciti automatici partono se li attivi. Commercialista AI lavora accanto al gestionale e non tiene la contabilità. Le schermate mostrano uno studio di esempio con clienti e dati di fantasia.</p>
 <script>
 (function(){{
  var D={json.dumps(data, ensure_ascii=False)};
@@ -87,16 +87,15 @@ def tutto(prefix):
 </script>'''
 
 AGENDA = [
- ("La giornata di uno studio, sul programma vero", "Apro Commercialista AI su uno studio di esempio e facciamo il giro intero: la posta già letta con le risposte ai clienti pronte, le scadenze e gli avvisi bonari trovati, gli F24 mandati e chi li ha ricevuti, i documenti del 730 chiesti ai clienti che scegli, le circolari, le parcelle, ogni invio con il suo esito."),
- ("Fatture estere, estratti e confronti", "La fattura del fornitore estero che diventa XML, gli estratti conto abbinati alle fatture, le differenze tra l'estratto conto e la lista movimenti che esporti dal gestionale."),
- ("Le tue 3 attività, guardate in diretta", "Porta le 3 cose che ripeti ogni settimana e che vorresti non fare più. Ti dico quali il programma fa già e cosa serve per partire."),
- ("Le tue domande", "Rispondo io, sul tuo studio. Alla fine ti dico quanto costa e come si attiva. Nessun obbligo."),
+ ("La giornata di uno studio, sul programma vero", "Apro Commercialista AI su uno studio di esempio. Vediamo le risposte pronte alle email, le scadenze e gli avvisi bonari, gli F24 inviati e le conferme di ricezione. Poi passiamo ai documenti del 730, alle circolari e alle parcelle. Per ogni invio guardiamo l'esito."),
+ ("Fatture estere, estratti e confronti", "Partiamo dalla fattura del fornitore estero e vediamo l'XML preparato. Poi abbiniamo i movimenti alle fatture e confrontiamo l'estratto conto con i movimenti esportati dal gestionale."),
+ ("Le tue 3 attività, guardate in diretta", "Pensa alle 3 attività che ripeti ogni settimana. Le guardiamo insieme e ti mostro quali può preparare il programma. Poi vediamo cosa serve per iniziare."),
+ ("Le tue domande", "Fai le tue domande sul lavoro del tuo studio. Rispondo in diretta. Alla fine ti spiego quanto costa il programma e come si attiva. Nessun obbligo."),
 ]
 def agenda(item_tpl):
     return '\n'.join(item_tpl.format(n=i+1, t=t, d=d) for i, (t, d) in enumerate(AGENDA))
 
-BIO = ("Ho costruito My Governance, un software per le aziende, e l'ho venduta al gruppo Zucchetti: «valutazione oltre 10 milioni», ha titolato Il Sole 24 Ore. "
-       "Sono TOP 20 al mondo in “LinkedIn® Growth” secondo Favikon 2025. Commercialista AI l'ho costruito e provato insieme a due studi commercialisti.")
+BIO = ("Sono Davide Caiazzo. Ho venduto la mia azienda MYGO SRL a Zucchetti, quella dei gestionali. Commercialista AI l'ho costruito e provato insieme a due studi commercialisti.")
 SQUADRA = "In squadra con me Gianfranco Motta, il tecnico di DC Academy: tiene d'occhio la chat e mi porta le domande più tecniche."
 
 # ---------------- B ----------------
@@ -125,10 +124,10 @@ def B():
 <section class="hero"><div class="wrap">
 <div>
 <p class="when"><i aria-hidden="true"></i>Workshop gratuito su Zoom · giovedì 29 ottobre, ore 21:00</p>
-<h1>Il lavoro di una segreteria intera, preparato dall'intelligenza artificiale. <em>Tu controlli e fai il consulente.</em></h1>
-<p class="lead">Risposte ai clienti, scadenze e avvisi bonari letti dalle email, F24 mandati con i solleciti, documenti del 730, fatture estere in XML, estratti conto abbinati, circolari, parcelle, archivio. Giovedì 29 ottobre apro Commercialista AI e ti faccio vedere tutto, dal vivo.</p>
+<h1>Sei un commercialista? <em>Email, F24 e documenti ti riempiono la giornata?</em></h1>
+<p class="lead">Ogni giorno rispondi ai clienti, mandi F24 e cerchi documenti. L'AI prepara queste attività. Tu controlli il risultato. Giovedì 29 ottobre apro Commercialista AI e ti mostro come prepara questi lavori. Vediamo anche scadenze e avvisi bonari, documenti del 730, fatture estere in XML, estratti conto, circolari e parcelle.</p>
 <a class="cta" href="#iscrizione">Riserva il posto gratis</a>
-<div class="host"><img src="davide-linkedin.jpg" alt="Davide Caiazzo" width="52" height="52"/><p><b>Conduce Davide Caiazzo</b><br/>ha venduto la sua azienda al gruppo Zucchetti</p></div>
+<div class="host"><img src="davide-linkedin.jpg" alt="Davide Caiazzo" width="52" height="52"/><p><b>Conduce Davide Caiazzo</b><br/>ha venduto MYGO SRL a Zucchetti</p></div>
 <div class="proof"><span>Il gestionale resta il tuo</span><span>Tu controlli e premi Invia</span><span>182 iscritti all'edizione del 15 ottobre</span></div>
 </div>
 <div class="stack">
@@ -145,18 +144,18 @@ def B():
 </div></section>
 
 <section style="padding-top:0"><div class="wrap">
-<h2 class="sec-h">Meno segreteria, più consulenza.</h2>
+<h2 class="sec-h">Meno attività ripetitive, più consulenza.</h2>
 <div class="how">
 <div><b>L'AI prepara</b><p>Legge email, PDF ed estratti, riconosce il cliente giusto e prepara F24, risposte, scadenze, documenti e file.</p></div>
-<div><b>Tu controlli</b><p>Vedi tutto in una pagina per ogni lavoro. Correggi se serve. Niente parte senza il tuo sì.</p></div>
-<div><b>Lo studio respira</b><p>Le ore che oggi se ne vanno in segreteria tornano alla consulenza ai clienti.</p></div>
+<div><b>Tu controlli</b><p>Rileggi il lavoro preparato e correggi se serve. Decidi cosa inviare e quali solleciti automatici attivare.</p></div>
+<div><b>Più spazio per i clienti</b><p>Il programma prepara le attività ripetitive. Tu puoi dedicarti alle pratiche e ai clienti.</p></div>
 </div></div></section>
 
 <div class="band"><div class="wrap"><h2>Giovedì 29 ottobre, ore 21:00. La diretta inizia tra</h2>{COUNTDOWN}<a class="cta" href="#iscrizione">Iscriviti gratis</a></div></div>
 
 <section><div class="wrap">
 <h2 class="sec-h">Cosa vedi dal vivo</h2>
-<p class="sec-p">Clienti di prova, programma vero. Nessuna slide.</p>
+<p class="sec-p">Clienti di prova, programma vero. Segui le operazioni sullo schermo.</p>
 <div class="agenda">{agenda('<div class="ag"><div class="n">{n}</div><div><h3>{t}</h3><p>{d}</p></div></div>')}</div>
 </div></section>
 
@@ -174,11 +173,11 @@ def B():
 <section><div class="wrap"><h2 class="sec-h">Domande frequenti</h2><div class="faq">{faq_html()}</div></div></section>
 
 <section id="iscrizione"><div class="wrap">
-<div><h2 class="sec-h">Giovedì 29 ottobre, ore 21:00. Su Zoom.</h2><p class="sec-p">Ti iscrivi in trenta secondi. Ricevi subito l'email di conferma e, prima della diretta, il link Zoom con i promemoria.</p></div>
+<div><h2 class="sec-h">Giovedì 29 ottobre, ore 21:00. Su Zoom.</h2><p class="sec-p">Compila il modulo per riservare il posto. Ricevi subito l'email di conferma e, prima della diretta, il link Zoom con i promemoria.</p></div>
 {form_block('', 'Riserva il tuo posto gratis', 'Giovedì 29 ottobre, ore 21:00 · Live su Zoom')}
 </div></section>
 </main>'''
-    return page('B', "Workshop gratuito per commercialisti: il lavoro di una segreteria intera, fatto dall'intelligenza artificiale",
+    return page('B', "Workshop gratuito per commercialisti: email, F24 e documenti preparati dall'AI",
       "Workshop live gratuito su Zoom per commercialisti, giovedì 29 ottobre alle 21:00. Davide Caiazzo mostra dal vivo Commercialista AI: F24, scadenze e avvisi bonari, risposte ai clienti, 730, fatture estere, estratti e confronti, circolari, parcelle.",
       'family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700', B2_CSS, body,
       "[CLAUDE] 2026-10-17 sera variante B v2 (prova ott A/B/C/D): stile Commercialista AI, gancio «una segreteria intera fatta dal programma», tutto il programma. Modulo e tracciamento copiati da workshop.html. Ipotesi: Projects/Tool-Commercialisti/consegne-a-sviluppi/workshop-pagine-ott-20261017/ipotesi.md")
@@ -186,10 +185,10 @@ def B():
 # ---------------- C ----------------
 GIORNATA = [
  ("8:30", "La posta", "Email dei clienti da leggere una a una, documenti da salvare, scadenze da segnare a mano.", "L'AI le ha già lette: ha trovato scadenze e avvisi bonari, messo i documenti nella scheda del cliente e scritto le risposte. Tu rileggi e premi Invia."),
- ("10:00", "Gli F24", "Mandati uno a uno, poi le telefonate per sapere chi li ha ricevuti.", "Pronti per tutti i clienti in una volta: controlli e premi Invia. Poi promemoria due giorni prima e sollecito a chi non risponde."),
+ ("10:00", "Gli F24", "Mandati uno a uno, poi le telefonate per sapere chi li ha ricevuti.", "Preparati insieme per i clienti: controlli e premi Invia. Puoi attivare i promemoria due giorni prima e i solleciti a chi non risponde."),
  ("12:00", "I documenti del 730", "La lista dei documenti mandata e rimandata, cliente per cliente.", "Scegli i clienti e il giorno: a ognuno parte l'elenco, anche da mandare in foto, con il promemoria a chi non ha finito."),
  ("15:00", "Fatture e quadrature", "La fattura del fornitore estero da ribattere, l'estratto conto da confrontare riga per riga.", "XML pronto da importare, estratti e fatture abbinati, le differenze già trovate."),
- ("18:00", "Lo studio", "Circolari da scrivere, parcelle da preparare, file sparsi.", "Circolare con la fonte ufficiale mandata ai clienti giusti, parcelle partite, archivio in ordine. Alle 18 fai l'unica cosa che nessuna AI fa: la consulenza."),
+ ("18:00", "Lo studio", "Circolari da scrivere, parcelle da preparare, file sparsi.", "Circolare con la fonte ufficiale pronta per i clienti scelti, parcelle programmate e documenti raccolti nell'archivio. Il programma prepara il lavoro. Tu segui le pratiche e fai consulenza."),
 ]
 C2_CSS = C_CSS + TUTTO_CSS + '''
 .hero h1{font-size:clamp(34px,4.8vw,64px)}
@@ -224,7 +223,7 @@ def C():
 <p class="kick">Workshop gratuito dal vivo, solo per commercialisti · conduce Davide Caiazzo</p>
 <p class="kick" style="font-family:'Fraunces',Georgia,serif;font-style:italic;font-size:20px;color:var(--paper)">«Ho bisogno di un consulente, non di una segretaria», dicevo al mio commercialista.</p>
 <h1>Non gli mancava la competenza. <span class="b">Gli mancava il tempo.</span></h1>
-<p class="lead">Pensavo che non fosse bravo. Costruendo Commercialista AI ho capito che mi sbagliavo: <b>il suo tempo se lo mangiava la segreteria</b>, tra email, scadenze, F24, documenti, fatture, circolari e parcelle. Giovedì 29 ottobre alle 21 ti mostro la giornata dello studio con tutto quel lavoro fatto dall'intelligenza artificiale.</p>
+<p class="lead">Sei un commercialista? Ti racconto cosa ho capito del lavoro del mio. Pensavo che non fosse bravo. Costruendo Commercialista AI ho capito che mi sbagliavo: <b>email, F24 e documenti gli portavano via la giornata</b>. Giovedì 29 ottobre alle 21 ti mostro come l'AI prepara questi lavori. Vediamo anche scadenze, fatture, circolari e parcelle. Tu controlli il risultato.</p>
 <a class="cta" href="#iscrizione">Riserva il posto gratis</a>
 </div></section>
 <div class="strip"><div class="wrap"><span><b>182</b> iscritti all'edizione del 15 ottobre</span><span>Il gestionale <b>resta il tuo</b></span><span><b>Gratis</b>, su Zoom</span></div></div>
@@ -244,7 +243,7 @@ def C():
 <section style="padding-top:0"><div class="wrap story">
 <img src="davide-linkedin.jpg" alt="Davide Caiazzo" width="400" height="400" loading="lazy"/>
 <div>
-<p>Sono Davide Caiazzo. {BIO} Giovedì te lo mostro io, dal vivo.</p>
+<p>{BIO} Giovedì te lo mostro io, dal vivo.</p>
 <div class="press">{STAMPA}</div>
 <p style="margin-top:16px">{SQUADRA}</p>
 </div></div></section>
@@ -257,7 +256,7 @@ def C():
 <section style="padding-top:0"><div class="wrap"><h2>Domande frequenti</h2><div class="faq">{faq_html()}</div></div></section>
 
 <section id="iscrizione"><div class="wrap">
-<div><h2>Giovedì 29 ottobre, ore 21:00</h2><p class="sub" style="margin-bottom:26px">Ti iscrivi in trenta secondi. Ricevi subito l'email di conferma e, prima della diretta, il link Zoom.</p>{COUNTDOWN}</div>
+<div><h2>Giovedì 29 ottobre, ore 21:00</h2><p class="sub" style="margin-bottom:26px">Compila il modulo per riservare il posto. Ricevi subito l'email di conferma e, prima della diretta, il link Zoom.</p>{COUNTDOWN}</div>
 {form_block('', 'Riserva il tuo posto gratis', 'Live su Zoom · solo per commercialisti')}
 </div></section>
 </main>'''
@@ -298,9 +297,9 @@ def D():
 <div>
 <p class="date">Giovedì 29 ottobre, ore 21:00 · gratis su Zoom</p>
 <div class="big"><div class="n"><span>13</span></div><h1>funzioni per il lavoro ripetitivo dello studio. <mark>L'AI prepara, tu controlli.</mark></h1></div>
-<p class="lead">Dalle risposte ai clienti agli F24 mandati con i solleciti, dai documenti del 730 alle fatture estere, dagli estratti conto alle circolari, fino a parcelle e archivio. <b>Scadenze, documenti e risposte sotto controllo.</b> Giovedì 29 ottobre te lo faccio vedere dal vivo.</p>
+<p class="lead">Sei un commercialista? Ci sono risposte da scrivere, F24 da mandare e documenti del 730 da chiedere. A fine giornata restano fatture, conti e parcelle. <b>Guarda come l'AI prepara questi lavori e come li controlli.</b> Giovedì 29 ottobre te lo mostro dal vivo.</p>
 <a class="cta" href="#iscrizione">Riserva il posto gratis</a>
-<div class="host"><img src="davide-linkedin.jpg" alt="Davide Caiazzo" width="50" height="50"/><p><b>Conduce Davide Caiazzo</b><br/>ha venduto la sua azienda al gruppo Zucchetti</p></div>
+<div class="host"><img src="davide-linkedin.jpg" alt="Davide Caiazzo" width="50" height="50"/><p><b>Conduce Davide Caiazzo</b><br/>ha venduto MYGO SRL a Zucchetti</p></div>
 </div>
 <div><ul class="chk" aria-label="Le 13 funzioni">{chk}</ul><p class="note">Tutte già attive nel programma: le vedi dal vivo il 29. Il gestionale resta il tuo.</p></div>
 </div></section>
@@ -319,7 +318,7 @@ def D():
 <div><h3>L'avviso bonario inoltrato tardi</h3><p>L'AI lo legge, cerca la data di notifica nella conversazione e calcola la scadenza con la sospensione feriale.</p></div>
 <div><h3>Il cliente che non manda i documenti</h3><p>Scegli i clienti e il giorno: l'elenco del 730 parte a ognuno, con il promemoria a chi non ha finito.</p></div>
 </div>
-<p class="sub" style="margin-top:26px">Quante ore a settimana se ne vanno così, nel tuo studio? Le contiamo insieme in diretta, sulle tue 3 attività più ripetitive.</p>
+<p class="sub" style="margin-top:26px">Quali di questi lavori ti portano via più tempo? Porta le tue 3 attività più ripetitive. Le guardiamo insieme in diretta.</p>
 </div></section>
 
 <section style="padding-top:0"><div class="wrap">
@@ -341,7 +340,7 @@ def D():
 <section style="padding-top:0"><div class="wrap"><h2>Domande frequenti</h2><div class="faq">{faq_html()}</div></div></section>
 
 <section id="iscrizione"><div class="wrap">
-<div><h2>Giovedì 29 ottobre, ore 21:00</h2><p class="sub" style="margin-bottom:24px">Ti iscrivi in trenta secondi. Ricevi subito l'email di conferma e, prima della diretta, il link Zoom.</p>{COUNTDOWN}</div>
+<div><h2>Giovedì 29 ottobre, ore 21:00</h2><p class="sub" style="margin-bottom:24px">Compila il modulo per riservare il posto. Ricevi subito l'email di conferma e, prima della diretta, il link Zoom.</p>{COUNTDOWN}</div>
 {form_block('', 'Riserva il tuo posto gratis', 'Live su Zoom · solo per commercialisti')}
 </div></section>
 </main>'''

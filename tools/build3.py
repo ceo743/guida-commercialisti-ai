@@ -120,11 +120,11 @@ def E():
 <div>
 <p class="pill"><b>Workshop gratuito su Zoom</b> · giovedì 29 ottobre, ore 21:00</p>
 <h1>Chi lavora nel tuo studio è una professionista. <em>Non l'hai assunta per fare la segreteria.</em></h1>
-<p class="lead">Spesso è commercialista come te. Eppure le sue giornate se ne vanno tra email dei clienti, F24 da mandare, solleciti, scadenze, documenti del 730 e fatture estere da ricopiare. <b>Giovedì 29 ottobre alle 21 ti mostro dal vivo tutto Commercialista AI</b>: il lavoro ripetitivo lo prepara il programma, chi lavora con te controlla e torna alle pratiche e alla consulenza.</p>
+<p class="lead">Sei un commercialista? Anche chi lavora con te passa la giornata tra email, F24, solleciti e documenti da chiedere. <b>Giovedì 29 ottobre alle 21 ti mostro Commercialista AI dal vivo.</b> L'AI prepara il lavoro ripetitivo. Chi lavora con te controlla il risultato e può dedicarsi alle pratiche e ai clienti.</p>
 <a class="cta" href="#iscrizione">Riserva il posto gratis</a>
 <p style="font-size:14px;color:var(--mute);margin-top:10px">Lavori in uno studio? Iscriviti anche tu.</p>
-<div class="host"><img src="davide-linkedin.jpg" alt="Davide Caiazzo" width="50" height="50"/><p><b>Conduce Davide Caiazzo</b><br/>ha venduto la sua azienda al gruppo Zucchetti</p></div>
-<div class="proof"><span>182 iscritti all'edizione del 15 ottobre</span><span>Il gestionale resta il tuo</span><span>Niente parte senza il tuo sì</span></div>
+<div class="host"><img src="davide-linkedin.jpg" alt="Davide Caiazzo" width="50" height="50"/><p><b>Conduce Davide Caiazzo</b><br/>ha venduto MYGO SRL a Zucchetti</p></div>
+<div class="proof"><span>182 iscritti all'edizione del 15 ottobre</span><span>Il gestionale resta il tuo</span><span>Scegli cosa inviare e quali solleciti attivare</span></div>
 </div>
 <div class="desk" aria-label="Esempio: la giornata di chi lavora nello studio">
 <h3>Il lavoro per cui l'hai scelta</h3>
@@ -133,17 +133,17 @@ def E():
 <ul class="off"><li>mandare gli F24 uno a uno</li><li>rispondere sempre alle stesse domande</li><li>segnare le scadenze a mano</li><li>ricopiare le fatture estere</li><li>rincorrere i documenti del 730</li></ul>
 <h4>Torna a chi lavora con te</h4>
 <ul class="on"><li>le pratiche dei clienti</li><li>i controlli che contano</li><li>la consulenza</li></ul>
-<small>Il programma prepara, lo studio controlla e decide cosa parte.</small>
+<small>Il programma prepara. Lo studio controlla gli invii e sceglie quali solleciti automatici attivare.</small>
 </div>
 </div></section>
 
 <section style="padding-top:0"><div class="wrap">
 <h2>Oggi e con il programma</h2>
-<p class="sub">Cinque lavori che oggi fa chi lavora con te. Giovedì li vedi fare dal programma, su uno studio di esempio.</p>
+<p class="sub">Cinque attività che conosci bene. Giovedì vedi come il programma le prepara, su uno studio di esempio.</p>
 <div class="two"><div class="hd l2">Oggi, a mano</div><div class="hd t">Con Commercialista AI</div>{righe}</div>
 <div class="quote">
 <blockquote>«Arranchiamo a trovare collaboratori.»<span>Un commercialista, parlando con noi</span></blockquote>
-<div class="key">Le persone giuste non si trovano. Quelle che hai valgono troppo per la segreteria: con il programma lo stesso studio segue più clienti, senza assumere.</div>
+<div class="key">Chi lavora con te ha competenze da dedicare ai clienti. Il programma prepara le attività ripetitive. Le persone restano al centro delle pratiche e dei controlli.</div>
 </div>
 </div></section>
 
@@ -167,7 +167,7 @@ def E():
 <section style="padding-top:0"><div class="wrap"><h2>Domande frequenti</h2><div class="faq">{faq_html()}</div></div></section>
 
 <section id="iscrizione"><div class="wrap">
-<div><h2>Giovedì 29 ottobre, ore 21:00</h2><p class="sub" style="margin-bottom:24px">Ti iscrivi in trenta secondi. Ricevi subito l'email di conferma e, prima della diretta, il link Zoom.</p>{COUNTDOWN}</div>
+<div><h2>Giovedì 29 ottobre, ore 21:00</h2><p class="sub" style="margin-bottom:24px">Compila il modulo per riservare il posto. Ricevi subito l'email di conferma e, prima della diretta, il link Zoom.</p>{COUNTDOWN}</div>
 {form_block('', 'Riserva il tuo posto gratis', 'Live su Zoom · per titolari e collaboratori degli studi')}
 </div></section>
 </main>'''
