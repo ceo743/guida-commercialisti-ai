@@ -31,7 +31,7 @@ FAQ = [
  ("È un corso?", "No. Ti mostro Commercialista AI al lavoro su uno studio di esempio. Segui un caso dall'inizio alla fine e fai le tue domande."),
  ("Quanto costa partecipare?", "Il workshop è gratuito. A fine serata ti spiego come lavorare con me e il mio team. Poi decidi tu, senza obblighi."),
  ("Funziona con il gestionale che uso in studio?", "Sì. Il gestionale resta il tuo: il programma legge i PDF che il gestionale ti fa scaricare e prepara il lavoro che poi ci entra. TeamSystem, Zucchetti, Profis o altro."),
- ("Devo saper usare la tecnologia?", "No. Guardi il mio schermo mentre uso il programma e fai le tue domande. Ti basta il link Zoom che ricevi via email. Puoi aprirlo anche dal browser."),
+ ("Devo saper usare la tecnologia?", "No. Guardi il mio schermo mentre uso il programma e fai le tue domande. Ti basta il link Zoom che ricevi via email il giorno del webinar. Puoi aprirlo anche dal browser."),
  ("Cosa NON fa il programma?", "Non tiene la contabilità e non sostituisce il gestionale. Prepara F24, risposte ai clienti, scadenze e documenti. Tu controlli il lavoro preparato."),
  ("E i dati dei miei clienti?", "Ne parlo in diretta. Ti mostro come controllare le risposte preparate e come scegliere quali solleciti automatici attivare."),
  ("Non posso esserci giovedì 29. Che faccio?", "Iscriviti comunque: dopo la diretta ti mando la registrazione per email, online per 48 ore. Le domande però le fai solo dal vivo."),
@@ -39,7 +39,7 @@ FAQ = [
 def faq_html():
     return '\n'.join('<details class="faq-i"><summary>%s</summary><p>%s</p></details>' % q for q in FAQ)
 
-DAVIDE_BIO = ("Sono Davide Caiazzo. Ho venduto la mia azienda MYGO SRL a Zucchetti, quella dei gestionali. Commercialista AI l'ho costruito e provato insieme a due studi commercialisti.")
+DAVIDE_BIO = ("Sono Davide Caiazzo. Ho venduto la mia azienda MYGO SRL a Zucchetti, quella dei gestionali. Durante il webinar ti mostro come usarlo nel lavoro del tuo studio e rispondo alle tue domande.")
 STAMPA = ('<a href="https://ntplusdiritto.ilsole24ore.com/art/zucchetti-acquisisce-my-governance-valutazione-oltre-10-milioni-caiazzo-confermato-ad-AHraItpC" target="_blank" rel="noopener noreferrer">Il Sole 24 Ore</a>'
   '<a href="https://www.iltempo.it/tv-news/2026/03/11/video/libri-arriva-il-potere-di-linkedin-di-davide-caiazzo-46755479/" target="_blank" rel="noopener noreferrer">Il Tempo</a>'
   '<a href="https://www.leggo.it/video/libri_arriva_il_potere_di_linkedin_di_davide_caiazzo-9409483.html" target="_blank" rel="noopener noreferrer">Leggo</a>')
@@ -122,7 +122,7 @@ a{{color:inherit}}
 def form_block(cls_title, title, sub):
     return f'''<div class="formbox"><h3 class="{cls_title}">{title}</h3><p class="formsub">{sub}</p>
 {FORM}
-<p class="formnote">Il link Zoom arriva via email prima della diretta. Nessuno spam.</p></div>'''
+<p class="formnote">Il link Zoom arriva via email il giorno del webinar. Nessuno spam.</p></div>'''
 
 # =============== B: stile Commercialista AI + Invia F24 ===============
 B_CSS = '''
@@ -220,7 +220,7 @@ def B():
 <h1>Il 16 mandi gli F24 a tutti i clienti. <em>E sai chi li ha ricevuti.</em></h1>
 <p class="lead">Giovedì 29 ottobre apro il computer e te lo faccio vedere sul programma vero: riconosce il cliente da ogni F24, prepara le email e sollecita chi non risponde. Tu controlli e premi Invia. Il gestionale resta il tuo.</p>
 <a class="cta" href="#iscrizione">Riserva il posto gratis</a>
-<div class="host"><img src="davide-linkedin.jpg" alt="Davide Caiazzo" width="52" height="52"/><p><b>Conduce Davide Caiazzo</b><br/>ha venduto MYGO SRL a Zucchetti</p></div>
+<div class="host"><img src="davide-linkedin.jpg" alt="Davide Caiazzo" width="52" height="52"/><p><b>Davide Caiazzo</b><br/>ha venduto MYGO SRL a Zucchetti</p></div>
 <div class="proof"><span>Più di 180 commercialisti iscritti all'edizione del 15 ottobre</span><span>Si guarda e si fanno domande</span><span>Gratis</span></div>
 </div>
 <figure class="shot"><div class="bar" aria-hidden="true"><i></i><i></i><i></i></div>
@@ -251,10 +251,10 @@ def B():
 
 <section><div class="wrap">
 <div class="who"><img src="davide-linkedin.jpg" alt="Davide Caiazzo" width="200" height="200" loading="lazy"/><div>
-<h3>Conduco io, Davide Caiazzo</h3>
-<p>Ho costruito My Governance, un software per le aziende, e l'ho venduta al gruppo Zucchetti: «valutazione oltre 10 milioni», ha titolato Il Sole 24 Ore. Sono TOP 20 al mondo in “LinkedIn® Growth” secondo Favikon 2025. Commercialista AI l'ho costruito e provato insieme a due studi commercialisti.</p>
+<h3>Te lo mostro io, Davide Caiazzo</h3>
+<p>Ho costruito My Governance, un software per le aziende, e l'ho venduta al gruppo Zucchetti: «valutazione oltre 10 milioni», ha titolato Il Sole 24 Ore. Sono TOP 20 al mondo in “LinkedIn® Growth” secondo Favikon 2025. Durante il webinar ti mostro come usarlo nel lavoro del tuo studio e rispondo alle tue domande.</p>
 <div class="press">{STAMPA}</div>
-<p class="team">In squadra con me Gianfranco Motta, il tecnico di DC Academy: tiene d'occhio la chat e mi porta le domande più tecniche.</p>
+<p class="team">Ti mostro il programma e rispondo alle tue domande sul lavoro del tuo studio.</p>
 </div></div>
 </div></section>
 
@@ -267,7 +267,7 @@ def B():
 <section><div class="wrap"><h2 class="sec-h">Domande frequenti</h2><div class="faq">{faq_html()}</div></div></section>
 
 <section id="iscrizione"><div class="wrap">
-<div><h2 class="sec-h">Giovedì 29 ottobre, ore 21:00. Su Zoom.</h2><p class="sec-p">Compila il modulo per riservare il posto. Ricevi subito l'email di conferma e, prima della diretta, il link Zoom con i promemoria.</p></div>
+<div><h2 class="sec-h">Giovedì 29 ottobre, ore 21:00. Su Zoom.</h2><p class="sec-p">Compila il modulo per riservare il posto. Ricevi subito l'email di conferma. Il link Zoom arriva via email il giorno del webinar.</p></div>
 {form_block('', 'Riserva il tuo posto gratis', 'Giovedì 29 ottobre, ore 21:00 · Live su Zoom')}
 </div></section>
 </main>'''
@@ -374,7 +374,7 @@ def C():
 <div class="xml"><div class="h">Pronto da importare nel gestionale</div><span class="t">&lt;TipoDocumento&gt;</span>TD17<span class="t">&lt;/TipoDocumento&gt;</span><br/><span class="t">&lt;Denominazione&gt;</span>Demo Cloud Services GmbH<span class="t">&lt;/Denominazione&gt;</span><br/><span class="t">&lt;Data&gt;</span>2026-07-12<span class="t">&lt;/Data&gt;</span><br/><span class="t">&lt;ImportoTotale&gt;</span>49.00<span class="t">&lt;/ImportoTotale&gt;</span><br/><span class="ok">✓ servizio da fornitore UE riconosciuto</span><br/><span class="ok">✓ dati controllati prima del file</span></div>
 </div>
 <a class="cta" href="#iscrizione">Riserva il posto gratis</a>
-<div class="byline"><img src="davide-linkedin.jpg" alt="Davide Caiazzo" width="56" height="56"/><p><b>Conduce Davide Caiazzo</b><br/>ha venduto MYGO SRL a Zucchetti</p></div>
+<div class="byline"><img src="davide-linkedin.jpg" alt="Davide Caiazzo" width="56" height="56"/><p><b>Davide Caiazzo</b><br/>ha venduto MYGO SRL a Zucchetti</p></div>
 </div></section>
 <div class="strip"><div class="wrap"><span><b>Più di 180</b> commercialisti iscritti all'edizione del 15 ottobre</span><span>Il gestionale <b>resta il tuo</b></span><span><b>Gratis</b>, su Zoom</span></div></div>
 
@@ -383,7 +383,7 @@ def C():
 <div>
 <blockquote>Ho bisogno di un consulente, non di una segretaria.</blockquote>
 <p>Per anni ho pensato che il mio commercialista non fosse bravo. O che non fosse un consulente. Glielo dicevo, con queste parole. Costruendo Commercialista AI ho capito che mi sbagliavo: <b>non gli mancava la competenza. Gli mancava il tempo.</b></p>
-<p>Sono Davide Caiazzo. Ho costruito My Governance e l'ho venduta al gruppo Zucchetti: «valutazione oltre 10 milioni», ha titolato Il Sole 24 Ore. Commercialista AI l'ho costruito e provato insieme a due studi commercialisti. Giovedì te lo mostro io, dal vivo.</p>
+<p>Sono Davide Caiazzo. Ho costruito My Governance e l'ho venduta al gruppo Zucchetti: «valutazione oltre 10 milioni», ha titolato Il Sole 24 Ore. Durante il webinar ti mostro come usarlo nel lavoro del tuo studio e rispondo alle tue domande. Giovedì te lo mostro io, dal vivo.</p>
 <div class="press">{STAMPA}</div>
 </div></div></section>
 
@@ -397,7 +397,7 @@ def C():
 <div class="st"><div><h3>Le tue domande, in diretta</h3><p>Rispondo io. Alla fine ti dico quanto costa e come si attiva. Nessun obbligo.</p></div></div>
 </div>
 <figure class="shot"><picture><source media="(max-width:700px)" srcset="img-ott/fatture-estere-telefono.webp"/><img src="img-ott/fatture-estere.webp" width="1440" height="860" loading="lazy" alt="La pagina Fatture estere e autofatture in XML di Commercialista AI"/></picture><figcaption>Fatture estere e autofatture in XML, studio dimostrativo di Commercialista AI.</figcaption></figure>
-<p style="margin-top:22px;color:var(--mute);font-size:15px">In squadra con me Gianfranco Motta, il tecnico di DC Academy: tiene d'occhio la chat e mi porta le domande più tecniche.</p>
+<p style="margin-top:22px;color:var(--mute);font-size:15px">Ti mostro il programma e rispondo alle tue domande sul lavoro del tuo studio.</p>
 </div></section>
 
 <section style="padding-top:0"><div class="wrap fit">
@@ -408,7 +408,7 @@ def C():
 <section style="padding-top:0"><div class="wrap"><h2>Domande frequenti</h2><div class="faq">{faq_html()}</div></div></section>
 
 <section id="iscrizione"><div class="wrap">
-<div><h2>Giovedì 29 ottobre, ore 21:00</h2><p class="sub" style="margin-bottom:26px">Compila il modulo per riservare il posto. Ricevi subito l'email di conferma e, prima della diretta, il link Zoom.</p>{COUNTDOWN}</div>
+<div><h2>Giovedì 29 ottobre, ore 21:00</h2><p class="sub" style="margin-bottom:26px">Compila il modulo per riservare il posto. Ricevi subito l'email di conferma. Il link Zoom arriva via email il giorno del webinar.</p>{COUNTDOWN}</div>
 {form_block('', 'Riserva il tuo posto gratis', 'Live su Zoom · solo per commercialisti')}
 </div></section>
 </main>'''
@@ -509,7 +509,7 @@ def D():
 <h1>Un avviso bonario nella PEC. Un F24 da mandare. <mark>Niente ti scappa più.</mark></h1>
 <p class="lead">Giovedì 29 ottobre ti faccio vedere dal vivo come Commercialista AI <b>trova le scadenze in documenti e posta</b>, legge l'avviso bonario, calcola la scadenza e ti avvisa prima. Tu confermi. Il gestionale resta il tuo.</p>
 <a class="cta" href="#iscrizione">Riserva il posto gratis</a>
-<div class="host"><img src="davide-linkedin.jpg" alt="Davide Caiazzo" width="50" height="50"/><p><b>Conduce Davide Caiazzo</b><br/>ha venduto MYGO SRL a Zucchetti</p></div>
+<div class="host"><img src="davide-linkedin.jpg" alt="Davide Caiazzo" width="50" height="50"/><p><b>Davide Caiazzo</b><br/>ha venduto MYGO SRL a Zucchetti</p></div>
 </div>
 <div>
 <div class="agenda-card" role="img" aria-label="Esempio di elenco scadenze dello studio in Commercialista AI">
@@ -547,17 +547,17 @@ def D():
 
 <section style="padding-top:0"><div class="wrap">
 <div class="who"><img src="davide-linkedin.jpg" alt="Davide Caiazzo" width="220" height="220" loading="lazy"/><div>
-<h3>Conduco io, Davide Caiazzo</h3>
-<p>Ho costruito My Governance, un software per le aziende, e l'ho venduta al gruppo Zucchetti: «valutazione oltre 10 milioni», ha titolato Il Sole 24 Ore. Sono TOP 20 al mondo in “LinkedIn® Growth” secondo Favikon 2025. Commercialista AI l'ho costruito e provato insieme a due studi commercialisti.</p>
+<h3>Te lo mostro io, Davide Caiazzo</h3>
+<p>Ho costruito My Governance, un software per le aziende, e l'ho venduta al gruppo Zucchetti: «valutazione oltre 10 milioni», ha titolato Il Sole 24 Ore. Sono TOP 20 al mondo in “LinkedIn® Growth” secondo Favikon 2025. Durante il webinar ti mostro come usarlo nel lavoro del tuo studio e rispondo alle tue domande.</p>
 <div class="press">{STAMPA}</div>
-<p style="margin-top:14px;font-size:15px">In squadra con me Gianfranco Motta, il tecnico di DC Academy: tiene d'occhio la chat e mi porta le domande più tecniche.</p>
+<p style="margin-top:14px;font-size:15px">Ti mostro il programma e rispondo alle tue domande sul lavoro del tuo studio.</p>
 </div></div>
 </div></section>
 
 <section style="padding-top:0"><div class="wrap"><h2>Domande frequenti</h2><div class="faq">{faq_html()}</div></div></section>
 
 <section id="iscrizione"><div class="wrap">
-<div><h2>Giovedì 29 ottobre, ore 21:00</h2><p class="sub" style="margin-bottom:24px">Compila il modulo per riservare il posto. Ricevi subito l'email di conferma e, prima della diretta, il link Zoom.</p>{COUNTDOWN}</div>
+<div><h2>Giovedì 29 ottobre, ore 21:00</h2><p class="sub" style="margin-bottom:24px">Compila il modulo per riservare il posto. Ricevi subito l'email di conferma. Il link Zoom arriva via email il giorno del webinar.</p>{COUNTDOWN}</div>
 {form_block('', 'Riserva il tuo posto gratis', 'Live su Zoom · solo per commercialisti')}
 </div></section>
 </main>'''

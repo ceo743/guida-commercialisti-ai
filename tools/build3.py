@@ -123,7 +123,7 @@ def E():
 <p class="lead">Sei un commercialista? Anche chi lavora con te passa la giornata tra email, F24, solleciti e documenti da chiedere. <b>Giovedì 29 ottobre alle 21 ti mostro Commercialista AI dal vivo.</b> L'AI prepara il lavoro ripetitivo. Chi lavora con te controlla il risultato e può dedicarsi alle pratiche e ai clienti.</p>
 <a class="cta" href="#iscrizione">Riserva il posto gratis</a>
 <p style="font-size:14px;color:var(--mute);margin-top:10px">Lavori in uno studio? Iscriviti anche tu.</p>
-<div class="host"><img src="davide-linkedin.jpg" alt="Davide Caiazzo" width="50" height="50"/><p><b>Conduce Davide Caiazzo</b><br/>ha venduto MYGO SRL a Zucchetti</p></div>
+<div class="host"><img src="davide-linkedin.jpg" alt="Davide Caiazzo" width="50" height="50"/><p><b>Davide Caiazzo</b><br/>ha venduto MYGO SRL a Zucchetti</p></div>
 <div class="proof"><span>182 iscritti all'edizione del 15 ottobre</span><span>Il gestionale resta il tuo</span><span>Scegli cosa inviare e quali solleciti attivare</span></div>
 </div>
 <div class="desk" aria-label="Esempio: la giornata di chi lavora nello studio">
@@ -161,13 +161,13 @@ def E():
 
 <section style="padding-top:0"><div class="wrap">
 <div class="whoD"><img src="davide-linkedin.jpg" alt="Davide Caiazzo" width="200" height="200" loading="lazy"/><div>
-<h3>Conduco io, Davide Caiazzo</h3><p>{BIO}</p><div class="press">{STAMPA}</div><p style="margin-top:12px;font-size:15px">{SQUADRA}</p>
+<h3>Te lo mostro io, Davide Caiazzo</h3><p>{BIO}</p><div class="press">{STAMPA}</div><p style="margin-top:12px;font-size:15px">{SQUADRA}</p>
 </div></div></div></section>
 
 <section style="padding-top:0"><div class="wrap"><h2>Domande frequenti</h2><div class="faq">{faq_html()}</div></div></section>
 
 <section id="iscrizione"><div class="wrap">
-<div><h2>Giovedì 29 ottobre, ore 21:00</h2><p class="sub" style="margin-bottom:24px">Compila il modulo per riservare il posto. Ricevi subito l'email di conferma e, prima della diretta, il link Zoom.</p>{COUNTDOWN}</div>
+<div><h2>Giovedì 29 ottobre, ore 21:00</h2><p class="sub" style="margin-bottom:24px">Compila il modulo per riservare il posto. Ricevi subito l'email di conferma. Il link Zoom arriva via email il giorno del webinar.</p>{COUNTDOWN}</div>
 {form_block('', 'Riserva il tuo posto gratis', 'Live su Zoom · per titolari e collaboratori degli studi')}
 </div></section>
 </main>'''

@@ -95,8 +95,8 @@ AGENDA = [
 def agenda(item_tpl):
     return '\n'.join(item_tpl.format(n=i+1, t=t, d=d) for i, (t, d) in enumerate(AGENDA))
 
-BIO = ("Sono Davide Caiazzo. Ho venduto la mia azienda MYGO SRL a Zucchetti, quella dei gestionali. Commercialista AI l'ho costruito e provato insieme a due studi commercialisti.")
-SQUADRA = "In squadra con me Gianfranco Motta, il tecnico di DC Academy: tiene d'occhio la chat e mi porta le domande più tecniche."
+BIO = ("Sono Davide Caiazzo. Ho venduto la mia azienda MYGO SRL a Zucchetti, quella dei gestionali. Durante il webinar ti mostro come usarlo nel lavoro del tuo studio e rispondo alle tue domande.")
+SQUADRA = "Ti mostro il programma e rispondo alle tue domande sul lavoro del tuo studio."
 
 # ---------------- B ----------------
 B2_CSS = B_CSS + TUTTO_CSS + '''
@@ -127,7 +127,7 @@ def B():
 <h1>Sei un commercialista? <em>Email, F24 e documenti ti riempiono la giornata?</em></h1>
 <p class="lead">Ogni giorno rispondi ai clienti, mandi F24 e cerchi documenti. L'AI prepara queste attività. Tu controlli il risultato. Giovedì 29 ottobre apro Commercialista AI e ti mostro come prepara questi lavori. Vediamo anche scadenze e avvisi bonari, documenti del 730, fatture estere in XML, estratti conto, circolari e parcelle.</p>
 <a class="cta" href="#iscrizione">Riserva il posto gratis</a>
-<div class="host"><img src="davide-linkedin.jpg" alt="Davide Caiazzo" width="52" height="52"/><p><b>Conduce Davide Caiazzo</b><br/>ha venduto MYGO SRL a Zucchetti</p></div>
+<div class="host"><img src="davide-linkedin.jpg" alt="Davide Caiazzo" width="52" height="52"/><p><b>Davide Caiazzo</b><br/>ha venduto MYGO SRL a Zucchetti</p></div>
 <div class="proof"><span>Il gestionale resta il tuo</span><span>Tu controlli e premi Invia</span><span>182 iscritti all'edizione del 15 ottobre</span></div>
 </div>
 <div class="stack">
@@ -161,7 +161,7 @@ def B():
 
 <section><div class="wrap">
 <div class="who"><img src="davide-linkedin.jpg" alt="Davide Caiazzo" width="200" height="200" loading="lazy"/><div>
-<h3>Conduco io, Davide Caiazzo</h3><p>{BIO}</p><div class="press">{STAMPA}</div><p class="team">{SQUADRA}</p>
+<h3>Te lo mostro io, Davide Caiazzo</h3><p>{BIO}</p><div class="press">{STAMPA}</div><p class="team">{SQUADRA}</p>
 </div></div></div></section>
 
 <section><div class="wrap">
@@ -173,7 +173,7 @@ def B():
 <section><div class="wrap"><h2 class="sec-h">Domande frequenti</h2><div class="faq">{faq_html()}</div></div></section>
 
 <section id="iscrizione"><div class="wrap">
-<div><h2 class="sec-h">Giovedì 29 ottobre, ore 21:00. Su Zoom.</h2><p class="sec-p">Compila il modulo per riservare il posto. Ricevi subito l'email di conferma e, prima della diretta, il link Zoom con i promemoria.</p></div>
+<div><h2 class="sec-h">Giovedì 29 ottobre, ore 21:00. Su Zoom.</h2><p class="sec-p">Compila il modulo per riservare il posto. Ricevi subito l'email di conferma. Il link Zoom arriva via email il giorno del webinar.</p></div>
 {form_block('', 'Riserva il tuo posto gratis', 'Giovedì 29 ottobre, ore 21:00 · Live su Zoom')}
 </div></section>
 </main>'''
@@ -220,7 +220,7 @@ def C():
 <main>
 <section class="hero"><div class="wrap">
 <img class="portrait" src="davide-linkedin.jpg" alt="Davide Caiazzo" width="120" height="120"/>
-<p class="kick">Workshop gratuito dal vivo, solo per commercialisti · conduce Davide Caiazzo</p>
+<p class="kick">Workshop gratuito dal vivo, solo per commercialisti · con Davide Caiazzo</p>
 <p class="kick" style="font-family:'Fraunces',Georgia,serif;font-style:italic;font-size:20px;color:var(--paper)">«Ho bisogno di un consulente, non di una segretaria», dicevo al mio commercialista.</p>
 <h1>Non gli mancava la competenza. <span class="b">Gli mancava il tempo.</span></h1>
 <p class="lead">Sei un commercialista? Ti racconto cosa ho capito del lavoro del mio. Pensavo che non fosse bravo. Costruendo Commercialista AI ho capito che mi sbagliavo: <b>email, F24 e documenti gli portavano via la giornata</b>. Giovedì 29 ottobre alle 21 ti mostro come l'AI prepara questi lavori. Vediamo anche scadenze, fatture, circolari e parcelle. Tu controlli il risultato.</p>
@@ -256,7 +256,7 @@ def C():
 <section style="padding-top:0"><div class="wrap"><h2>Domande frequenti</h2><div class="faq">{faq_html()}</div></div></section>
 
 <section id="iscrizione"><div class="wrap">
-<div><h2>Giovedì 29 ottobre, ore 21:00</h2><p class="sub" style="margin-bottom:26px">Compila il modulo per riservare il posto. Ricevi subito l'email di conferma e, prima della diretta, il link Zoom.</p>{COUNTDOWN}</div>
+<div><h2>Giovedì 29 ottobre, ore 21:00</h2><p class="sub" style="margin-bottom:26px">Compila il modulo per riservare il posto. Ricevi subito l'email di conferma. Il link Zoom arriva via email il giorno del webinar.</p>{COUNTDOWN}</div>
 {form_block('', 'Riserva il tuo posto gratis', 'Live su Zoom · solo per commercialisti')}
 </div></section>
 </main>'''
@@ -299,7 +299,7 @@ def D():
 <div class="big"><div class="n"><span>13</span></div><h1>funzioni per il lavoro ripetitivo dello studio. <mark>L'AI prepara, tu controlli.</mark></h1></div>
 <p class="lead">Sei un commercialista? Ci sono risposte da scrivere, F24 da mandare e documenti del 730 da chiedere. A fine giornata restano fatture, conti e parcelle. <b>Guarda come l'AI prepara questi lavori e come li controlli.</b> Giovedì 29 ottobre te lo mostro dal vivo.</p>
 <a class="cta" href="#iscrizione">Riserva il posto gratis</a>
-<div class="host"><img src="davide-linkedin.jpg" alt="Davide Caiazzo" width="50" height="50"/><p><b>Conduce Davide Caiazzo</b><br/>ha venduto MYGO SRL a Zucchetti</p></div>
+<div class="host"><img src="davide-linkedin.jpg" alt="Davide Caiazzo" width="50" height="50"/><p><b>Davide Caiazzo</b><br/>ha venduto MYGO SRL a Zucchetti</p></div>
 </div>
 <div><ul class="chk" aria-label="Le 13 funzioni">{chk}</ul><p class="note">Tutte già attive nel programma: le vedi dal vivo il 29. Il gestionale resta il tuo.</p></div>
 </div></section>
@@ -334,13 +334,13 @@ def D():
 
 <section style="padding-top:0"><div class="wrap">
 <div class="who"><img src="davide-linkedin.jpg" alt="Davide Caiazzo" width="220" height="220" loading="lazy"/><div>
-<h3>Conduco io, Davide Caiazzo</h3><p>{BIO}</p><div class="press">{STAMPA}</div><p style="margin-top:14px;font-size:15px">{SQUADRA}</p>
+<h3>Te lo mostro io, Davide Caiazzo</h3><p>{BIO}</p><div class="press">{STAMPA}</div><p style="margin-top:14px;font-size:15px">{SQUADRA}</p>
 </div></div></div></section>
 
 <section style="padding-top:0"><div class="wrap"><h2>Domande frequenti</h2><div class="faq">{faq_html()}</div></div></section>
 
 <section id="iscrizione"><div class="wrap">
-<div><h2>Giovedì 29 ottobre, ore 21:00</h2><p class="sub" style="margin-bottom:24px">Compila il modulo per riservare il posto. Ricevi subito l'email di conferma e, prima della diretta, il link Zoom.</p>{COUNTDOWN}</div>
+<div><h2>Giovedì 29 ottobre, ore 21:00</h2><p class="sub" style="margin-bottom:24px">Compila il modulo per riservare il posto. Ricevi subito l'email di conferma. Il link Zoom arriva via email il giorno del webinar.</p>{COUNTDOWN}</div>
 {form_block('', 'Riserva il tuo posto gratis', 'Live su Zoom · solo per commercialisti')}
 </div></section>
 </main>'''
