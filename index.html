@@ -10,6 +10,8 @@
      17/10 sera: B, C, D riscritte su tutto il programma (cambiano gancio e grafica) ed entra E = /workshop-ott-e
      (chi lavora nello studio è una professionista, non la segreteria). Nuova ripartizione A 40 %, B/C/D/E 15 % ciascuna.
      17/10 notte: entra F = /workshop-ott-f (struttura Sibill: «Meno lavoro amministrativo. Più consulenza.»). A 40 %, B/C/D/E/F 12 % ciascuna.
+     30/10 notte (ok di Davide): escono C (6,1 %) e F (5,5 %), le due che convertivano meno dal 17/10. A 40 %, B/D/E 20 % ciascuna.
+     Chi era su C o F viene riassegnato una volta a A, B, D o E; /workshop-ott-c e /workshop-ott-f restano raggiungibili ma fuori rotazione.
      Chi era già stato assegnato resta sulla sua pagina; i nuovi visitatori entrano nella ripartizione nuova.
      Le pagine /workshop-b, /workshop-c e /workshop-d (prove precedenti) restano raggiungibili ma fuori rotazione.
      Chiave nuova (dc_pagina_ott): tutti vengono riassegnati una volta, poi restano sulla stessa pagina.
@@ -21,12 +23,12 @@
   try {
     var q = new URLSearchParams(window.location.search);
     if (q.get('pagina') === 'principale' || q.get('prova') === '1' || !/^https?:$/.test(window.location.protocol)) return;
-    var mappa = {A: '/workshop', B: '/workshop-ott-b', C: '/workshop-ott-c', D: '/workshop-ott-d', E: '/workshop-ott-e', F: '/workshop-ott-f'};
+    var mappa = {A: '/workshop', B: '/workshop-ott-b', D: '/workshop-ott-d', E: '/workshop-ott-e'};
     var v = null;
     try { v = window.localStorage.getItem('dc_pagina_ott'); } catch (e) {}
     if (!mappa[v]) {
       var x = Math.random();
-      v = x < 0.4 ? 'A' : (x < 0.52 ? 'B' : (x < 0.64 ? 'C' : (x < 0.76 ? 'D' : (x < 0.88 ? 'E' : 'F'))));
+      v = x < 0.4 ? 'A' : (x < 0.6 ? 'B' : (x < 0.8 ? 'D' : 'E'));
       try { window.localStorage.setItem('dc_pagina_ott', v); } catch (e) {}
     }
     var c = (q.get('utm_campaign') || 'webinar-commercialisti').replace(/-(pagina|sett|ott)-[abcdef]$/i, '');
