@@ -128,7 +128,7 @@ def B():
 <p class="lead">I documenti da chiedere ai clienti. Gli F24 da mandare. Le email a cui rispondere. E i collaboratori bravi non si trovano.<br/><br/>Giovedì 29 ottobre alle 21:00 ti mostro Commercialista AI dal vivo, gratis su Zoom. Vediamo come prepara le richieste di documenti, le email degli F24 e le risposte ai clienti. <b>Tu controlli e premi Invia. Il gestionale resta il tuo.</b></p>
 <a class="cta" href="#iscrizione">Riserva il posto gratis</a>
 <div class="host"><img src="davide-linkedin.jpg" alt="Davide Caiazzo" width="52" height="52"/><p><b>Davide Caiazzo</b><br/>ha venduto MYGO SRL a Zucchetti</p></div>
-<div class="proof"><span>Il gestionale resta il tuo</span><span>Tu controlli e premi Invia</span><span>182 iscritti all'edizione del 15 ottobre</span></div>
+<div class="proof"><span>Il gestionale resta il tuo</span><span>Tu controlli e premi Invia</span><span data-iscritti-passati>535 iscritti alle edizioni passate</span></div>
 </div>
 <div id="iscrizione">{form_block('', 'Riserva il tuo posto gratis', 'Giovedì 29 ottobre, ore 21:00 · Live su Zoom').replace('<input type="text"', '<input autocomplete="name" aria-label="Nome e cognome" type="text"').replace('<input type="email"', '<input autocomplete="email" aria-label="Email" type="email"').replace('<input type="tel"', '<input autocomplete="tel" aria-label="Telefono" type="tel"').replace('Il link Zoom arriva via email il giorno del webinar. Nessuno spam.', 'Ricevi la conferma via email. Il team potrà chiamarti per conoscere il tuo studio prima della diretta.')}</div>
 </div></section>
@@ -222,7 +222,7 @@ def C():
 <p class="lead">Sei un commercialista? Ti racconto cosa ho capito del lavoro del mio. Pensavo che non fosse bravo. Costruendo Commercialista AI ho capito che mi sbagliavo: <b>email, F24 e documenti gli portavano via la giornata</b>. Giovedì 29 ottobre alle 21 ti mostro come l'AI prepara questi lavori. Vediamo anche scadenze, fatture, circolari e parcelle. Tu controlli il risultato.</p>
 <a class="cta" href="#iscrizione">Riserva il posto gratis</a>
 </div></section>
-<div class="strip"><div class="wrap"><span><b>182</b> iscritti all'edizione del 15 ottobre</span><span>Il gestionale <b>resta il tuo</b></span><span><b>Gratis</b>, su Zoom</span></div></div>
+<div class="strip"><div class="wrap"><span><b data-iscritti-passati>535</b> iscritti alle edizioni passate</span><span>Il gestionale <b>resta il tuo</b></span><span><b>Gratis</b>, su Zoom</span></div></div>
 
 <section><div class="wrap">
 <h2>La giornata dello studio, prima e dopo</h2>
@@ -303,7 +303,7 @@ def D():
 <section style="padding-top:10px"><div class="wrap">
 <div class="nums">
 <div class="num"><b>23 su 31</b><p>commercialisti al sondaggio del webinar del 30 settembre hanno messo F24 e solleciti fra le cose che tolgono più tempo.</p></div>
-<div class="num"><b>182</b><p>iscritti all'edizione del 15 ottobre.</p></div>
+<div class="num"><b data-iscritti-passati>535</b><p>iscritti alle edizioni passate.</p></div>
 <div class="num"><b>0</b><p>gestionali da cambiare. Non tiene la contabilità: lavora accanto al tuo e legge i PDF che ti fa scaricare.</p></div>
 </div></div></section>
 

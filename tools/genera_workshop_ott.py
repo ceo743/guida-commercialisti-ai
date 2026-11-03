@@ -110,7 +110,7 @@ def F():
 <h1>{TIT1}<span>{TIT2}</span></h1>
 <p class="lead">{SUBF}</p>
 <a class="cta" href="#iscrizione">Riserva il posto gratis</a>
-<div class="proofF"><span><b>182</b> iscritti all'edizione del 15 ottobre</span><span>Il gestionale <b>resta il tuo</b></span><span>Gli invii <b>restano sotto il tuo controllo</b></span></div>
+<div class="proofF"><span><b data-iscritti-passati>535</b> iscritti alle edizioni passate</span><span>Il gestionale <b>resta il tuo</b></span><span>Gli invii <b>restano sotto il tuo controllo</b></span></div>
 <div class="host"><img src="davide-linkedin.jpg" alt="Davide Caiazzo" width="50" height="50"/><p><b>Davide Caiazzo</b><br/>ha venduto MYGO SRL a Zucchetti</p></div>
 </div>
 <figure class="win"><div class="bar" aria-hidden="true"><i></i><i></i><i></i></div>
