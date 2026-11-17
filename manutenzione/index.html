@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<!-- [CLAUDE] 17/11/2026, Davide: «tutte le pagine di errore con la nostra grafica». Pagina di manutenzione del programma
+     (commercialista-ai.davidecaiazzo.it e soldea.ai, servizio Render): Render la mostra quando il servizio è in
+     manutenzione, se nelle impostazioni «Maintenance mode» c'è questo indirizzo. Deve stare FUORI dal servizio in
+     manutenzione (documentazione Render), per questo è qui su GitHub Pages. Si ricarica da sola ogni 60 secondi. -->
+<meta http-equiv="refresh" content="60"/>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="robots" content="noindex, follow"/>
+<title>Aggiornamento in corso | Commercialista AI</title>
+<meta name="description" content="Stiamo aggiornando Commercialista AI e Soldea. Torniamo online fra pochi minuti."/>
+<link rel="icon" type="image/png" href="https://automazioni.davidecaiazzo.it/favicon.png"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{--navy:#05070e;--navy-2:#0d1120;--cream:#fcfbf6;--cream-70:rgba(252,251,246,.72);--cream-50:rgba(252,251,246,.5);--verm:#ff3d2e;--verm-2:#c62d20;--line:rgba(252,251,246,.12)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100%}
+body{background:var(--navy);color:var(--cream);font-family:'Instrument Sans',system-ui,-apple-system,'Segoe UI',sans-serif;font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased;display:flex;flex-direction:column;min-height:100vh;
+  background-image:radial-gradient(ellipse 70% 55% at 50% -10%,rgba(255,61,46,.16),transparent 70%)}
+a{color:inherit}
+.testata{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px clamp(16px,5vw,64px);border-bottom:1px solid var(--line)}
+.marchio{display:inline-flex;align-items:center;gap:10px;text-decoration:none;font-weight:700;font-size:18px;letter-spacing:-.01em}
+.marchio-segno{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:9px;background:var(--verm);color:#fff;font-family:'Anton',sans-serif;font-size:18px}
+.marchio b{color:var(--verm)}
+.accedi{font-size:15px;font-weight:600;text-decoration:none;color:var(--cream-70);padding:10px 4px}
+.accedi:hover{color:var(--cream)}
+main{flex:1;display:flex;align-items:center;justify-content:center;padding:clamp(40px,8vw,96px) 16px}
+.riquadro{width:100%;max-width:720px;text-align:center}
+.codice{font-family:'Anton',sans-serif;font-size:clamp(96px,22vw,180px);line-height:.9;letter-spacing:.02em;color:transparent;-webkit-text-stroke:2px var(--verm);margin-bottom:20px}
+h1{font-family:'Anton',sans-serif;font-weight:400;font-size:clamp(30px,5vw,48px);line-height:1.1;letter-spacing:.01em;text-transform:uppercase;margin-bottom:14px}
+.spiega{color:var(--cream-70);font-size:clamp(16px,1.6vw,19px);max-width:560px;margin:0 auto 32px}
+.azioni{display:flex;flex-wrap:wrap;justify-content:center;gap:12px}
+.bottone{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:14px 26px;border-radius:999px;font-weight:700;font-size:16px;text-decoration:none;transition:transform .15s ease,background .15s ease,border-color .15s ease}
+.bottone:hover{transform:translateY(-1px)}
+.bottone:focus-visible,.accedi:focus-visible,.marchio:focus-visible,.piede a:focus-visible{outline:3px solid var(--cream);outline-offset:3px}
+.primario{background:var(--verm);color:#fff;box-shadow:0 10px 30px rgba(255,61,46,.28)}
+.primario:hover{background:var(--verm-2)}
+.secondario{border:1.5px solid var(--line);color:var(--cream)}
+.secondario:hover{border-color:var(--cream-50)}
+.aiuto{margin-top:28px;font-size:15px;color:var(--cream-50)}
+.aiuto a{color:var(--cream-70)}
+.piede{padding:22px 16px;border-top:1px solid var(--line);text-align:center;font-size:13px;color:var(--cream-50)}
+.piede a{color:var(--cream-50)}
+.segno-attesa{display:flex;justify-content:center;gap:12px;margin-bottom:28px}
+.segno-attesa span{width:16px;height:16px;border-radius:50%;background:var(--verm);animation:pulsa 1.2s ease-in-out infinite}
+.segno-attesa span:nth-child(2){animation-delay:.2s}.segno-attesa span:nth-child(3){animation-delay:.4s}
+@keyframes pulsa{0%,100%{opacity:.25;transform:scale(.8)}50%{opacity:1;transform:scale(1)}}
+@media (prefers-reduced-motion:reduce){.segno-attesa span{animation:none;opacity:.8}}
+@media (max-width:560px){
+  .azioni{flex-direction:column}
+  .bottone{width:100%}
+  .marchio-testo{font-size:16px}
+}
+</style>
+</head>
+<body>
+<header class="testata">
+  <a class="marchio" href="https://commercialisti.davidecaiazzo.it/" aria-label="Commercialista AI, torna alla pagina principale"><span class="marchio-segno" aria-hidden="true">C</span><span class="marchio-testo">Commercialista <b>AI</b></span></a>
+  <a class="accedi" href="https://commercialista-ai.davidecaiazzo.it/accedi">Accedi</a>
+</header>
+<main>
+  <div class="riquadro">
+    <p class="segno-attesa" aria-hidden="true"><span></span><span></span><span></span></p>
+    <h1>Stiamo aggiornando il programma</h1>
+    <p class="spiega">Commercialista AI e Soldea tornano online fra pochi minuti. I tuoi dati sono al sicuro e il lavoro già fatto resta dov'è. Questa pagina si aggiorna da sola.</p>
+    <div class="azioni">
+      <a class="bottone primario" href="https://commercialista-ai.davidecaiazzo.it/accedi">Riprova adesso</a>
+    </div>
+  </div>
+</main>
+<footer class="piede">
+  Commercialista AI · <a href="https://commercialisti.davidecaiazzo.it/policy.html">Privacy e cookie</a>
+</footer>
+</body>
+</html>
